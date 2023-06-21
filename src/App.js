@@ -96,19 +96,6 @@ export default function App() {
                         <ProtocolView/>
                         <FooterV2/>
                     </Route>
-                    <Route path="/defi-hub">
-                        <CustomHeader showUserLink={false}/>
-                        <ConnectView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path="/terms-of-service">
-                        <CustomHeader showUserLink={false}/>
-                        <TermsOfServiceView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path="/test">
-                        <ServiceLandingPage/>
-                    </Route>
                     <Route path="/:user/allowance">
                         <ApprovalView/>
                         <FooterV2/>
@@ -149,8 +136,7 @@ export default function App() {
                         <FooterV2/>
                     </Route>
                     <Route>
-                        <CustomHeader expanded={true} showUserLink={false}/>
-                        <LandingView/>
+                        <Web3DashboardView/>
                         <FooterV2/>
                     </Route>
                 </Switch>
