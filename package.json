@@ -1,6 +1,6 @@
 {
-  "name": "@decentrifi/showcase",
-  "version": "0.2.0",
+  "name": "@decentrifi/decentrifi-track",
+  "version": "1.0.0",
   "dependencies": {
     "@decentri.fi/defi-hub": "^2.0.4",
     "@emotion/react": "^11.6.0",
