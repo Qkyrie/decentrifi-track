@@ -34,7 +34,6 @@ export default function () {
                         <DashboardNavbar address={address} selected={"suggestions"}/>
                     </Center>
                 </DashboardWrapper>
-                <RequiresMembership target={`/${address}/allowance`}>
                     <SectionWithBackground>
                         <TableContainer>
                             <p>
@@ -45,7 +44,6 @@ export default function () {
                             </p>
                         </TableContainer>
                     </SectionWithBackground>
-                </RequiresMembership>
             </Container>
         </>
     );

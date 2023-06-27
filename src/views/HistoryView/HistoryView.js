@@ -4,7 +4,6 @@ import CustomHeader from "../../components/Header/CustomHeader";
 import tw from "twin.macro";
 import {SectionHeading, Subheading as SubheadingBase} from "../../components/misc/Headings";
 import {SectionDescription} from "../../components/misc/Typography";
-import RequiresMembership from "../../components/RequiresMembership";
 import TwoColSingleFeatureWithStats2 from "../../components/features/TwoColSingleFeatureWithStats2";
 import DashboardNavbar from "../../components/DashboardNavbar";
 import useHistoryHooks from "./hooks/useHistoryHooks";
@@ -40,9 +39,9 @@ export default function HistoryView() {
 
 
     const entries = useMemo(() => {
-       return events?.map((entry) => {
+        return events?.map((entry) => {
             return (
-                <TransactionEntry transaction={entry} events={entry.events} owner={address} />
+                <TransactionEntry transaction={entry} events={entry.events} owner={address}/>
             )
         })
     }, [events]);
@@ -55,48 +54,46 @@ export default function HistoryView() {
                     <DashboardNavbar address={address} selected={"history"}/>
                 </Center>
             </DashboardWrapper>
-            <RequiresMembership owner={address}>
-                <SectionWithBackground>
-                    <Subheading>A little bit of history</Subheading>
-                    <Heading><HighlightedText>DEFI</HighlightedText> ACTIVITIES</Heading>
-                    <Description>Here's an overview of your asset transfers, claims, LP activities and borrows
-                        events.</Description>
-                </SectionWithBackground>
-                <DashboardWrapper>
+            <SectionWithBackground>
+                <Subheading>A little bit of history</Subheading>
+                <Heading><HighlightedText>DEFI</HighlightedText> ACTIVITIES</Heading>
+                <Description>Here's an overview of your asset transfers, claims, LP activities and borrows
+                    events.</Description>
+            </SectionWithBackground>
+            <DashboardWrapper>
 
-                    {
-                        loading &&
-                        <Center>
-                            <TransactionEntryPlaceholder/>
-                        </Center>
-                    }
+                {
+                    loading &&
+                    <Center>
+                        <TransactionEntryPlaceholder/>
+                    </Center>
+                }
 
-                    {
-                        !loading && entries?.length > 0 &&
+                {
+                    !loading && entries?.length > 0 &&
 
-                        <Center>
-                            {entries}
-                        </Center>
-                    }
+                    <Center>
+                        {entries}
+                    </Center>
+                }
 
 
-                    {
-                        !loading && entries == null &&
-                        <Section>
-                            <TwoColSingleFeatureWithStats2
-                                statistics={[]}
-                                subheading={"History is being scanned"}
-                                heading={"We're currently scanning for your history."}
-                                description={"Please check back and refresh this page after a while to see your full historical transactions."}
-                                primaryButtonText={"Refresh"}
-                                primaryButtonUrl={`/${address}/history`}
-                                secondaryButtonText={"Back to overview"}
-                                secondaryButtonUrl={`/${address}/profile`}
-                            />
-                        </Section>
-                    }
-                </DashboardWrapper>
-            </RequiresMembership>
+                {
+                    !loading && entries == null &&
+                    <Section>
+                        <TwoColSingleFeatureWithStats2
+                            statistics={[]}
+                            subheading={"History is being scanned"}
+                            heading={"We're currently scanning for your history."}
+                            description={"Please check back and refresh this page after a while to see your full historical transactions."}
+                            primaryButtonText={"Refresh"}
+                            primaryButtonUrl={`/${address}/history`}
+                            secondaryButtonText={"Back to overview"}
+                            secondaryButtonUrl={`/${address}/profile`}
+                        />
+                    </Section>
+                }
+            </DashboardWrapper>
         </Container>
 
     </>

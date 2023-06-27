@@ -6,7 +6,6 @@ import {SectionHeading, Subheading as SubheadingBase} from "../../components/mis
 import {SectionDescription} from "../../components/misc/Typography";
 import FAQ from "../../components/faqs/SingleCol";
 import DollarLabel from "../../components/Label/DollarLabel";
-import RequiresMembership from "../../components/RequiresMembership";
 import DashboardNavbar from "../../components/DashboardNavbar";
 import {DashboardContext} from "../../App";
 
@@ -73,12 +72,10 @@ export default function ClaimableView() {
                             </Section>
                         }
 
-                        <RequiresMembership owner={address} target={`/${address}/claimables`}>
-                            <ClaimableSection>
-                                <ClaimableDetails showNothingFoundMessage={true}
-                                                  showPlaceholder={claimableLoading}/>
-                            </ClaimableSection>
-                        </RequiresMembership>
+                        <ClaimableSection>
+                            <ClaimableDetails showNothingFoundMessage={true}
+                                              showPlaceholder={claimableLoading}/>
+                        </ClaimableSection>
                     </>
                 }
 

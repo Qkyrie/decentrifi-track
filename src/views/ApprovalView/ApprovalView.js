@@ -1,7 +1,6 @@
 import React from 'react';
 import {useHistory, useParams} from "react-router-dom";
 import {useApprovalHooks} from "./hooks/useApprovalHooks";
-import RequiresMembership from "../../components/RequiresMembership";
 import CustomHeader from "../../components/Header/CustomHeader";
 import tw from "twin.macro";
 import DashboardNavbar from "../../components/DashboardNavbar";
@@ -36,16 +35,14 @@ export function ApprovalView() {
                         <DashboardNavbar address={address} selected={"allowance"}/>
                     </Center>
                 </DashboardWrapper>
-                <RequiresMembership owner={address} target={`/${address}/allowance`}>
-                    <SectionWithBackground>
-                        <Heading><span tw="text-red-500">Revoke</span> access to your assets.</Heading>
-                        <TableContainer>
-                            <ApprovalTable revoke={approvalHooks.revoke} isLoading={approvalHooks.isLoading} allowances={approvalHooks.allowances}/>
-                        </TableContainer>
-                    </SectionWithBackground>
-                </RequiresMembership>
+                <SectionWithBackground>
+                    <Heading><span tw="text-red-500">Revoke</span> access to your assets.</Heading>
+                    <TableContainer>
+                        <ApprovalTable revoke={approvalHooks.revoke} isLoading={approvalHooks.isLoading}
+                                       allowances={approvalHooks.allowances}/>
+                    </TableContainer>
+                </SectionWithBackground>
             </Container>
-
         </>
     )
 }
