@@ -1,5 +1,4 @@
 import React from "react";
-import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container, ContentWithPaddingXl } from "components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -37,7 +36,7 @@ const Text = styled.div`
 
 export default ({ headingText = "Terms And Condition" }) => {
   return (
-    <AnimationRevealPage>
+    <>
       <Header />
       <Container>
         <ContentWithPaddingXl>
@@ -270,6 +269,6 @@ export default ({ headingText = "Terms And Condition" }) => {
         </ContentWithPaddingXl>
       </Container>
       <Footer />
-    </AnimationRevealPage>
+    </>
   );
 };

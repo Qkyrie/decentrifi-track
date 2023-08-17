@@ -3,7 +3,6 @@ import erc20ImageSrc from "../../images/erc20_carbon.png";
 import ReactGA from "react-ga4";
 import MainFeature from "../../components/features/TwoColWithButton";
 import TwoColWithButton from "../../components/features/TwoColWithButton";
-import AnimationRevealPage from "../../helpers/AnimationRevealPage";
 import FAQ from "../../components/faqs/TwoColumnPrimaryBackground";
 import MoneyUnicornPic from "../../images/moneyunicorns.png";
 import tw from "twin.macro";
@@ -33,7 +32,7 @@ export default function ConnectView() {
                 />
 
             </Dark>
-            <AnimationRevealPage>
+            <>
                 <MainFeature
                     subheading="Developer Friendly"
                     heading="Open Source. High Standards."
@@ -59,7 +58,7 @@ export default function ConnectView() {
                 } description={"🔥This might contain an answer to your burning questions.🔥"}/>
 
                 <Ourwork/>
-            </AnimationRevealPage>
+            </>
         </>
     )
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import AnimationRevealPage from "helpers/AnimationRevealPage.js"
 
 import EventLandingPage from "demos/EventLandingPage.js";
 import HotelTravelLandingPage from "demos/HotelTravelLandingPage.js";
@@ -512,9 +511,7 @@ export default () => {
     let Component = null;
     if(type === "blocks" && subtype) {
       Component= components[type][subtype]["elements"][name].component
-      return <AnimationRevealPage disabled>
-          <Component/>
-        </AnimationRevealPage>
+      return <Component/>
     }
     else
       Component= components[type][name].component

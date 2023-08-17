@@ -1,5 +1,4 @@
 import React from "react";
-import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 import { Container, Content2Xl } from "components/misc/Layouts";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -41,7 +40,6 @@ export default () => {
   }, [])
 
   return (
-    <AnimationRevealPage disabled>
       <Container tw="-mx-8 -mt-8 pt-8 px-8">
         <Content2Xl>
           <NavRow>
@@ -98,6 +96,5 @@ export default () => {
           </HeroRow>
         </Content2Xl>
       </Container>
-    </AnimationRevealPage>
   );
 };

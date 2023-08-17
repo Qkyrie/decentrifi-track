@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 
 import Hero from "./components/BackgroundAsImage.js";
 import Features from "./components/DashedBorderSixFeatures";
@@ -19,7 +18,7 @@ export default () => {
 
     return (
 
-        <AnimationRevealPage>
+        <>
             <CustomHeader expanded={false}/>
 
             <Hero/>
@@ -72,6 +71,6 @@ export default () => {
             <OurWork/>
             <ContactUsForm/>
             <Footer/>
-        </AnimationRevealPage>
+        </>
     );
 };
