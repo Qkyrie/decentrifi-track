@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {ReactComponent as TwitterIcon} from "images/twitter-icon.svg";
 import {ReactComponent as GithubIcon} from "images/github-icon.svg";
 import Logo from "images/logo/namewithlogo.png";
+import {PoweredByAlchemy} from "./components/PoweredByAlchemy";
 
 const Container = styled.div`
   ${tw`relative bg-primary-500 text-gray-100 -mb-8  px-8 py-20 lg:py-24`}
@@ -42,24 +43,6 @@ const SocialLink = styled.a`
 `;
 
 const Center = tw.div`w-1/3 mx-auto text-center grid justify-items-center`;
-
-function PoweredByAlchemy() {
-
-    function onClick() {
-        window.open("https://alchemy.com/?r=28b98946-57c8-41d4-8ba3-ca85c3bf429a", "_blank");
-    }
-
-    return (
-        <>
-            <script>const BADGE_ID = '28b98946-57c8-41d4-8ba3-ca85c3bf429a';</script>
-            <script type="text/javascript" src="http://static.alchemyapi.io/scripts/badge/alchemy-badge.js"></script>
-            <a tw="w-1/3" href="#">
-                <img tw="w-full" onClick={onClick} id="badge-button"
-                     src="https://static.alchemyapi.io/images/marketing/badgeLight.png" alt="Alchemy Supercharged"/>
-            </a>
-        </>
-    )
-}
 
 export default () => {
     return (
@@ -122,7 +105,7 @@ export default () => {
                         <SocialLink href="https://twitter.com/decentrifi">
                             <TwitterIcon/>
                         </SocialLink>
-                        <SocialLink href="https://github.com/decentri-foi">
+                        <SocialLink href="https://github.com/decentri-fi">
                             <GithubIcon/>
                         </SocialLink>
                     </SocialLinksContainer>

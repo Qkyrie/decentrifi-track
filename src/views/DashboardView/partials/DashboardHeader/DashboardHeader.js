@@ -26,7 +26,7 @@ const AddressText = tw.div`flex flex-col`
 const Wrapper = tw.div`flex grid justify-items-center flex-wrap lg:flex-nowrap p-4`;
 const Center = tw.div`w-full lg:w-2/3 border rounded-xl`
 const PortfolioValue = tw.div`lg:justify-items-end justify-self-center grid w-full`
-const PortfolioValueContainer = tw.div`bg-gray-200 p-4 flex flex-col rounded-xl w-full lg:w-2/3`
+const PortfolioValueContainer = tw.div`bg-gray-200 p-4 flex flex-col rounded-lg w-full lg:w-3/4 mx-4`
 
 const ScanningContainer = tw.div`block m-auto`;
 const ProgressText = tw.span`text-sm inline-block text-gray-500`
@@ -117,7 +117,7 @@ export default function DashboardHeader() {
                         }}>
                             <PortfolioValueContainer>
                                 <PortfolioTitle>Portfolio Value</PortfolioTitle>
-                                <PortfolioAmount><DollarLabel pretty={false} amount={totalBalance}/></PortfolioAmount>
+                                <PortfolioAmount><DollarLabel pretty={true} amount={totalBalance}/></PortfolioAmount>
                             </PortfolioValueContainer>
                         </PortfolioValue>
                     </GeneralInfo>
