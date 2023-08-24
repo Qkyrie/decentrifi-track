@@ -1,12 +1,14 @@
 import {fetchClaimables} from "../../../api/defitrack/claimable/claimable";
 import {useQueries, useQueryClient} from "@tanstack/react-query";
 import useProtocols from "./useProtocols";
+import {useMemo} from "react";
 
 export default function useDashboardClaimableHooks(account) {
     const queryClient = useQueryClient();
     const {protocols} = useProtocols();
 
     async function getClaimables(protocol) {
+        console.log('fetching from endpoint')
         return (await fetchClaimables(account, protocol)).map(claimable => {
             return {
                 ...claimable,
@@ -25,6 +27,7 @@ export default function useDashboardClaimableHooks(account) {
         queries: protocols.map((protocol) => {
             return {
                 queryKey: ['claimables', account, protocol],
+                staleTime: 1000 * 60 * 3,
                 queryFn: query(protocol),
             }
         })
@@ -43,11 +46,13 @@ export default function useDashboardClaimableHooks(account) {
         });
     }
 
-    const fetchedClaimables = queries.map((query) => {
-        return query.data
-    }).filter(data => {
-        return data != null
-    }).flat();
+    const fetchedClaimables = useMemo(() => {
+       return queries.map((query) => {
+            return query.data
+        }).filter(data => {
+            return data != null
+        }).flat();
+    }, [account])
 
 
     return {
