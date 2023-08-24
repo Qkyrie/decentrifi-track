@@ -15,6 +15,7 @@ export default function (address) {
         document.title = `History for ${address} - Decentrifi`;
     }, []);
 
+    console.log('events', eventsQuery.data);
 
     return {
         loading: eventsQuery.isLoading,

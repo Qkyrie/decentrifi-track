@@ -71,8 +71,6 @@ export default function DashboardNavbar({address, selected = "profile"}) {
         ].filter((item) => !!item);
     }, [stats, address])
 
-    console.log(items)
-
     return (
         <Navbar items={items}/>
     )

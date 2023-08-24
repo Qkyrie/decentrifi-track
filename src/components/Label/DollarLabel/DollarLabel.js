@@ -48,7 +48,7 @@ export default function DollarLabel({amount, pretty = true}) {
         return (
             <>
                 <NumberFormat value={prettyAmount.amount} displayType={'text'} fixedDecimalScale={true} decimalScale={2}
-                              thousandSeparator={true} prefix={'US$ '}/> {prettyAmount.suffix}
+                              thousandSeparator={true} prefix={'$'}/> {prettyAmount.suffix}
             </>
         );
     }
