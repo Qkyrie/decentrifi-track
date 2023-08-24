@@ -46,14 +46,11 @@ export default function useDashboardClaimableHooks(account) {
         });
     }
 
-    const fetchedClaimables = useMemo(() => {
-       return queries.map((query) => {
+    const fetchedClaimables = queries.map((query) => {
             return query.data
         }).filter(data => {
             return data != null
         }).flat();
-    }, [account])
-
 
     return {
         claimables: [...fetchedClaimables.reduce((a, c) => {
