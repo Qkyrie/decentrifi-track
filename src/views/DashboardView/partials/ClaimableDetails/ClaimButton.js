@@ -1,60 +1,60 @@
 import {useClaims} from "../../../../hooks/useClaims";
 import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import React from "react";
-import swal from "sweetalert";
-import useTransactionPopup from "../../../../hooks/useTransactionPopup";
 import {useTransactions} from "../../../../hooks/useTransactions";
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ClaimButton({refreshClaimables, claimable}) {
     const useClaim = useClaims();
     const transactions = useTransactions()
 
-    const {
-        html: transactionPopup,
-        setTransactionState,
-        open,
-        close
-    } = useTransactionPopup();
-
     const claimFn = claimingFunction();
+
 
     function claimingFunction() {
 
         return async (event) => {
             event.stopPropagation();
             try {
-                setTransactionState("signing");
+                toast("Signing transaction to claim tokens.")
                 const result = await useClaim.claim(claimable);
-                setTransactionState("pending")
+                toast.dismiss();
                 if (result !== undefined) {
-                    result.wait().then(() => {
-                        swal({
-                            text: "Your rewards were successfully claimed, refreshing them.",
-                            icon: "success"
-                        });
-                        setTransactionState("mined");
+                    toast.promise(
+                        result.wait(),
+                        {
+                            pending: "Transaction submitted, awaiting confirmation.",
+                            success: "Your rewards were successfully claimed, refreshing them",
+                        }
+                    ).then(() => {
                         refreshClaimables();
-                        close();
                     });
-                } else  {
-                    close();
+                } else {
+
                 }
             } catch (err) {
                 transactions.handleErrorResult(err).then(() => {
-                    close();
                 })
             }
         };
     }
 
-    return (
-        <>
+    if ( transactions.isOnCorrectChain(claimable.network.chainId)) {
+        return (
+            <>
+                <PrimaryButton onClick={async (e) => {
+                    await claimFn(e);
+                }} label="Claim"/>
+                <ToastContainer closeOnClick={false} theme={'light'}/>
+            </>
+        );
+    } else  {
+        return <>
             <PrimaryButton onClick={async (e) => {
-                open();
                 await claimFn(e);
-            }} label="Claim"/>
-            {transactionPopup}
+            }} label="Change Network"/>
         </>
-    );
+    }
 };
 

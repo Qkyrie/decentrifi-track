@@ -20,6 +20,10 @@ export const useTransactions = () => {
         }
     }
 
+    const isOnCorrectChain = (chainId) => {
+        return chainId === web3.web3React.chainId
+    }
+
     const validateChainId = async (chainId) => {
         if (chainId !== web3.web3React.chainId) {
             try {
@@ -54,6 +58,7 @@ export const useTransactions = () => {
     }
     return {
         validateChainId,
+        isOnCorrectChain,
         handleErrorResult
     }
 }
