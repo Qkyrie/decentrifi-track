@@ -44,6 +44,11 @@ export default function
     }
 
     const {
+        lps,
+        refresh: refreshLps
+    } = useDashboardLPHooks(account, supportsPooling, {addToTotalScanning, incrementProgress});
+
+    const {
         stakings,
         refresh: refreshStakings
     } = useDashboardStakingHooks(account, supportsStaking, {addToTotalScanning, incrementProgress});
@@ -51,6 +56,7 @@ export default function
         lendings,
         refresh: refreshLendings
     } = useDashboardLendingHooks(account, supportsLending, {setTotalScanning, setDoneScanning});
+
     const {
         claimables,
         refresh: refreshClaimables,
@@ -63,10 +69,6 @@ export default function
         borrowings,
         refresh: refreshBorrowings
     } = useDashboardBorrowingHooks(account, supportsDebt, {setTotalScanning, setDoneScanning});
-    const {
-        lps,
-        refresh: refreshLps
-    } = useDashboardLPHooks(account, supportsPooling, {setTotalScanning, setDoneScanning});
 
     const {
         ens

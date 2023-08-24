@@ -19,23 +19,33 @@ export default function useDashboardStakingHooks(account, supportsStaking, {
 
             addToTotalScanning(farmingProtocols.length);
 
-            const results = farmingProtocols.map(async (protocol) => {
-                const result = await farmingPositions(account, protocol)
+            const result = new ResultHolder();
+
+            farmingProtocols.forEach(async (protocol) => {
+                const positions = await farmingPositions(account, protocol)
                 incrementProgress();
-                return result;
+                positions.forEach((position) => result.push(position))
             });
-            return (await Promise.all(results)).flat();
+
+            return result
         },
         enabled: protocols.length > 0 && !!account
-    })
+    });
 
+    class ResultHolder {
+        results = []
+
+        push(element) {
+            this.results.push(element);
+        }
+    }
 
     function refresh() {
         stakingQuery.refetch();
     }
 
     return {
-        stakings: stakingQuery.data || [],
+        stakings: stakingQuery.data?.results || [],
         refresh
     }
 };

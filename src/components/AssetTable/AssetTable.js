@@ -6,6 +6,7 @@ import APYLabel from "../Label/APYLabel";
 import DollarLabel from "../Label/DollarLabel";
 import PlaceholderLoading from "react-placeholder-loading";
 import {Pagination} from "../Pagination/Pagination";
+import styled from "styled-components";
 
 const Container = tw.div`w-full my-4`
 
@@ -13,27 +14,31 @@ const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-c
 const List = tw.ul`flex flex-col w-full`
 
 const ListItem = tw.li`flex flex-row w-full`
-const Row = tw.div`select-none cursor-pointer flex items-center py-2 border-b hover:bg-indigo-100 w-full`
-const IconColumn = tw.div`flex flex-col w-1/12 justify-center items-center mr-4 lg:block`;
 const IconBlock = tw.div`block relative`
 const FallbackImageContainer = tw.div`flex flex-nowrap`
 const Image = tw.div`h-5 w-5 lg:h-8 lg:w-8`
 const OverlayImage = tw.div`lg:h-4 lg:w-4 h-2 w-2 -mx-2 `
 
-const NameColumn = tw.div`pl-1 lg:w-1/4 w-3/4 flex-1 font-medium text-indigo-600 text-xs`
-const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 lg:w-1/3 w-0`
+const Row = tw.div`select-none cursor-pointer flex items-center py-2 border-b hover:bg-indigo-100 w-full`
+
+const IconColumn = tw.div`flex flex-col w-1/12 justify-center items-center mr-4 lg:block`
+const NameColumn = tw.div`pl-1 w-3/12  flex-1 font-medium text-indigo-600 text-xs`
+const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 w-3/12`
+const TotalColumn = tw.div`text-sm pr-4 text-left text-gray-600 w-3/12 justify-items-end grid`
+const ActionColumn = tw.div`w-2/12`
+
 
 const ThinGreen = tw.span`text-green-500 font-thin`
 
-const TotalColumn = tw.div`text-sm text-left text-gray-600 w-1/3 lg:w-1/5 justify-items-end grid`
-const PullRight = tw.div`flex items-center justify-items-end`
+const PullRight = tw.div`flex items-center justify-items-end w-full`
 const Bold = tw.span`font-bold text-sm`
 const Hidden = tw.span`hidden lg:block`
 
-const ActionButton = tw.div`ml-4`
+const ActionButton = tw.div`ml-4 justify-items-end flex w-full`
 
 const PaginationSection = tw.div`mt-4 flex flex-row justify-center w-full`
 const Center = tw.div`flex`
+
 
 function DummyList() {
     return (
@@ -147,6 +152,11 @@ function ListEntry({entry}) {
                             <Bold>
                                 <DollarLabel amount={entry.dollarValue}/>
                             </Bold>
+
+                        </PullRight>
+                    </TotalColumn>
+                    <ActionColumn>
+                        <PullRight>
                             <ActionButton>
                                 {
                                     entry.actionButton &&
@@ -154,7 +164,7 @@ function ListEntry({entry}) {
                                 }
                             </ActionButton>
                         </PullRight>
-                    </TotalColumn>
+                    </ActionColumn>
                 </Row>
             </ListItem>
         </>

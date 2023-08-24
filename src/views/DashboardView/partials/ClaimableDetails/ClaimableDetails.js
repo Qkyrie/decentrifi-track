@@ -9,21 +9,22 @@ import {DashboardContext} from "../../../../App";
 
 const Container = tw.div`w-full items-center grid`
 const Header = tw.div`w-full flex text-lg font-medium mb-2 grid justify-items-center`
-const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
-const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 bg-green-600 rounded-r  text-white`
-const BalanceText = tw.div`w-9/12 text-right`
 
 const PullRight = tw.div`flex flex-col grid justify-items-end`
 
 const Center = tw.div`grid w-full justify-items-center mb-4 border p-4 rounded-lg`
 const Section = tw.div`w-full bg-white`
-const Hidden = tw.span`hidden lg:block`
 
 const Hero = tw.div`justify-self-center bg-gray-100 w-full border p-4 mb-4 text-center w-full`
 const CenterImage = tw.div`w-full flex justify-center my-2`
 const SadWhaleImage = tw.img`w-10 h-10`
 const HeroDescription = tw.p`text-purple-400 text-lg`
 
+const AssetHeader = tw.div`w-full flex items-center mb-5 `
+const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
+const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 bg-green-600 rounded-r  text-white`
+const BalanceText = tw.div`w-9/12 text-right`
+const Hidden = tw.span`hidden lg:block`
 
 export default function ClaimableDetails({showPlaceholder = false, showNothingFoundMessage = false}) {
 
@@ -80,21 +81,20 @@ export default function ClaimableDetails({showPlaceholder = false, showNothingFo
                                 showPlaceholder={showPlaceholder}
                                 entries={assetEntries}
                                 header={
-                                    <Header>
+                                    <AssetHeader>
                                         <HeaderTextContainer>
-                                            <HeaderText>CLAIMABLE</HeaderText>
+                                            <HeaderText>CLAIMABLES</HeaderText>
                                         </HeaderTextContainer>
                                         <BalanceText>
                                             <Hidden>
                                                 <PullRight>
                                                     <HeaderText>
                                                         <DollarLabel
-                                                            amount={totalClaimables}/>
-                                                    </HeaderText>
+                                                            amount={totalClaimables}/></HeaderText>
                                                 </PullRight>
                                             </Hidden>
                                         </BalanceText>
-                                    </Header>
+                                    </AssetHeader>
                                 }
                             />
                         </Container>

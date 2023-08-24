@@ -1,75 +1,49 @@
-import {useEffect, useState} from "react";
 import {poolingPositions} from "../../../api/defitrack/pools/pools";
 import useProtocols from "./useProtocols";
+import {useQuery} from "@tanstack/react-query";
 
-export default function useDashboardLPHooks(account, supportsPooling, {setTotalScanning, setDoneScanning}) {
-    const [lps, setLps] = useState([]);
-    const {deprecatedProtocols: protocols} = useProtocols();
+export default function useDashboardLPHooks(account, supportsPooling, {addToTotalScanning, incrementProgress}) {
+    const {deprecatedProtocols: deprecatedProtocols, protocols} = useProtocols();
 
-    function getStoredElements() {
-        return JSON.parse(localStorage.getItem(`lp-elements-${account}`));
+    const poolingQuery = useQuery({
+        queryKey: ['pooling', account],
+        staleTime: 1000 * 60 * 3,
+        queryFn: async () => {
+            let poolingProtocols = protocols.filter(proto => {
+                return proto.primitives.includes('POOLING');
+            });
+
+            addToTotalScanning(poolingProtocols.length);
+
+            const result = new ResultHolder();
+
+            poolingProtocols.forEach(async (protocol) => {
+                const positions = await poolingPositions(account, protocol)
+                incrementProgress();
+                positions.forEach(position => {
+                    result.push(position);
+                })
+            });
+
+            return result;
+        },
+        enabled: protocols.length > 0 && !!account
+    });
+
+    class ResultHolder {
+        results = []
+
+        push(element) {
+            this.results.push(element);
+        }
     }
 
     function refresh() {
-        localStorage.setItem(`lp-elements-${account}`, null);
-        setLps([]);
-        init();
+        poolingQuery.refetch();
     }
-
-    function updatePoolings(poolings) {
-        setDoneScanning(prevState => {
-            return prevState + 1
-        })
-        if (poolings.length > 0) {
-            for (const pooling of poolings) {
-                setLps(prevState => {
-                    prevState.push(pooling);
-                    localStorage.setItem(`lp-elements-${account}`, JSON.stringify(prevState));
-                    return [...prevState];
-                });
-            }
-        } else {
-            setLps(prevState => {
-                localStorage.setItem(`lp-elements-${account}`, JSON.stringify(prevState));
-                return [...prevState];
-            });
-        }
-    }
-
-    function init() {
-        const loadData = async () => {
-            if (protocols.length > 0) {
-                setTotalScanning(prevTotalScanning => {
-                    return prevTotalScanning + protocols.length
-                })
-                for (const protocol of protocols) {
-                    poolingPositions(account, protocol).then(poolings => {
-                        updatePoolings(poolings);
-                    }).catch(() => {
-                        updatePoolings([]);
-                        console.log("error trying to fetch pooling positions");
-                    });
-                }
-            }
-        }
-
-        if (supportsPooling && account !== undefined) {
-            const savedOne = getStoredElements();
-            if (savedOne !== null) {
-                setLps(savedOne);
-            } else {
-                setLps([])
-                loadData();
-            }
-        }
-    }
-
-    useEffect(async () => {
-        init();
-    }, [protocols, account])
 
     return {
-        lps,
+        lps: poolingQuery.data?.results || [],
         refresh
     }
 };

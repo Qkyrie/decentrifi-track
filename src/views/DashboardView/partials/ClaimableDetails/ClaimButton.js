@@ -4,6 +4,9 @@ import React from "react";
 import {useTransactions} from "../../../../hooks/useTransactions";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import tw from "twin.macro";
+
+const ButtonHolder = tw.div`w-full flex justify-end text-xs`
 
 export default function ClaimButton({refreshClaimables, claimable}) {
     const useClaim = useClaims();
@@ -42,19 +45,20 @@ export default function ClaimButton({refreshClaimables, claimable}) {
 
     if ( transactions.isOnCorrectChain(claimable.network.chainId)) {
         return (
-            <>
+            <ButtonHolder>
                 <PrimaryButton onClick={async (e) => {
                     await claimFn(e);
                 }} label="Claim"/>
                 <ToastContainer closeOnClick={false} theme={'light'}/>
-            </>
+            </ButtonHolder>
         );
     } else  {
-        return <>
+        return <ButtonHolder>
             <PrimaryButton onClick={async (e) => {
                 await claimFn(e);
             }} label="Change Network"/>
-        </>
+            <ToastContainer closeOnClick={false} theme={'light'}/>
+        </ButtonHolder>
     }
 };
 
