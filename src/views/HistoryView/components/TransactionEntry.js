@@ -10,10 +10,12 @@ const TransactionDetails = tw.div`text-xs w-full flex-wrap flex flex-row bg-gray
 const AccountLink = tw.div`flex flex-row items-center `
 const ListContainer = tw.div`flex flex-wrap w-full lg:w-3/4 justify-center bg-white border`
 const List = tw.div`w-full flex flex-col flex-wrap`
-const Transaction = tw.div`px-4 py-2 lg:block w-10/12 flex flex-row`
-const DateInfo = tw.div`px-4 py-2 text-right w-2/12`
+
+const TransactionColumn = tw.div`font-sans px-4 py-2 lg:block w-8/12 flex flex-row`
+const DateColumn = tw.div`px-4 py-2 text-xs text-right w-4/12`
+
 const NetworkLogo = tw.div`w-8 h-8 rounded-full mr-2`
-const HashLabel = tw.div`bg-gray-300 mx-2 px-2 py-1 rounded flex items-center`
+const HashLabel = tw.div`bg-gray-300 mx-2 px-2 py-1 rounded flex items-center font-mono text-xs`
 const LinkIcon = tw.div`bg-white p-1 mx-1 rounded-lg`
 
 export default function ({transaction, events, owner}) {
@@ -30,7 +32,7 @@ export default function ({transaction, events, owner}) {
 
             <ListContainer>
                 <TransactionDetails>
-                    <Transaction>
+                    <TransactionColumn>
                         <a target={"_blank"} href={`${transaction.network.baseUrl}/tx/${transaction.hash}`}>
                             <AccountLink>
 
@@ -53,10 +55,10 @@ export default function ({transaction, events, owner}) {
 
                         </a>
 
-                    </Transaction>
-                    <DateInfo>
+                    </TransactionColumn>
+                    <DateColumn>
                         {new Date(transaction.time).toLocaleString("nl-BE")}
-                    </DateInfo>
+                    </DateColumn>
                 </TransactionDetails>
                 <List>
                     {eventItems}
