@@ -7,24 +7,17 @@ export default function useDashboardClaimableHooks(account) {
     const {protocols} = useProtocols();
 
     async function getClaimables(protocol) {
-        const claimables = (await fetchClaimables(account, protocol)).map(claimable => {
+        return (await fetchClaimables(account, protocol)).map(claimable => {
             return {
                 ...claimable,
                 owner: account
             }
         });
-        persist(account, protocol, claimables);
-        return claimables;
     }
 
     function query(protocol) {
         return async () => {
-            let fromLocalStorage = getFromLocalStorage(account, protocol);
-            if (fromLocalStorage != null) {
-                return fromLocalStorage;
-            } else {
-                return await getClaimables(protocol);
-            }
+            return await getClaimables(protocol);
         };
     }
 
@@ -37,19 +30,10 @@ export default function useDashboardClaimableHooks(account) {
         })
     });
 
-    function persist(account, protocol, claimables) {
-        localStorage.setItem(`claimables-${account}-${protocol.name}`, JSON.stringify(claimables));
-    }
-
-    function getFromLocalStorage(account, protocol) {
-        return JSON.parse(localStorage.getItem(`claimables-${account}-${protocol.name}`));
-    }
-
 
     const refresh = () => {
         protocols.forEach(async (protocol) => {
             await queryClient.invalidateQueries(['claimables', account, protocol]);
-            persist(account, protocol, null);
             await queryClient.prefetchQuery(
                 {
                     queryKey: ['claimables', account, protocol],

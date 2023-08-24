@@ -69,7 +69,7 @@ export default function DashboardNavbar({address, selected = "profile"}) {
                 }
             }
         ].filter((item) => !!item);
-    }, [stats, address])
+    }, [stats, claimables.claimables, address])
 
     return (
         <Navbar items={items}/>
