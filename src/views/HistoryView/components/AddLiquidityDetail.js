@@ -16,8 +16,6 @@ const AssetText = tw.span`text-green-500 font-thin`
 const FromOrToColumn = tw.div`lg:w-1/3 w-1/2  lg:text-right font-mono`
 
 export default function AddLiquidityDetail({event, owner}) {
-    console.log(event);
-
     const amounts = event.metadata.deposits.map(deposit =>  {
         return <div>
             ~ +{deposit.amount}

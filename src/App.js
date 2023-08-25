@@ -26,6 +26,7 @@ import {ApprovalView} from "./views/ApprovalView/ApprovalView";
 import SuggestionView from "./views/SuggestionView/SuggestionView";
 import MentorshipView from "./views/MentorshipView/MentorshipView";
 import GoerliFaucetView from "./views/GoerliFaucetView/GoerliFaucetView.js";
+import {DashboardProvider} from "./views/DashboardProvider";
 
 export const DashboardContext = createContext(null);
 
@@ -47,85 +48,86 @@ export default function App() {
 
     return (
         <QueryClientProvider client={queryClient}>
-
-            <Router>
-                <Switch>
-                    <Route path="/dashboard">
-                        <Web3DashboardView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path={"/mentorship"}>
-                        <MentorshipView/>
-                    </Route>
-                    <Route path={"/goerli-faucet"}>
-                        <GoerliFaucetView/>
-                    </Route>
-                    <Route path="/explore">
-                        <ExploreView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path="/membership">
-                        <MembershipView/>
-                    </Route>
-                    <Route path="/claimables">
-                        <Web3ClaimableView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route exact path="/protocols">
-                        <CustomHeader/>
-                        <ProtocolsView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route exact path="/protocols/:protocol">
-                        <CustomHeader/>
-                        <ProtocolView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path="/:user/allowance">
-                        <ApprovalView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path="/:user/suggestions">
-                        <SuggestionView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path="/:user/profile">
-                        <AddressDashboardView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path="/account/:user">
-                        <AddressDashboardView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path="/:user/claimables">
-                        <AddressClaimableView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path="/:user/history">
-                        <HistoryView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path="/tokens/:network/:token">
-                        <CustomHeader/>
-                        <TokenView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route path="/staking/:network/:protocol/:selectedStakingId">
-                        <CustomHeader/>
-                        <StakingView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route exact path="/pooling/:network/:protocol/:selectedPoolingMarketId">
-                        <CustomHeader/>
-                        <PoolingView/>
-                        <FooterV2/>
-                    </Route>
-                    <Route>
-                        <Web3DashboardView/>
-                        <FooterV2/>
-                    </Route>
-                </Switch>
-            </Router>
+            <DashboardProvider>
+                <Router>
+                    <Switch>
+                        <Route path="/dashboard">
+                            <Web3DashboardView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route path={"/mentorship"}>
+                            <MentorshipView/>
+                        </Route>
+                        <Route path={"/goerli-faucet"}>
+                            <GoerliFaucetView/>
+                        </Route>
+                        <Route path="/explore">
+                            <ExploreView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route path="/membership">
+                            <MembershipView/>
+                        </Route>
+                        <Route path="/claimables">
+                            <Web3ClaimableView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route exact path="/protocols">
+                            <CustomHeader/>
+                            <ProtocolsView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route exact path="/protocols/:protocol">
+                            <CustomHeader/>
+                            <ProtocolView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route path="/:user/allowance">
+                            <ApprovalView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route path="/:user/suggestions">
+                            <SuggestionView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route path="/:user/profile">
+                            <AddressDashboardView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route path="/account/:user">
+                            <AddressDashboardView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route path="/:user/claimables">
+                            <AddressClaimableView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route path="/:user/history">
+                            <HistoryView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route path="/tokens/:network/:token">
+                            <CustomHeader/>
+                            <TokenView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route path="/staking/:network/:protocol/:selectedStakingId">
+                            <CustomHeader/>
+                            <StakingView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route exact path="/pooling/:network/:protocol/:selectedPoolingMarketId">
+                            <CustomHeader/>
+                            <PoolingView/>
+                            <FooterV2/>
+                        </Route>
+                        <Route>
+                            <Web3DashboardView/>
+                            <FooterV2/>
+                        </Route>
+                    </Switch>
+                </Router>
+            </DashboardProvider>
         </QueryClientProvider>
     );
 }

@@ -1,17 +1,24 @@
 import Navbar from "./Navbar/Navbar";
-import React, {useMemo} from "react";
+import React, {useContext, useMemo} from "react";
 import {useHistory} from "react-router-dom";
 import tw from "twin.macro";
 import {useQuery} from "@tanstack/react-query";
 import {getAccount} from "../api/whalespotter/account/account";
 import useDashboardClaimableHooks from "../views/DashboardView/hooks/useDashboardClaimableHooks";
+import {DashboardContext} from "../App";
 
 const NewLabel = tw.span`text-xs align-text-top font-thin text-teal-500`
 
-export default function DashboardNavbar({address, selected = "profile"}) {
+export default function DashboardNavbar({selected = "profile"}) {
+
+
 
     const history = useHistory();
-    const claimables = useDashboardClaimableHooks(address);
+
+    const {
+        claimables,
+        address
+    } = useContext(DashboardContext)
 
     const query = useQuery({
         queryKey: ["whalespotter", "users", address],
@@ -39,7 +46,7 @@ export default function DashboardNavbar({address, selected = "profile"}) {
                     history.push(`/${address}/profile`)
                 }
             },
-            claimables.claimables.length > 0 && {
+            claimables.length > 0 && {
                 name: "Claimables",
                 selected: selected === "claimables",
                 onClick() {
@@ -69,7 +76,7 @@ export default function DashboardNavbar({address, selected = "profile"}) {
                 }
             }
         ].filter((item) => !!item);
-    }, [stats, claimables.claimables, address])
+    }, [stats, claimables, address])
 
     return (
         <Navbar items={items}/>

@@ -1,9 +1,7 @@
 import React, {useEffect} from 'react';
 import {useHistory, useParams} from "react-router-dom";
-import useDashboardHooks from "../DashboardView/hooks/dashboard-hooks";
 import ClaimableView from "./ClaimableView";
 import CustomHeader from "../../components/Header/CustomHeader";
-import {DashboardContext} from "../../App";
 
 export default function AddressClaimableView() {
 
@@ -19,19 +17,10 @@ export default function AddressClaimableView() {
         history.push(`/${address}/claimables`);
     };
 
-    const dashboardHooks = useDashboardHooks(address, {
-        supportsPooling: false,
-        supportsLending: false,
-        supportsStaking: false,
-        supportsClaimables: true,
-        supportsBalances: false,
-        supportsDebt: false
-    });
-
     return (
-        <DashboardContext.Provider value={dashboardHooks}>
+        <>
             <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
-            <ClaimableView />
-        </DashboardContext.Provider>
+            <ClaimableView address={address}/>
+        </>
     )
 };

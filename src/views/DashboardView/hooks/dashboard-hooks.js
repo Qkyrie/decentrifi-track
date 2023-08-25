@@ -10,13 +10,15 @@ import useDashboardLPHooks from "./useDashboardLPHooks";
 import useEns from "./useEns";
 
 export default function
-    useDashboardHooks(account, {
+    useDashboardHooks({
     supportsBalances = true,
     supportsDebt = true,
     supportsLending = true,
     supportsStaking = true,
     supportsPooling = true
 }) {
+
+    const [account, setAccount] = useState(null);
 
     const useDashboardFilter = useDashboardFilterHooks()
 
@@ -243,6 +245,7 @@ export default function
         searchAddress,
         setSearchAddress: setSearchAddress,
         address: account,
+        setAddress: setAccount,
         usedProtocols: getUniqueProtocols(),
         usedNetworks: getUniqueNetworks(),
         hasFinishedScanning: doneScanning === totalScanning,

@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import ClaimableDetails from "../DashboardView/partials/ClaimableDetails";
 
 import tw from 'twin.macro';
@@ -26,13 +26,17 @@ const Section = tw.div`grid w-full justify-items-center pt-2`
 const ClaimableSection = tw.div`py-4 lg:w-2/3 w-full px-4 mt-4`
 const FAQSection = tw.div`w-full px-4  bg-white`
 
-export default function ClaimableView() {
+export default function ClaimableView({address}) {
 
     const {
-        address,
+        setAddress,
         totalClaimables,
         claimableLoading
-    } = useContext(DashboardContext)
+    } = useContext(DashboardContext);
+
+    useEffect(() => {
+        setAddress(address)
+    }, [address]);
 
     const faqs = [
         {
