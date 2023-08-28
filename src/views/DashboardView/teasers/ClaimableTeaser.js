@@ -15,7 +15,7 @@ export default function ClaimableTeaser({amount, address}) {
         return <PrimaryBackgroundContainer>
             <Center>
                 <SectionHeading>You've got <DollarLabel amount={amount}/> in rewards.</SectionHeading>
-                <SubHeader>You've got unclaimed yields waiting for you, which you can claim them straight from this app!</SubHeader>
+                <SubHeader>You've got unclaimed yields waiting for you, which you can claim straight from this app!</SubHeader>
                 <PrimaryButton onClick={() => {
                     history.push(`/${address}/claimables`)
                 }

@@ -50,7 +50,7 @@ export default function useProtocolView() {
         if (poolingOpportunities.length > 0) {
             t.push({
                 id: 'Pooling',
-                selected: 'Pooling' == activeTab,
+                selected: 'Pooling' === activeTab,
                 name: `Pooling (${poolingOpportunities.length})`,
                 onClick: () => setActiveTab('Pooling')
             });
@@ -58,7 +58,7 @@ export default function useProtocolView() {
         if (lendingOpportunities.length > 0) {
             t.push({
                 id: `Lending`,
-                selected: 'Lending' == activeTab,
+                selected: 'Lending' === activeTab,
                 name: `Lending (${lendingOpportunities.length})`,
                 onClick: () => {
                     console.log('lending')
@@ -69,7 +69,7 @@ export default function useProtocolView() {
         if (farmingOpportunities.length > 0) {
             t.push({
                 id: 'Farming',
-                selected: 'Farming' == activeTab,
+                selected: 'Farming' === activeTab,
                 name: `Farming (${farmingOpportunities.length})`,
                 onClick: () => {
                     console.log('farming')

@@ -46,7 +46,7 @@ export default function ApprovalDetail({event, owner}) {
                 </Center>
             </SymbolColumn>
             <FromOrToColumn>spender:
-                <a target="_blank" href={`${event.network.baseUrl}/address/${event.metadata.spender.address}`}>
+                <a rel="noreferrer" target="_blank" href={`${event.network.baseUrl}/address/${event.metadata.spender.address}`}>
                      {event.metadata.spender.label || sliceAccount(event.metadata.spender.address)}
                 </a>
             </FromOrToColumn>

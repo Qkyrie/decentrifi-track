@@ -1,4 +1,3 @@
-import BigNumber from "bignumber.js";
 import React from "react";
 import FallbackImage from "../../../components/Image/FallbackImage";
 import tw from "twin.macro";

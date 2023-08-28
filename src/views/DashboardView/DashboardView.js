@@ -56,7 +56,7 @@ export default function DashboardView({address}) {
         <Container>
             <DashboardWrapper>
                 <Center>
-                    <DashboardNavbar selected={"profile"}/>
+                    <DashboardNavbar address={address} selected={"profile"}/>
                 </Center>
 
                 <DashboardHeader/>

@@ -1,41 +1,19 @@
 import Navbar from "./Navbar/Navbar";
-import React, {useContext, useMemo} from "react";
+import React, {useMemo} from "react";
 import {useHistory} from "react-router-dom";
 import tw from "twin.macro";
-import {useQuery} from "@tanstack/react-query";
-import {getAccount} from "../api/whalespotter/account/account";
-import useDashboardClaimableHooks from "../views/DashboardView/hooks/useDashboardClaimableHooks";
-import {DashboardContext} from "../App";
+import {useAddressStatistics} from "../views/DashboardView/hooks/useAddressStatistics";
 
 const NewLabel = tw.span`text-xs align-text-top font-thin text-teal-500`
 
-export default function DashboardNavbar({selected = "profile"}) {
-
-
+export default function DashboardNavbar({selected = "profile", address}) {
 
     const history = useHistory();
 
     const {
-        claimables,
-        address
-    } = useContext(DashboardContext)
+        stats
+    } = useAddressStatistics(address);
 
-    const query = useQuery({
-        queryKey: ["whalespotter", "users", address],
-        queryFn: async () => {
-            const response = getAccount(address)
-            return await response;
-        }
-    })
-
-    const stats = useMemo(() => {
-        return query.data || {
-            "address": address,
-            "allowanceCount": 0,
-            "transactionCount": 0,
-            "suggestionCount": 0
-        }
-    }, [query.data, address])
 
     let items = useMemo(() => {
         return [
@@ -46,7 +24,7 @@ export default function DashboardNavbar({selected = "profile"}) {
                     history.push(`/${address}/profile`)
                 }
             },
-            claimables.length > 0 && {
+            {
                 name: "Claimables",
                 selected: selected === "claimables",
                 onClick() {
@@ -76,7 +54,7 @@ export default function DashboardNavbar({selected = "profile"}) {
                 }
             }
         ].filter((item) => !!item);
-    }, [stats, claimables, address])
+    }, [stats, address])
 
     return (
         <Navbar items={items}/>

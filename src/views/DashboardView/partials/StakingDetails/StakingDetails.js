@@ -106,13 +106,6 @@ export default function StakingDetails({protocol}) {
                                 element.exitPositionSupported &&
                                 <ExitButton element={element}/>
                             }
-                            <Button onClick={
-                                () => {
-                                    history.push(`/staking/${element.network.name}/${element.protocol.slug}/${element.id}`)
-                                }
-                            }
-                                    variant={"contained"}
-                            >Details</Button>
                         </ActionContainer>
                     </>
                 )

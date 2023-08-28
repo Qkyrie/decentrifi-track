@@ -33,7 +33,7 @@ export default function ({transaction, events, owner}) {
             <ListContainer>
                 <TransactionDetails>
                     <TransactionColumn>
-                        <a target={"_blank"} href={`${transaction.network.baseUrl}/tx/${transaction.hash}`}>
+                        <a rel="noreferrer" target={"_blank"} href={`${transaction.network.baseUrl}/tx/${transaction.hash}`}>
                             <AccountLink>
 
                                 <NetworkLogo>

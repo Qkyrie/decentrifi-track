@@ -44,7 +44,7 @@ export default function HistoryView() {
                 <TransactionEntry transaction={entry} events={entry.events} owner={address}/>
             )
         })
-    }, [events]);
+    }, [events, address]);
 
     return <>
         <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>

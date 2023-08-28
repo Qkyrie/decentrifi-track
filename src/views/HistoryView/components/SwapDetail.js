@@ -1,6 +1,5 @@
 import BigNumber from "bignumber.js";
 import React from "react";
-import FallbackImage from "../../../components/Image/FallbackImage";
 import tw from "twin.macro";
 
 const Container = tw.div`w-full flex px-2`
@@ -11,7 +10,6 @@ const AmountColumn = tw.div`lg:w-1/3 w-1/2 flex flex-col items-start text-center
 const SymbolColumn = tw.div`w-1/2 lg:w-1/5 text-right grid  justify-items-center lg:justify-items-end`
 const Center = tw.div`flex flex-col`
 
-const AssetLogo = tw.div`w-5 h-5`
 const AssetText = tw.span`text-green-500 font-thin`
 const FromOrToColumn = tw.div`lg:w-1/3 w-1/2  lg:text-right font-mono`
 

@@ -7,8 +7,6 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import AddressDashboardView from "./views/DashboardView/AddressDashboardView";
 import TokenView from "../src/views/TokenView/TokenView";
-import StakingView from "../src/views/StakingView/StakingView";
-import PoolingView from "../src/views/PoolingView";
 import CustomHeader from "./components/Header/CustomHeader";
 import Web3DashboardView from "./views/DashboardView/Web3DashboardView.js";
 import FooterV2 from "./components/Footer/FooterV2";
@@ -40,10 +38,14 @@ export default function App() {
     const queryClient = new QueryClient()
     const web3 = useWeb3();
 
-    useEffect(async () => {
+    async function autoconnect() {
         if (web3.supported && !web3.active) {
             await web3.autoConnect();
         }
+    }
+
+    useEffect( () => {
+        autoconnect()
     }, []);
 
     return (
@@ -109,16 +111,6 @@ export default function App() {
                         <Route path="/tokens/:network/:token">
                             <CustomHeader/>
                             <TokenView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route path="/staking/:network/:protocol/:selectedStakingId">
-                            <CustomHeader/>
-                            <StakingView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route exact path="/pooling/:network/:protocol/:selectedPoolingMarketId">
-                            <CustomHeader/>
-                            <PoolingView/>
                             <FooterV2/>
                         </Route>
                         <Route>

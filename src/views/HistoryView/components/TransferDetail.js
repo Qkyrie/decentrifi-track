@@ -52,8 +52,8 @@ export default function TransferDetail({event, owner}) {
         return null;
     }
 
-    if(event.metadata.from.address.toLowerCase() != owner.toLowerCase() &&
-        event.metadata.to.address.toLowerCase() != owner.toLowerCase()
+    if(event.metadata.from.address.toLowerCase() !== owner.toLowerCase() &&
+        event.metadata.to.address.toLowerCase() !== owner.toLowerCase()
     ) {
         return null;
     }
@@ -72,7 +72,7 @@ export default function TransferDetail({event, owner}) {
                 </Center>
             </SymbolColumn>
             <FromOrToColumn>
-                <a target="_blank" href={`${event.network.baseUrl}/address/${fromOrTo.address}`}>{fromOrTo.label}: {fromOrTo.sliced}</a>
+                <a rel="noreferrer" target="_blank" href={`${event.network.baseUrl}/address/${fromOrTo.address}`}>{fromOrTo.label}: {fromOrTo.sliced}</a>
             </FromOrToColumn>
         </Container>
     );

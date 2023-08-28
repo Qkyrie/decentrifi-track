@@ -26,16 +26,6 @@ export default function TokenStats({token, userBalance, network}) {
 
     const userDollarBalance = userBalance * token.dollarValue
 
-    const tokenDescription = () => {
-        if (token !== null && token.type === 'SINGLE') {
-            return 'This is a normal ERC20 token that can be traded anywhere.'
-        } else {
-            const underlying = token?.underlyingTokens.map((u) => {
-                return u.symbol
-            }).join(', ')
-            return `This is a liquidity pool token, consisting of: ${underlying}`
-        }
-    }
 
 
     return (
@@ -45,7 +35,6 @@ export default function TokenStats({token, userBalance, network}) {
                     <TokenInfo>
                         <StatTitle>{token.symbol} on {network.toLowerCase()}</StatTitle>
                         <StatCenterText>{token.name}</StatCenterText>
-                        <StatDescription>{tokenDescription()}</StatDescription>
                     </TokenInfo>
                     <TokenLogo>
                         <StatLogo>

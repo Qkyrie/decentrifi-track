@@ -1,5 +1,5 @@
 import FallbackImage from "../../components/Image/FallbackImage";
-import React, {useEffect} from "react";
+import React from "react";
 import {useHistory} from "react-router-dom";
 import tw from "twin.macro";
 import styled from "styled-components";

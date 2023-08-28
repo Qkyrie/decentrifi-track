@@ -2,7 +2,6 @@ import React from "react";
 import CustomHeader from "../../components/Header/CustomHeader";
 import {useHistory, useParams} from "react-router-dom";
 import DashboardNavbar from "../../components/DashboardNavbar";
-import RequiresMembership from "../../components/RequiresMembership";
 import tw from "twin.macro";
 import useSuggestionHooks from "./hooks/useSuggestionHooks.js";
 import SuggestionTable from "./SuggestionTable";
@@ -34,16 +33,16 @@ export default function () {
                         <DashboardNavbar address={address} selected={"suggestions"}/>
                     </Center>
                 </DashboardWrapper>
-                    <SectionWithBackground>
-                        <TableContainer>
-                            <p>
-                                {isLoading && "Loading..."}
-                                {
-                                    !isLoading && <SuggestionTable suggestions={suggestions}/>
-                                }
-                            </p>
-                        </TableContainer>
-                    </SectionWithBackground>
+                <SectionWithBackground>
+                    <TableContainer>
+                        <p>
+                            {isLoading && "Loading..."}
+                            {
+                                !isLoading && <SuggestionTable suggestions={suggestions}/>
+                            }
+                        </p>
+                    </TableContainer>
+                </SectionWithBackground>
             </Container>
         </>
     );

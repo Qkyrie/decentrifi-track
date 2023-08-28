@@ -1,6 +1,6 @@
 import tw from "twin.macro";
 import CustomHeader from "../../components/Header/CustomHeader";
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import {useQuery} from "@tanstack/react-query";
 import {getStatisticsPerProtocol} from "../../api/defitrack/statistics/Statistics";
 import {ProtocolCard} from "./ProtocolCard";
@@ -18,9 +18,10 @@ const ProtocolsContainer = tw.div`flex lg:w-3/4 flex-wrap w-full`
 
 export default function () {
 
-    useEffect(async () => {
+    useEffect(() => {
         window.title = 'Decentrifi Connect | Explore DeFi Protocols and Accounts';
     }, []);
+
 
     async function fetchStatistics() {
         return await getStatisticsPerProtocol();
@@ -44,17 +45,13 @@ export default function () {
         }
     });
 
-    const protocols = protocolQuery.data?.sort(() => 0.5 - Math.random()).map((stat) => {
-        return (
-            <ProtocolCard stat={stat} key={stat.protocol.slug}/>
-        )
-    }).slice(0, 12)
-
-    const whales = whaleQuery.data?.content.map((whale) => {
-        return (
-            <WhaleCard whale={whale} />
-        )
-    });
+    const protocols = useMemo(() =>  {
+        return protocolQuery.data?.sort(() => 0.5 - Math.random()).map((stat) => {
+            return (
+                <ProtocolCard stat={stat} key={stat.protocol.slug}/>
+            )
+        }).slice(0, 12)
+    }, [protocolQuery.data])
 
     return <>
         <CustomHeader showSearch={false}></CustomHeader>
@@ -67,14 +64,6 @@ export default function () {
 
                 <ProtocolsContainer>
                     {protocols}
-                </ProtocolsContainer>
-            </Center>
-            <br/><br/>
-            <Center>
-                <Heading>Explore <Highlight>Accounts</Highlight></Heading>
-
-                <ProtocolsContainer>
-                    {whales}
                 </ProtocolsContainer>
             </Center>
         </Container>

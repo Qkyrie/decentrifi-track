@@ -11,11 +11,9 @@ export default function (address) {
         }
     })
 
-    useEffect(async () => {
+    useEffect(() => {
         document.title = `History for ${address} - Decentrifi`;
-    }, []);
-
-    console.log('events', eventsQuery.data);
+    }, [address]);
 
     return {
         loading: eventsQuery.isLoading,
