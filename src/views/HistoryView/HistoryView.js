@@ -41,7 +41,7 @@ export default function HistoryView() {
     const entries = useMemo(() => {
         return events?.map((entry) => {
             return (
-                <TransactionEntry transaction={entry} events={entry.events} owner={address}/>
+                <TransactionEntry key={entry.hash} transaction={entry} events={entry.events} owner={address}/>
             )
         })
     }, [events, address]);

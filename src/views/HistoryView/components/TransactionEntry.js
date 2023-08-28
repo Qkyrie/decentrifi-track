@@ -19,8 +19,8 @@ const HashLabel = tw.div`bg-gray-300 mx-2 px-2 py-1 rounded flex items-center fo
 const LinkIcon = tw.div`bg-white p-1 mx-1 rounded-lg`
 
 export default function ({transaction, events, owner}) {
-    const eventItems = events.map((event) => {
-        return <HistoryDetail event={event} owner={owner}/>
+    const eventItems = events.map((event, i) => {
+        return <HistoryDetail key={i} event={event} owner={owner}/>
     });
 
     const sliceAccount = function (address) {

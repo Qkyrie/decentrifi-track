@@ -11,11 +11,11 @@ const historyDetailMapper = new HistoryDetailMapper();
 export default function HistoryDetail({event, owner}) {
 
 
-    const result = useMemo(() => {
+    const details = useMemo(() => {
         return historyDetailMapper.map(event, owner)
     }, [event, owner])
 
-    if (result == null) {
+    if (details == null) {
         return <></>
     }
 
@@ -23,7 +23,7 @@ export default function HistoryDetail({event, owner}) {
         <Wrapper>
             <Container>
                 {
-                    result
+                    details
                 }
             </Container>
         </Wrapper>

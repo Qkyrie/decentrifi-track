@@ -8,7 +8,8 @@ export default function (address) {
         queryKey: ['account', address, 'events'],
         queryFn: async () => {
             return getEvents(address)
-        }
+        },
+        staleTime: 1000 * 60 * 3,
     })
 
     useEffect(() => {

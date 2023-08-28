@@ -5,9 +5,6 @@ import {useQuery} from "@tanstack/react-query";
 import {getStatisticsPerProtocol} from "../../api/defitrack/statistics/Statistics";
 import {ProtocolCard} from "./ProtocolCard";
 import ExploreSearchTeaser from "./components/ExploreSearchTeaser";
-import {getWhales} from "../../api/whalespotter/whale/whales";
-import {WhaleCard} from "./WhaleCard";
-
 
 const Container = tw.div`flex grid w-full`
 const Center = tw.div`flex grid justify-items-center mb-1`
@@ -27,23 +24,12 @@ export default function () {
         return await getStatisticsPerProtocol();
     }
 
-    async function fetchWhales() {
-        return await getWhales();
-    }
-
     const protocolQuery = useQuery({
         queryKey: ["protocol-stats"],
         queryFn: async () => {
             return await fetchStatistics();
         }
     })
-
-    const whaleQuery = useQuery({
-        queryKey: ["whales"],
-        queryFn: async () => {
-            return await fetchWhales();
-        }
-    });
 
     const protocols = useMemo(() =>  {
         return protocolQuery.data?.sort(() => 0.5 - Math.random()).map((stat) => {

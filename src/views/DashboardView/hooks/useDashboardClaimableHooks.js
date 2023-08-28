@@ -8,7 +8,6 @@ export default function useDashboardClaimableHooks(account) {
     const {protocols} = useProtocols();
 
     async function getClaimables(protocol) {
-        console.log('fetching from endpoint')
         return (await fetchClaimables(account, protocol)).map(claimable => {
             return {
                 ...claimable,
@@ -29,8 +28,9 @@ export default function useDashboardClaimableHooks(account) {
                 queryKey: ['claimables', account, protocol],
                 staleTime: 1000 * 60 * 3,
                 queryFn: query(protocol),
+                enabled: !!account
             }
-        })
+        }),
     });
 
 

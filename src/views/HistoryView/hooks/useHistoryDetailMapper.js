@@ -2,6 +2,7 @@ import TransferDetail from "../components/TransferDetail";
 import ApprovalDetail from "../components/ApprovalDetail";
 import AddLiquidityDetail from "../components/AddLiquidityDetail";
 import SwapDetail from "../components/SwapDetail";
+import GetRewardDetail from "../components/GetRewardDetail";
 
 export class HistoryDetailMapper {
 
@@ -14,8 +15,10 @@ export class HistoryDetailMapper {
             return AddLiquidityDetail({event, owner});
         } else if(event.type === "SWAP") {
             return SwapDetail({event, owner})
+        } else if(event.type === "GET_REWARD") {
+            return GetRewardDetail({event, owner})
         } else {
-            console.log(event.type);
+            console.log('unknown type', event.type);
             return null
         }
     }
