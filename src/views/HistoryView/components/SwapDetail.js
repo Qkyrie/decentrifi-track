@@ -11,7 +11,7 @@ const SymbolColumn = tw.div`w-1/2 lg:w-1/5 text-right grid  justify-items-center
 const Center = tw.div`flex flex-col`
 
 const AssetText = tw.span`text-green-500 font-thin`
-const FromOrToColumn = tw.div`lg:w-1/3 w-1/2  lg:text-right font-mono`
+const FromOrToColumn = tw.div`lg:w-1/3 w-1/2  lg:text-right font-mono text-xs font-thin`
 
 export default function SwapDetail({event, owner}) {
     console.log(event);
