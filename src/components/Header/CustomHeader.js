@@ -35,12 +35,6 @@ const RightColumn = tw.div`w-full sm:w-5/6 lg:w-1/2 mt-16 lg:mt-0 lg:pl-8`;
 
 const SearchHolder = tw.div`flex justify-between items-center flex-col lg:flex-row`;
 
-const SearchContainer = tw.div`flex w-full border-2 focus-within:border-2 focus-within:border-blue-400 border-purple-200 relative max-w-screen-xl text-gray-600 mb-4`;
-const SearchInput = tw.input`bg-transparent  w-11/12 h-10 px-5 text-sm focus:outline-none`
-const Caret = tw.div`flex items-center align-middle w-1/12`
-const OrText = tw.div`text-white my-4 text-xl text-center lg:text-left font-black text-gray-100 leading-none`
-const SearchTeaser = tw.div`w-full`
-
 const Heading = styled.h1`
   ${tw`text-3xl text-center lg:text-left sm:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-100 leading-none`}
   span {
@@ -128,24 +122,15 @@ export default function CustomHeader({onAddressChange, expanded = false, showUse
         <NavLinks key={1}>
             <NavLink onClick={e => {
                 history.push('/explore');
-            }}>
-                Explore
-            </NavLink>
+            }}>Explore</NavLink>
+            <NavLink onClick={e => {
+                history.push('/claimables');
+            }}>Claimables</NavLink>
             <NavLink onClick={e => {
                 history.push('/dashboard');
-            }}>
-                Decentrifi Connect
-            </NavLink>
-            <NavLink onClick={e => {
-                history.push('/protocols');
-            }}>
-                Protocols
-            </NavLink>
+            }}>Positions</NavLink>
             <NavLink target="_blank" href="https://docs.decentri.fi">
                 API
-            </NavLink>
-            <NavLink target="_blank" href="https://learn.decentri.fi">
-                Learn
             </NavLink>
         </NavLinks>,
     ];

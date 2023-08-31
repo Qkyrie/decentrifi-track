@@ -56,7 +56,13 @@ export default () => {
                                 <Link href="https://docs.decentri.fi">Documentation</Link>
                             </LinkListItem>
                             <LinkListItem>
-                                <Link href="https://decentri.fi/dashboard">Insights</Link>
+                                <Link href="https://track.decentri.fi/dashboard">Insights</Link>
+                            </LinkListItem>
+                            <LinkListItem>
+                                <Link href="https://track.decentri.fi/explore">Explore</Link>
+                            </LinkListItem>
+                            <LinkListItem>
+                                <Link href="https://track.decentri.fi/claimables">Claimables</Link>
                             </LinkListItem>
                             <LinkListItem>
                                 <Link href="https://docs.decentri.fi/general/supported-protocols">Roadmap</Link>
