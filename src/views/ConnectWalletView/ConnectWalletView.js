@@ -5,7 +5,7 @@ import React from "react";
 import tw from "twin.macro";
 import useWeb3 from "../../hooks/web3";
 
-const Container = tw.div`px-2 flex pt-8 lg:pt-24 bg-defaultBackground`
+const Container = tw.div`px-2 flex pt-8 lg:pt-24 bg-primary-100`
 const Center = tw.div`w-full grid justify-items-center`;
 
 

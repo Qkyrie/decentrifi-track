@@ -9,7 +9,7 @@ import FoxWithWalletPic from "../../images/fox-with-wallet.png";
 import 'reactjs-popup/dist/index.css';
 import useConnectWalletPopup from "../ConnectWalletPopup/UseConnectWalletPopup";
 
-const Container = tw.div`w-full grid justify-items-center`;
+const Container = tw.div`w-full grid justify-items-center bg-primary-100`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-8 pb-12  md:py-24`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
 const ImageColumn = tw(Column)`hidden lg:block md:w-5/12 flex-shrink-0 h-80 md:h-auto relative`;
@@ -28,7 +28,7 @@ const Subheading = tw(SubheadingBase)`text-center md:text-left`;
 const Heading = tw(
     SectionHeading
 )`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
-const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`;
+const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-white`;
 const PrimaryButton = tw(PrimaryButtonBase)`mt-8 md:mt-10 text-sm inline-block mx-auto md:mx-0`;
 
 const DecoratorBlob = styled(SvgDotPattern)(props => [

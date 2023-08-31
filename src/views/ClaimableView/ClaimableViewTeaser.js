@@ -13,7 +13,12 @@ import {SectionHeading, Subheading as SubheadingBase} from "../../components/mis
 import {SectionDescription} from "../../components/misc/Typography";
 import FAQ from "../../components/faqs/SingleCol";
 
-const Container = tw.div`px-2 flex pt-8 lg:pt-24 bg-defaultBackground`
+import TeaserImageLocation from "images/landing/claimable-teaser.png";
+
+const Container = tw.div`px-2 flex flex-col pt-8 lg:pt-24 bg-defaultBackground`
+const AlternativeContainer = tw(Container)`bg-primary-100 text-white`
+
+
 const Center = tw.div`w-full grid justify-items-center`;
 
 const Section = tw.div`grid w-full justify-items-center pt-2`
@@ -24,6 +29,9 @@ const Heading = tw(SectionHeading)`w-full`;
 const Description = tw(SectionDescription)`w-full text-center mb-4`;
 
 const FAQSection = tw.div`w-full px-4  bg-white`
+
+
+const TeaserImage = tw.img`w-full lg:w-1/2 -mb-24`
 
 const faqs = [
     {
@@ -73,7 +81,20 @@ export default function ClaimableViewTeaser() {
                         outstanding <HighlightedText>rewards.</HighlightedText></Heading>
                     <Description></Description>
                 </Section>
+                <Section>
+                    <TeaserImage src={TeaserImageLocation} alt="Claimable Teaser" tw="w-full lg:w-1/2" />
+                </Section>
             </Container>
+            <AlternativeContainer>
+                <Center>
+                    {
+                        web3.supported && <ConnectWalletSection/>
+                    }
+                    {
+                        !web3.supported && <NoWeb3Browser/>
+                    }
+                </Center>
+            </AlternativeContainer>
             <Container>
                 <FAQSection>
                     <FAQ
@@ -83,16 +104,6 @@ export default function ClaimableViewTeaser() {
                         heading={<>Any <HighlightedText>Questions ?</HighlightedText></>}
                     />
                 </FAQSection>
-            </Container>
-            <Container>
-                <Center>
-                    {
-                        web3.supported && <ConnectWalletSection/>
-                    }
-                    {
-                        !web3.supported && <NoWeb3Browser/>
-                    }
-                </Center>
             </Container>
         </>
     }
