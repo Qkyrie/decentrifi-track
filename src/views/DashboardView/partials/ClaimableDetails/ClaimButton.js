@@ -14,7 +14,7 @@ export default function ClaimButton({refreshClaimables, claimable}) {
 
     async function requestNetworkChange(event) {
         event.stopPropagation();
-        const result = await transactions.validateChainId(claimable.network.chainId)
+        await transactions.validateChainId(claimable.network.chainId)
     }
 
     async function claim(event) {

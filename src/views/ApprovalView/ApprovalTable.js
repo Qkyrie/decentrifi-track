@@ -26,17 +26,11 @@ const Image = tw.div`h-5 w-5 `
 
 const TwoColumns = tw.div`grid grid-cols-2`
 
-const ThinGreen = tw.span`text-green-500 font-thin`
+const ThinGreen = tw.span`text-green-500 text-sm font-thin`
 
 const TotalColumn = tw.div`text-sm text-left text-gray-600 w-1/3 lg:w-1/3 justify-items-end grid`
 const PullRight = tw.div`flex items-center justify-items-end`
 const BoldRed = tw.span`font-bold text-sm text-red-500`
-const Hidden = tw.span`hidden lg:block`
-
-const ActionButton = tw.div`ml-4`
-
-const PaginationSection = tw.div`mt-4 flex flex-row justify-center w-full`
-const Center = tw.div`flex`
 
 function DummyRow() {
     return (
@@ -89,8 +83,8 @@ function DummyList() {
 
 export function ApprovalTable({isLoading, allowances}) {
 
-    const {handleErrorResult} = useTransactions();
-    const {revoke} = useApprovals();
+    let {isOnCorrectChain} = useTransactions();
+
 
     if (isLoading) {
         return <DummyList/>
@@ -106,28 +100,9 @@ export function ApprovalTable({isLoading, allowances}) {
                 }
             }
 
-            const doRevoke = async (event) => {
-                event.stopPropagation();
-                try {
-                    toast("Signing transaction to claim tokens.")
-                    const result = await revoke(allowance);
-                    toast.dismiss();
-                    if (result !== undefined) {
-                        await toast.promise(
-                            result.wait(),
-                            {
-                                pending: "Transaction submitted, awaiting confirmation.",
-                                success: "Your approvals are succesfully revoked.",
-                            }
-                        )
-                    }
-                } catch (err) {
-                    toast.dismiss();
-                    handleErrorResult(err).then(() => {
-                    })
-                }
-            }
 
+            let correctChain = isOnCorrectChain(allowance.network.chainId);
+            console.log(correctChain)
             return (
                 <ListItem>
                     <Row>
@@ -154,10 +129,15 @@ export function ApprovalTable({isLoading, allowances}) {
                         </AmountColumn>
                         <TotalColumn>
                             <PullRight>
-                                <BoldRed>
-                                    <ToastContainer closeOnClick={false} theme={'light'}/>
-                                    <span onClick={doRevoke}>revoke</span>
-                                </BoldRed>
+                                <ToastContainer closeOnClick={false} theme={'light'}/>
+                                {
+                                    correctChain &&
+                                    <RevokeButton allowance={allowance}/>
+                                }
+                                {
+                                    !correctChain &&
+                                    <ChangeNetworkButton allowance={allowance}/>
+                                }
                             </PullRight>
                         </TotalColumn>
                     </Row>
@@ -214,3 +194,47 @@ const normalized = function (sign, amount, decimals = 18) {
         }
     }
 };
+
+function RevokeButton({allowance}) {
+
+    const {handleErrorResult} = useTransactions();
+    const {revoke} = useApprovals();
+
+    const doRevoke = async (event) => {
+        event.stopPropagation();
+        try {
+            toast("Signing transaction to claim tokens.")
+            const result = await revoke(allowance);
+            toast.dismiss();
+            if (result !== undefined) {
+                await toast.promise(
+                    result.wait(),
+                    {
+                        pending: "Transaction submitted, awaiting confirmation.",
+                        success: "Your approvals are succesfully revoked.",
+                    }
+                )
+            }
+        } catch (err) {
+            toast.dismiss();
+            handleErrorResult(err).then(() => {
+            })
+        }
+    }
+
+
+    return <BoldRed onClick={doRevoke}>revoke</BoldRed>;
+}
+
+function ChangeNetworkButton({allowance}) {
+    const {validateChainId} = useTransactions();
+
+    async function changeNetwork() {
+        console.log('changing network');
+        await validateChainId(allowance.network.chainId)
+    }
+
+    return <>
+        <ThinGreen onClick={changeNetwork}>change network</ThinGreen>
+    </>
+}
