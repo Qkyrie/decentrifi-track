@@ -1,5 +1,9 @@
-import {hooks as metamaskHooks, metaMask} from "./metamask";
+import {hooks as metamaskHooks, metaMask} from "./connectors/metamask";
+import {hooks as walletConnectHooks, walletConnectV2} from "./connectors/walletconnect";
 import {useWeb3React} from '@web3-react/core'
+import {useEffect} from "react";
+import {MetaMask} from "@web3-react/metamask";
+import {getByChainId} from "../chains/chains";
 
 export default function useWeb3() {
 
@@ -7,49 +11,80 @@ export default function useWeb3() {
 
     const web3React = useWeb3React();
 
+    const {
+        useIsActive: mmIsActive
+    } = metamaskHooks;
+
+    const {
+        useIsActive: wcIsActive
+    } = walletConnectHooks;
+
+    const metamaskIsActive = mmIsActive();
+    const walletConnectIsActive = wcIsActive();
+
+    useEffect(() => {
+        console.log('metamask active: ', metamaskIsActive);
+        console.log('walletconnect active: ', walletConnectIsActive);
+    }, [metamaskIsActive]);
+
+    function getActiveHook() {
+        if (metamaskIsActive) {
+            return metamaskHooks
+        } else {
+            return walletConnectHooks
+        }
+    }
+
     const supported = function () {
         return window.ethereum !== undefined
     };
 
-    const connect = async () => {
+    async function connectWalletConnect() {
+        await walletConnectV2.connectEagerly().catch(() => {
+            console.debug('Failed to connect eagerly to metamask')
+        })
+    }
+
+    async function browserConnect() {
+        //  console.log('connecting eagerly');
         await metaMask.connectEagerly().catch(() => {
             console.debug('Failed to connect eagerly to metamask')
         })
     }
 
+    const walletConnectLogin = async () => {
+        try {
+            await walletConnectV2.activate();
+        } catch (ex) {
+            console.error(ex)
+        }
+    }
+
     const metamaskLogin = async () => {
         try {
-            if (window.ethereum.isMetaMask) {
-                await ethereum.request({
-                    method: 'eth_requestAccounts',
-                })
-                await metaMask.connectEagerly().catch(() => {
-                    console.debug('Failed to connect eagerly to metamask')
-                })
-            }
+            await metaMask.activate()
         } catch (ex) {
             console.error(ex)
         }
     };
 
     async function changeNetwork(networkId) {
-        await metaMask.activate(networkId)
-    /*    await ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{chainId: "0x" + networkId.toString(16)}], // chainId must be in hexadecimal numbers
-        }) */
+        console.log('changing network');
+        const chainConfig = getByChainId(networkId);
+        console.log(chainConfig);
+        await metaMask.activate(chainConfig)
     }
 
     return {
         changeNetwork: changeNetwork,
         ethereum: ethereum,
         metamaskLogin,
-        autoConnect: connect,
-        hasAccount: metamaskHooks.useAccount()?.length > 0,
-        active: metamaskHooks.useIsActive(),
+        walletConnectLogin,
+        autoConnect: browserConnect,
+        hasAccount: getActiveHook().useAccount()?.length > 0,
+        active: getActiveHook().useIsActive(),
         supported: supported(),
         web3React: web3React,
-        provider: metaMask.provider,
-        account: metamaskHooks.useAccount(),
+        account: getActiveHook().useAccount(),
     }
 };

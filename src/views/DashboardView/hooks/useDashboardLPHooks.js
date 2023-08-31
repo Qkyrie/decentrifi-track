@@ -3,7 +3,7 @@ import useProtocols from "./useProtocols";
 import {useQuery} from "@tanstack/react-query";
 
 export default function useDashboardLPHooks(account, supportsPooling, {addToTotalScanning, incrementProgress}) {
-    const {deprecatedProtocols: deprecatedProtocols, protocols} = useProtocols();
+    const {protocols} = useProtocols();
 
     const poolingQuery = useQuery({
         queryKey: ['pooling', account],

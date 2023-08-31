@@ -13,7 +13,7 @@ import FooterV2 from "./components/Footer/FooterV2";
 import ReactGA from "react-ga4";
 import ProtocolsView from "./views/ProtocolsView/ProtocolsView";
 import ProtocolView from "./views/ProtocolsView/ProtocolView";
-import Web3ClaimableView from "./views/ClaimableView/Web3ClaimableView";
+import ClaimableViewTeaser from "./views/ClaimableView/ClaimableViewTeaser";
 import AddressClaimableView from "./views/ClaimableView/AddressClaimableView";
 import useWeb3 from "./hooks/web3";
 import HistoryView from "./views/HistoryView/HistoryView";
@@ -71,7 +71,7 @@ export default function App() {
                             <MembershipView/>
                         </Route>
                         <Route path="/claimables">
-                            <Web3ClaimableView/>
+                            <ClaimableViewTeaser/>
                             <FooterV2/>
                         </Route>
                         <Route exact path="/protocols">
