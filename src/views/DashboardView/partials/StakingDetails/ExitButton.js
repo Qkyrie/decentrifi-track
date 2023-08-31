@@ -49,7 +49,7 @@ export function ExitButton({element}) {
             <ButtonContent>
                 {state === 'pending' &&
                     <span>
-                        <img src={spinner}/>
+                        <img alt="spinner" src={spinner}/>
                     </span>
                 }
                 <span>Exit Position</span>

@@ -6,9 +6,7 @@ import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 import {DashboardContext} from "../../../../App";
 import {ExitButton} from "./ExitButton";
-import {Button} from "@mui/material";
 import styled from "styled-components";
-import {useHistory} from "react-router-dom";
 
 const Header = tw.div`w-full flex items-center mb-2`
 const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
@@ -29,8 +27,6 @@ const ActionContainer = styled.div`
 const DataContainer = tw.div`w-full px-4`
 
 export default function StakingDetails({protocol}) {
-
-    const history = useHistory();
 
     const [open, setOpen] = useState(false);
     const [popupData, setPopupData] = useState(<></>);
@@ -133,7 +129,7 @@ export default function StakingDetails({protocol}) {
             <Popup modal open={open} onClose={closeModal}>
                 <CloseContainer>
                     <CloseIcon>
-                        <a className="close" onClick={closeModal}>
+                        <a href="#" className="close" onClick={closeModal}>
                             &times;
                         </a>
                     </CloseIcon>

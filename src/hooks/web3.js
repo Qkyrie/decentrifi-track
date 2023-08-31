@@ -1,6 +1,5 @@
 import {hooks as metamaskHooks, metaMask} from "./metamask";
 import {useWeb3React} from '@web3-react/core'
-import {Web3Provider} from '@ethersproject/providers'
 
 export default function useWeb3() {
 
@@ -33,24 +32,12 @@ export default function useWeb3() {
         }
     };
 
-
-    function decimalToHex(d, padding) {
-        let hex = Number(d).toString(16);
-        padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
-
-        while (hex.length < padding) {
-            hex = "0" + hex;
-        }
-
-        return hex;
-    }
-
-
     async function changeNetwork(networkId) {
-        await ethereum.request({
+        await metaMask.activate(networkId)
+    /*    await ethereum.request({
             method: 'wallet_switchEthereumChain',
             params: [{chainId: "0x" + networkId.toString(16)}], // chainId must be in hexadecimal numbers
-        })
+        }) */
     }
 
     return {

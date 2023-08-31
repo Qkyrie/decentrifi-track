@@ -11,5 +11,8 @@ function getContract(address, abi, web3, account) {
 }
 
 export function getSigner(provider, account) {
-    return provider.getSigner(account).connectUnchecked()
+    console.log('getting signer')
+    let jsonRpcSigner = provider.getSigner(account).connectUnchecked();
+    console.log('got signer')
+    return jsonRpcSigner
 }

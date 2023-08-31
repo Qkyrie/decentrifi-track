@@ -2,6 +2,7 @@ import {withContract} from "../withContract";
 import ERC20 from "../../constants/abis/erc20/ERC20.json"
 import {MaxUint256} from "@ethersproject/constants";
 import {useTransactions} from "../useTransactions";
+import {Web3Provider} from "@ethersproject/providers";
 
 
 export const useERC20 = (web3) => {
@@ -21,8 +22,7 @@ export const useERC20 = (web3) => {
         return await contract.allowance(userAddress, spender);
     }
 
-    const approve = async (erc20, spender, amount, chainId) => {
-        await transaction.validateChainId(chainId);
+    const approve = async (erc20, spender, amount) => {
         const contract = withContract(erc20, ERC20, web3)
         return await contract.approve(spender, amount)
     }

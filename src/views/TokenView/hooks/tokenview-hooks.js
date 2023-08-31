@@ -95,12 +95,6 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
 
     const [activeTab, setActiveTab] = useState('Pooling');
 
-
-    function updateActiveTab(tabName) {
-        const t = tabs.find((tab) => tab.id === tabName);
-        setActiveTab(t.id)
-    }
-
     const farmingOpportunitiesQuery = useQuery({
         queryKey: ['tokens', networkName, tokenAddress, 'farming-markets'],
         queryFn: async () => {
@@ -122,6 +116,11 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
 
 
     const tabs = useMemo(() => {
+        function updateActiveTab(tabName) {
+            const t = tabs.find((tab) => tab.id === tabName);
+            setActiveTab(t.id)
+        }
+
         let t = [];
         if ((poolingOpportunitiesQuery.data || []).length > 0) {
             t.push({
@@ -155,12 +154,6 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
         farmingOpportunitiesQuery.data,
         lendingOpportunitiesQuery.data,
         poolingOpportunitiesQuery.data,
-        poolingOpportunitiesQuery.isLoading,
-        lendingOpportunitiesQuery.isLoading,
-        farmingOpportunitiesQuery.isLoading,
-        poolingOpportunitiesQuery.error,
-        lendingOpportunitiesQuery.error,
-        farmingOpportunitiesQuery.error,
     ]);
 
     return {

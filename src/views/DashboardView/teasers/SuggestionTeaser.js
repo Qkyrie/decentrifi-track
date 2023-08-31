@@ -2,7 +2,7 @@ import React from "react";
 
 import {useHistory} from "react-router-dom";
 import {SectionHeading, Subheading} from "../../../components/misc/Headings";
-import {PrimaryButton, SuccessButton} from "../../../components/misc/Buttons";
+import {SuccessButton} from "../../../components/misc/Buttons";
 import tw from "twin.macro";
 
 const Center = tw.div`grid justify-items-center py-5`

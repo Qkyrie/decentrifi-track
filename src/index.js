@@ -13,7 +13,7 @@ const connectors = [
 ]
 
 ReactDOM.render(
-    <Web3ReactProvider connectors={connectors}>
+    <Web3ReactProvider lookupENS={false} connectors={connectors}>
         <App/>
     </Web3ReactProvider>,
 

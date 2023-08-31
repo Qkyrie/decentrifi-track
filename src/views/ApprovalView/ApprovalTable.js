@@ -2,24 +2,28 @@ import React from 'react';
 import tw from "twin.macro";
 import PlaceholderLoading from "react-placeholder-loading";
 import FallbackImage from "../../components/Image/FallbackImage";
+import BigNumber from "bignumber.js";
+import {toast, ToastContainer} from "react-toastify";
+import {useTransactions} from "../../hooks/useTransactions";
+import {useApprovals} from "./hooks/useApprovals";
 
-
-const Container = tw.div`w-full my-4`
 
 const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-center bg-white`
 const List = tw.ul`flex flex-col w-full`
 
 const ListItem = tw.li`flex flex-row`
 const Row = tw.div`px-4 select-none cursor-pointer flex flex-1 items-center py-2 border-b hover:bg-indigo-100`
+
 const IconColumn = tw.div`flex flex-col w-1/12 justify-center items-center mr-4 lg:block`;
+const NameColumn = tw.div`pl-1 lg:w-2/6 w-3/4  font-mono font-medium text-indigo-600 text-xs`
+const TokenColumn = tw.div`pl-1 lg:w-1/3 w-3/4 font-mono font-medium text-indigo-600 text-xs`
+const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 lg:w-1/3 w-0`
+
+
 const IconBlock = tw.div`block relative`
 const FallbackImageContainer = tw.div`flex flex-nowrap`
 const Image = tw.div`h-5 w-5 `
-const OverlayImage = tw.div`lg:h-4 lg:w-4 h-2 w-2 -mx-2 `
 
-const NameColumn = tw.div`pl-1 lg:w-1/6 w-3/4 flex-1 font-mono font-medium text-indigo-600 text-xs`
-const TokenColumn = tw.div`pl-1 lg:w-1/6 w-3/4 flex-1 font-mono font-medium text-indigo-600 text-xs`
-const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 lg:w-1/3 w-0`
 const TwoColumns = tw.div`grid grid-cols-2`
 
 const ThinGreen = tw.span`text-green-500 font-thin`
@@ -83,7 +87,11 @@ function DummyList() {
 }
 
 
-export function ApprovalTable({isLoading, allowances, revoke}) {
+export function ApprovalTable({isLoading, allowances}) {
+
+    const {handleErrorResult} = useTransactions();
+    const {revoke} = useApprovals();
+
     if (isLoading) {
         return <DummyList/>
     } else {
@@ -98,8 +106,26 @@ export function ApprovalTable({isLoading, allowances, revoke}) {
                 }
             }
 
-            const doRevoke = async () => {
-                await revoke(allowance)
+            const doRevoke = async (event) => {
+                event.stopPropagation();
+                try {
+                    toast("Signing transaction to claim tokens.")
+                    const result = await revoke(allowance);
+                    toast.dismiss();
+                    if (result !== undefined) {
+                        await toast.promise(
+                            result.wait(),
+                            {
+                                pending: "Transaction submitted, awaiting confirmation.",
+                                success: "Your approvals are succesfully revoked.",
+                            }
+                        )
+                    }
+                } catch (err) {
+                    toast.dismiss();
+                    handleErrorResult(err).then(() => {
+                    })
+                }
             }
 
             return (
@@ -124,11 +150,12 @@ export function ApprovalTable({isLoading, allowances, revoke}) {
                             {allowance.token.name}
                         </TokenColumn>
                         <AmountColumn>
-                            {allowance.amount}
+                            {normalized('+', allowance.amount, allowance.token.decimals)}
                         </AmountColumn>
                         <TotalColumn>
                             <PullRight>
                                 <BoldRed>
+                                    <ToastContainer closeOnClick={false} theme={'light'}/>
                                     <span onClick={doRevoke}>revoke</span>
                                 </BoldRed>
                             </PullRight>
@@ -168,4 +195,22 @@ export function ApprovalTable({isLoading, allowances, revoke}) {
 
 const sliceAccount = function (address) {
     return `${address.slice(0, 6)}...${address.slice(-6, address.length)}`;
+};
+
+const normalized = function (sign, amount, decimals = 18) {
+    if (amount == null) {
+        return "0.00"
+    } else {
+        const result = new BigNumber(amount).dividedBy(
+            new BigNumber(10).exponentiatedBy(decimals)
+        )
+        if (new BigNumber(100000000000000000000000000000000000).isLessThan(result)) {
+            return 'everything'
+        }
+        if (new BigNumber(0).isLessThan(result)) {
+            return `~ ${sign}${result.toFixed(6, 0)}`;
+        } else {
+            return <>&nbsp;&nbsp;&nbsp;0.00</>;
+        }
+    }
 };

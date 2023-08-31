@@ -2,26 +2,20 @@ import {useQuery} from "@tanstack/react-query";
 import {getApprovals} from "../../../api/whalespotter/approvals/Approvals";
 import {useERC20} from "../../../hooks/erc20/useERC20";
 import useWeb3 from "../../../hooks/web3";
+import {useTransactions} from "../../../hooks/useTransactions";
 
 export function useApprovalHooks(address) {
-
-    const web3 = useWeb3();
-    const erc20 = useERC20(web3);
-
-    const revoke = async (allowance) => {
-        await erc20.approve(allowance.token.address, allowance.spender.address, 0, allowance.network.chainId)
-    }
 
     const approvalQuery = useQuery({
         queryKey: ['account', address, 'allowance'],
         queryFn: async () => {
             return await getApprovals(address)
-        }
+        },
+        enabled: !!address
     })
 
     return {
         allowances: approvalQuery.data || [],
         isLoading: approvalQuery.isLoading,
-        revoke
     }
 }
