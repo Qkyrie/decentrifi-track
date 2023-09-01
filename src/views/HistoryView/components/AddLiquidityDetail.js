@@ -2,7 +2,7 @@ import React from "react";
 import FallbackImage from "../../../components/Image/FallbackImage";
 import tw from "twin.macro";
 
-const Container = tw.div`w-full flex flex-col lg:flex-row px-2`
+const Container = tw.div`w-full flex flex-col lg:flex-row px-2 py-2`
 const TypeColumn = tw.div`lg:w-1/6 w-full text-center`
 const TypeLabel = tw.span`px-3 py-1 font-medium  rounded bg-blue-200 mx-4 my-3`
 
@@ -14,12 +14,20 @@ const AssetLogo = tw.div`w-5 h-5`
 const AssetText = tw.span`text-green-500 font-thin`
 const FromOrToColumn = tw.div`lg:w-1/3 w-1/2  lg:text-right font-mono text-xs`
 
-export default function AddLiquidityDetail({event, owner}) {
+export default function AddLiquidityDetail({event, owner, index}) {
     const amounts = event.metadata.deposits.map(deposit =>  {
         return <div>
             ~ +{deposit.amount}
         </div>
     });
+
+    const TheContainer = (() => {
+        if (index % 2 === 0) {
+            return tw(Container)`bg-white`
+        } else {
+            return tw(Container)`bg-gray-100`
+        }
+    })();
 
     const symbols = event.metadata.deposits.map(deposit =>  {
         return <>
@@ -32,7 +40,7 @@ export default function AddLiquidityDetail({event, owner}) {
     });
 
     return (
-        <Container>
+        <TheContainer>
             <TypeColumn>
                 <TypeLabel>add liquidity</TypeLabel>
             </TypeColumn>
@@ -46,6 +54,6 @@ export default function AddLiquidityDetail({event, owner}) {
             </SymbolColumn>
             <FromOrToColumn>
             </FromOrToColumn>
-        </Container>
+        </TheContainer>
     );
 }

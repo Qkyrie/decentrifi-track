@@ -75,7 +75,7 @@ export default function ClaimableViewTeaser() {
             <Container>
                 <Section>
                     <Subheading>defi rewards might be waiting for you</Subheading>
-                    <Heading>You might have got <HighlightedText><DollarLabel amount={
+                    <Heading>You might have <HighlightedText><DollarLabel amount={
                         420.69
                     }/></HighlightedText> of
                         outstanding <HighlightedText>rewards.</HighlightedText></Heading>

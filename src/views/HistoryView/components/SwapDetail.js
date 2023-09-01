@@ -1,44 +1,61 @@
 import BigNumber from "bignumber.js";
 import React from "react";
 import tw from "twin.macro";
+import FallbackImage from "../../../components/Image/FallbackImage";
 
-const Container = tw.div`w-full flex px-2`
-const TypeColumn = tw.div`lg:w-1/6 w-1/2 `
-const TypeLabel = tw.span`px-2 font-medium  rounded bg-blue-100 mx-4 my-1`
+const Container = tw.div`w-full flex flex-col lg:flex-row px-2 py-2`
+const TypeColumn = tw.div`lg:w-1/6 w-full text-center`
+const TypeLabel = tw.span`py-1 px-3 font-medium rounded bg-blue-200 mx-4 my-3 `
 
-const AmountColumn = tw.div`lg:w-1/3 w-1/2 flex flex-col items-start text-center font-mono`
-const SymbolColumn = tw.div`w-1/2 lg:w-1/5 text-right grid  justify-items-center lg:justify-items-end`
-const Center = tw.div`flex flex-col`
+const AmountColumn = tw.div`lg:w-1/3 w-full text-xs items-center text-center font-mono`
+const SymbolColumn = tw.div`w-full lg:w-1/5 text-center lg:text-right grid  justify-items-center lg:justify-items-end`
+const Center = tw.div`flex items-center`
 
+const AssetLogo = tw.div`w-5 h-5`
 const AssetText = tw.span`text-green-500 font-thin`
 const FromOrToColumn = tw.div`lg:w-1/3 w-1/2  lg:text-right font-mono text-xs font-thin`
 
-export default function SwapDetail({event, owner}) {
-    console.log(event);
+export default function SwapDetail({event, owner, index}) {
     const fromAmount = event.metadata.fromAmount;
     const fromToken = event.metadata.fromToken
 
     const toAmount = event.metadata.toAmount;
     const toToken = event.metadata.toToken
 
+    const TheContainer = (() => {
+        if (index % 2 === 0) {
+            return tw(Container)`bg-white`
+        } else {
+            return tw(Container)`bg-gray-100`
+        }
+    })();
+
     return (
-        <Container>
+        <TheContainer>
             <TypeColumn>
                 <TypeLabel>swap</TypeLabel>
             </TypeColumn>
             <AmountColumn>
                 <div tw={"mb-1"}>{normalized("-", fromAmount, fromToken.toDecimals)}</div>
-                <br />
+                <br/>
                 <div>{normalized("+", toAmount, toToken.decimals)}</div>
             </AmountColumn>
             <SymbolColumn>
                 <Center>
-                   <AssetText> {fromToken.symbol}</AssetText>
+                    <AssetText> {fromToken.symbol}</AssetText>
+                    &nbsp;
+                    <AssetLogo><FallbackImage src={fromToken.logo} alt={fromToken.symbol}/></AssetLogo> <br/>
+
+                </Center>
+                <Center>
+                    <AssetText> {fromToken.symbol}</AssetText>
+                    &nbsp;
+                    <AssetLogo><FallbackImage src={toToken.logo} alt={toToken.symbol}/></AssetLogo>
                 </Center>
             </SymbolColumn>
             <FromOrToColumn>
             </FromOrToColumn>
-        </Container>
+        </TheContainer>
     );
 }
 

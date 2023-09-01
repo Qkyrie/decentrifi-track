@@ -93,11 +93,6 @@ export default () => {
                             <LinkListItem>
                                 <Link target="_blank" href="https://twitter.com/decentrifi">Twitter</Link>
                             </LinkListItem>
-                            <LinkListItem>
-                                <Link
-                                    href="https://gitcoin.co/grants/4539/defitrack-find-the-best-opportunities-in-the-defi">Gitcoin
-                                    Grants</Link>
-                            </LinkListItem>
                         </LinkList>
                     </Column>
                 </FiveColumns>

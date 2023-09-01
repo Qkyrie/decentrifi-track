@@ -20,7 +20,7 @@ const LinkIcon = tw.div`bg-white p-1 mx-1 rounded-lg`
 
 export default function ({transaction, events, owner}) {
     const eventItems = events.map((event, i) => {
-        return <HistoryDetail key={i} event={event} owner={owner}/>
+        return <HistoryDetail key={i} event={event} owner={owner} index={0}/>
     });
 
     const sliceAccount = function (address) {

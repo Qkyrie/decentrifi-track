@@ -3,7 +3,7 @@ import React from "react";
 import FallbackImage from "../../../components/Image/FallbackImage";
 import tw from "twin.macro";
 
-const Container = tw.div`w-full flex flex-col lg:flex-row px-2`
+const Container = tw.div`w-full flex flex-col lg:flex-row px-2 py-2`
 const TypeColumn = tw.div`lg:w-1/6 w-full text-center `
 const TypeLabel = tw.span`px-1 px-3 font-medium rounded mx-4 my-3`
 const RevokeTypeLabel = tw(TypeLabel)`bg-red-200`
@@ -17,11 +17,19 @@ const AssetLogo = tw.div`w-5 h-5`
 const AssetText = tw.span`text-green-500 font-thin`
 const FromOrToColumn = tw.div`lg:w-1/3 w-1/2 lg:text-right font-mono text-xs font-thin`
 
-export default function ApprovalDetail({event, owner}) {
+export default function ApprovalDetail({event, owner, index}) {
 
     if (event.metadata.owner.address.toLowerCase() !== owner.toLowerCase()) {
         return null
     }
+
+    const TheContainer = (() => {
+        if (index % 2 === 0) {
+            return tw(Container)`bg-white`
+        } else {
+            return tw(Container)`bg-gray-100`
+        }
+    })();
 
     const revokeOrApproval = (event) => {
         if (new BigNumber(event.metadata.amount).isZero()) {
@@ -32,7 +40,7 @@ export default function ApprovalDetail({event, owner}) {
     }
 
     return (
-        <Container>
+        <TheContainer>
             <TypeColumn>
                 {revokeOrApproval(event)}
             </TypeColumn>
@@ -50,7 +58,7 @@ export default function ApprovalDetail({event, owner}) {
                      {event.metadata.spender.label || sliceAccount(event.metadata.spender.address)}
                 </a>
             </FromOrToColumn>
-        </Container>
+        </TheContainer>
     );
 }
 

@@ -3,7 +3,7 @@ import React from "react";
 import FallbackImage from "../../../components/Image/FallbackImage";
 import tw from "twin.macro";
 
-const Container = tw.div`w-full flex flex-col lg:flex-row px-2`
+const Container = tw.div`w-full flex flex-col lg:flex-row px-2 py-2`
 const TypeColumn = tw.div`lg:w-1/6 w-full text-center`
 const TypeLabel = tw.span`py-1 px-3 font-medium rounded bg-purple-200 mx-4 my-3 `
 
@@ -15,12 +15,20 @@ const AssetLogo = tw.div`w-5 h-5`
 const AssetText = tw.span`text-green-500 font-thin`
 const FromOrToColumn = tw.div`lg:w-1/3 w-full text-center lg:text-right font-mono text-xs font-thin`
 
-export default function TransferDetail({event, owner}) {
+export default function TransferDetail({event, owner, index}) {
     const sign = (() => {
         if (event.metadata.from.address.toLowerCase() === owner.toLowerCase()) {
             return '-';
         } else {
             return '+';
+        }
+    })();
+
+    const TheContainer = (() => {
+        if (index % 2 === 0) {
+            return tw(Container)`bg-white`
+        } else {
+            return tw(Container)`bg-gray-100`
         }
     })();
 
@@ -59,7 +67,7 @@ export default function TransferDetail({event, owner}) {
     }
 
     return (
-        <Container>
+        <TheContainer>
             <TypeColumn>
                 <TypeLabel>{fromOrTo.action}</TypeLabel>
             </TypeColumn>
@@ -74,7 +82,7 @@ export default function TransferDetail({event, owner}) {
             <FromOrToColumn>
                 <a rel="noreferrer" target="_blank" href={`${event.network.baseUrl}/address/${fromOrTo.address}`}>{fromOrTo.label}: {fromOrTo.sliced}</a>
             </FromOrToColumn>
-        </Container>
+        </TheContainer>
     );
 }
 

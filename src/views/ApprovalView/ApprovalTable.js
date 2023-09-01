@@ -6,6 +6,8 @@ import BigNumber from "bignumber.js";
 import {toast, ToastContainer} from "react-toastify";
 import {useTransactions} from "../../hooks/useTransactions";
 import {useApprovals} from "./hooks/useApprovals";
+import useWeb3 from "../../hooks/web3";
+import useConnectWalletPopup from "../../components/ConnectWalletPopup/UseConnectWalletPopup";
 
 
 const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-center bg-white`
@@ -27,6 +29,7 @@ const Image = tw.div`h-5 w-5 `
 const TwoColumns = tw.div`grid grid-cols-2`
 
 const ThinGreen = tw.span`text-green-500 text-sm font-thin`
+const ThinBlue = tw(ThinGreen)`text-blue-500`
 
 const TotalColumn = tw.div`text-sm text-left text-gray-600 w-1/3 lg:w-1/3 justify-items-end grid`
 const PullRight = tw.div`flex items-center justify-items-end`
@@ -83,8 +86,8 @@ function DummyList() {
 
 export function ApprovalTable({isLoading, allowances}) {
 
+    const web3 = useWeb3();
     let {isOnCorrectChain} = useTransactions();
-
 
     if (isLoading) {
         return <DummyList/>
@@ -102,7 +105,18 @@ export function ApprovalTable({isLoading, allowances}) {
 
 
             let correctChain = isOnCorrectChain(allowance.network.chainId);
-            console.log(correctChain)
+
+            function getActionButton(allowance) {
+                console.log('web3: ', web3.active)
+                if (!web3.active) {
+                    return <ConnectButton />
+                } else if(!correctChain) {
+                    return <ChangeNetworkButton allowance={allowance}/>
+                } else {
+                    return <RevokeButton allowance={allowance}/>
+                }
+            }
+
             return (
                 <ListItem>
                     <Row>
@@ -117,6 +131,7 @@ export function ApprovalTable({isLoading, allowances}) {
                         </IconColumn>
                         <NameColumn>
                             <a target="_blank"
+                               rel="noreferrer"
                                href={`${allowance.network.baseUrl}/address/${allowance.spender.address}`}>
                                 {spender()}
                             </a>
@@ -129,15 +144,8 @@ export function ApprovalTable({isLoading, allowances}) {
                         </AmountColumn>
                         <TotalColumn>
                             <PullRight>
-                                <ToastContainer closeOnClick={false} theme={'light'}/>
-                                {
-                                    correctChain &&
-                                    <RevokeButton allowance={allowance}/>
-                                }
-                                {
-                                    !correctChain &&
-                                    <ChangeNetworkButton allowance={allowance}/>
-                                }
+                                    <ToastContainer closeOnClick={false} theme={'light'}/>
+                                {getActionButton(allowance)}
                             </PullRight>
                         </TotalColumn>
                     </Row>
@@ -236,5 +244,22 @@ function ChangeNetworkButton({allowance}) {
 
     return <>
         <ThinGreen onClick={changeNetwork}>change network</ThinGreen>
+    </>
+}
+
+
+function ConnectButton() {
+    const {
+        html: connectWalletPopup,
+        open: openConnectWalletPopup,
+    } = useConnectWalletPopup();
+
+    async function connect() {
+        openConnectWalletPopup();
+    }
+
+    return <>
+        {connectWalletPopup}
+        <ThinBlue onClick={connect}>connect</ThinBlue>
     </>
 }

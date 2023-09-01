@@ -3,7 +3,7 @@ import React from "react";
 import tw from "twin.macro";
 import FallbackImage from "../../../components/Image/FallbackImage";
 
-const Container = tw.div`w-full flex flex-col lg:flex-row px-2`
+const Container = tw.div`w-full flex flex-col lg:flex-row px-2 py-2`
 const TypeColumn = tw.div`lg:w-1/6 w-full text-center `
 const TypeLabel = tw.span`py-1 px-3 font-medium rounded bg-yellow-200 mx-4 my-3 `
 
@@ -16,10 +16,18 @@ const AssetLogo = tw.div`w-5 h-5`
 
 const FromOrToColumn = tw.div`lg:w-1/3 w-1/2  lg:text-right font-mono text-xs font-thin`
 
-export default function GetRewardDetail({event}) {
+export default function GetRewardDetail({event, index}) {
+
+    const TheContainer = (() => {
+        if (index % 2 === 0) {
+            return tw(Container)`bg-white`
+        } else {
+            return tw(Container)`bg-gray-100`
+        }
+    })();
 
     return (
-        <Container>
+        <TheContainer>
             <TypeColumn>
                 <TypeLabel>get reward</TypeLabel>
             </TypeColumn>
@@ -36,7 +44,7 @@ export default function GetRewardDetail({event}) {
             </SymbolColumn>
             <FromOrToColumn>
             </FromOrToColumn>
-        </Container>
+        </TheContainer>
     );
 }
 

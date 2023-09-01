@@ -2,12 +2,9 @@ import {hooks as metamaskHooks, metaMask} from "./connectors/metamask";
 import {hooks as walletConnectHooks, walletConnectV2} from "./connectors/walletconnect";
 import {useWeb3React} from '@web3-react/core'
 import {useEffect} from "react";
-import {MetaMask} from "@web3-react/metamask";
 import {getByChainId} from "../chains/chains";
 
 export default function useWeb3() {
-
-    const {ethereum} = window
 
     const web3React = useWeb3React();
 
@@ -25,7 +22,7 @@ export default function useWeb3() {
     useEffect(() => {
         console.log('metamask active: ', metamaskIsActive);
         console.log('walletconnect active: ', walletConnectIsActive);
-    }, [metamaskIsActive]);
+    }, [metamaskIsActive, walletConnectIsActive]);
 
     function getActiveHook() {
         if (metamaskIsActive) {
@@ -35,20 +32,21 @@ export default function useWeb3() {
         }
     }
 
+    function getActiveConnector() {
+        if (metamaskIsActive) {
+            return metaMask
+        } else {
+            return walletConnectV2
+        }
+    }
+
     const supported = function () {
         return window.ethereum !== undefined
     };
 
-    async function connectWalletConnect() {
-        await walletConnectV2.connectEagerly().catch(() => {
-            console.debug('Failed to connect eagerly to metamask')
-        })
-    }
-
-    async function browserConnect() {
-        //  console.log('connecting eagerly');
-        await metaMask.connectEagerly().catch(() => {
-            console.debug('Failed to connect eagerly to metamask')
+    async function autoConnect() {
+        getActiveConnector().connectEagerly().catch(() => {
+            console.debug('Failed to connect eagerly to connector')
         })
     }
 
@@ -69,18 +67,15 @@ export default function useWeb3() {
     };
 
     async function changeNetwork(networkId) {
-        console.log('changing network');
         const chainConfig = getByChainId(networkId);
-        console.log(chainConfig);
-        await metaMask.activate(chainConfig)
+        await getActiveConnector().activate(chainConfig)
     }
 
     return {
         changeNetwork: changeNetwork,
-        ethereum: ethereum,
         metamaskLogin,
         walletConnectLogin,
-        autoConnect: browserConnect,
+        autoConnect,
         hasAccount: getActiveHook().useAccount()?.length > 0,
         active: getActiveHook().useIsActive(),
         supported: supported(),
