@@ -50,7 +50,6 @@ export default function DashboardHeader() {
     } = useContext(DashboardContext);
 
     const slicedAccount = useMemo(() => {
-        console.log('slicing')
         if (address && address.length > 6) {
             return `${address.slice(0, 6)}...${address.slice(-6, address.length)}`;
         } else {

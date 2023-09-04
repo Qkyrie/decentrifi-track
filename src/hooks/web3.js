@@ -45,9 +45,13 @@ export default function useWeb3() {
     };
 
     async function autoConnect() {
-        getActiveConnector().connectEagerly().catch(() => {
+        return getActiveConnector().connectEagerly().catch(() => {
             console.debug('Failed to connect eagerly to connector')
         })
+    }
+
+    async function disconnect() {
+        return getActiveConnector().deactivate();
     }
 
     const walletConnectLogin = async () => {
@@ -80,6 +84,7 @@ export default function useWeb3() {
         active: getActiveHook().useIsActive(),
         supported: supported(),
         web3React: web3React,
+        disconnect,
         account: getActiveHook().useAccount(),
     }
 };

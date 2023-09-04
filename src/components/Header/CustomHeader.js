@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import Header, {DesktopNavLinks, LogoLink, NavLink, NavLinks, NavToggle} from "../headers/light.js";
@@ -56,6 +56,8 @@ const Notification = tw.span`inline-block my-4 pl-3 py-1 text-gray-100 border-l-
 function UserLink({web3}) {
 
     const {ens} = useEns(web3.account);
+    const {disconnect} = useWeb3();
+    const [showLogout, setShowLogout] = useState(false)
 
     const {
         html: connectWalletPopup,
@@ -66,17 +68,36 @@ function UserLink({web3}) {
         return `${address.slice(0, 6)}...${address.slice(-6, address.length)}`;
     };
 
+    const initiateLogout = function (e) {
+        e.preventDefault();
+        setShowLogout(true);
+        setTimeout(() => {
+            setShowLogout(false);
+        }, 5000)
+    };
+
+    const buttonClicked = async function (e) {
+        if (showLogout) {
+            //logout
+            await disconnect();
+        } else {
+            initiateLogout(e)
+        }
+    };
+
     if (web3.account != null) {
         const buttonText = (function () {
-            if (ens != null) {
+            if (showLogout === true) {
+                return 'Log Out';
+            } else if (ens != null) {
                 return ens;
             } else {
-                return sliceAccount(web3.account)
+                return sliceAccount(web3.account);
             }
         })();
         return (
             <>
-                <Button color={"secondary"} variant={"contained"}>
+                <Button onClick={buttonClicked} color={"secondary"} variant={"contained"}>
                     {buttonText}
                 </Button>
             </>

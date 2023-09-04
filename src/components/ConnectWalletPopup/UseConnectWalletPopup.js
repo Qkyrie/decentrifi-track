@@ -11,8 +11,10 @@ const Container = tw.div`grid w-full justify-items-center`;
 const CloseContainer = tw.div`p-4 w-full`
 const Header = tw.h1`text-lg font-black text-purple-600`
 const ConnectList = tw.div`flex flex-col mx-2 mb-8 w-full grid justify-items-center`
-const ConnectListItem = tw.div`w-1/2 hover:border-blue-500 border-2 font-bold text-gray-700 hover:text-blue-500 hover:border-2 flex flex-row rounded rounded-lg`
+const ConnectListItem = tw.div`w-3/4 hover:border-blue-300 border-2 font-bold text-gray-700 hover:text-blue-300 hover:border-2 flex flex-row rounded rounded-lg`
 const ConnectItemLogo = tw.img`w-16 h-16 mr-4`
+
+const ConnectionDescription = tw.div`text-xs text-gray-400`
 
 export default function useConnectWalletPopup() {
 
@@ -36,7 +38,10 @@ export default function useConnectWalletPopup() {
                             setOpen(false);
                         })}>
                             <ConnectItemLogo src={Metamask} alt="metamask" width="32" height="32"/>
-                            Browser Wallet
+                            <div>
+                                <span>Browser Wallet</span> <br />
+                                <ConnectionDescription>A browser wallet like Metamask is a browser extension that allows you to interact with the Ethereum blockchain</ConnectionDescription>
+                            </div>
                         </ConnectListItem>
                     </ConnectList>
                     <ConnectList>
@@ -47,7 +52,7 @@ export default function useConnectWalletPopup() {
                             <ConnectItemLogo src={WalletConnect} alt="walletconnect" width="32" height="32"/>
                             <div>
                                 <span>WalletConnect</span> <br/>
-                                <span tw="text-xs text-gray-400">WalletConnect is a bridge that connects Decentralized Applications (DApps) to your web3 crypto wallet</span>
+                                <ConnectionDescription>WalletConnect is a bridge that connects Decentralized Applications (DApps) to your web3 crypto wallet</ConnectionDescription>
                             </div>
                         </ConnectListItem>
                     </ConnectList>
