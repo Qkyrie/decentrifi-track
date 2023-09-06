@@ -1,7 +1,6 @@
 import {hooks as metamaskHooks, metaMask} from "./connectors/metamask";
 import {hooks as walletConnectHooks, walletConnectV2} from "./connectors/walletconnect";
 import {useWeb3React} from '@web3-react/core'
-import {useEffect} from "react";
 import {getByChainId} from "../chains/chains";
 
 export default function useWeb3() {
