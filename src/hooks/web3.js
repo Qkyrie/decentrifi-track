@@ -32,9 +32,8 @@ export default function useWeb3() {
     }
 
     async function disconnect() {
-        let activeConnector = getActiveWeb3();
-        if (activeConnector !== undefined) {
-            await activeConnector.deactivate();
+        if (web3React.connector.deactivate !== undefined) {
+            await web3React.connector.deactivate();
         }
     }
 
@@ -56,7 +55,6 @@ export default function useWeb3() {
 
     async function changeNetwork(networkId) {
         const chainConfig = getByChainId(networkId);
-        console.log(chainConfig);
         web3React.connector.activate(chainConfig)
     }
 
@@ -70,8 +68,8 @@ export default function useWeb3() {
         active: getActiveWeb3()?.active || false,
         supported: supported(),
         web3React: web3React,
-        disconnect,
         account: getActiveWeb3()?.account || undefined,
+        disconnect,
     }
 }
 
