@@ -1,6 +1,6 @@
 const chains = [
     {
-        chainId: "0x1",
+        chainId: "1",
         name: "Ethereum Mainnet",
         shortName: "eth",
         nativeCurrency: {
@@ -12,7 +12,7 @@ const chains = [
         rpcUrls: ["https://mainnet.infura.io/v3/"]
     },
     {
-        chainId: "0xa4b1",
+        chainId: "a4b1",
         chainName: "Arbitrum One",
         blockExplorerUrls: ["https://arbiscan.io"],
         nativeCurrency: {
@@ -23,7 +23,7 @@ const chains = [
         rpcUrls: ["https://arb1.arbitrum.io/rpc"]
     },
     {
-        chainId: "0xa",
+        chainId: "a",
         chainName: "OP Mainnet",
         nativeCurrency: {
             name: 'Ethereum',
@@ -47,5 +47,5 @@ const chains = [
 ]
 
 export function getByChainId(chainId) {
-    return chains.find(chain => chain.chainId === chainId.toString(16))
+    return chains.find(chain => chain.chainId ===  chainId.toString(16))
 }

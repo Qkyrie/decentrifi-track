@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import Header, {DesktopNavLinks, LogoLink, NavLink, NavLinks, NavToggle} from "../headers/light.js";
@@ -53,10 +53,10 @@ const SlantedBackground = styled.span`
 const Notification = tw.span`inline-block my-4 pl-3 py-1 text-gray-100 border-l-4 border-blue-500 font-medium text-sm`;
 
 
-function UserLink({web3}) {
+function UserLink() {
 
-    const {ens} = useEns(web3.account);
-    const {disconnect} = useWeb3();
+    const {ens} = useEns();
+    const {disconnect, hasAccount, account} = useWeb3();
     const [showLogout, setShowLogout] = useState(false)
 
     const {
@@ -85,14 +85,14 @@ function UserLink({web3}) {
         }
     };
 
-    if (web3.account != null) {
+    if (hasAccount) {
         const buttonText = (function () {
             if (showLogout === true) {
                 return 'Log Out';
             } else if (ens != null) {
                 return ens;
             } else {
-                return sliceAccount(web3.account);
+                return sliceAccount(account);
             }
         })();
         return (
@@ -136,7 +136,6 @@ function Expansion({expanded}) {
 
 export default function CustomHeader({onAddressChange, expanded = false, showUserLink = true, showSearch = false}) {
 
-    const web3 = useWeb3();
     const history = useHistory();
 
     const navLinks = [
@@ -156,7 +155,7 @@ export default function CustomHeader({onAddressChange, expanded = false, showUse
         </NavLinks>,
     ];
 
-    const userLink = showUserLink ? <UserLink web3={web3}/> : <></>
+    const userLink = showUserLink ? <UserLink/> : <></>
 
     const userLinks = [
         <NavLinks key={2}>

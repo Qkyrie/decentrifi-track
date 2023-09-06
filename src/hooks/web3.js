@@ -8,55 +8,39 @@ export default function useWeb3() {
 
     const web3React = useWeb3React();
 
-    const {
-        useIsActive: mmIsActive
-    } = metamaskHooks;
-
-    const {
-        useIsActive: wcIsActive
-    } = walletConnectHooks;
-
-    const metamaskIsActive = mmIsActive();
-    const walletConnectIsActive = wcIsActive();
-
-    useEffect(() => {
-        console.log('metamask active: ', metamaskIsActive);
-        console.log('walletconnect active: ', walletConnectIsActive);
-    }, [metamaskIsActive, walletConnectIsActive]);
-
-    function getActiveHook() {
-        if (metamaskIsActive) {
-            return metamaskHooks
-        } else {
-            return walletConnectHooks
-        }
-    }
-
-    function getActiveConnector() {
-        if (metamaskIsActive) {
-            return metaMask
-        } else {
-            return walletConnectV2
-        }
-    }
+    const metamaskWeb3 = useMetamaskWeb3();
+    const walletConnectWeb3 = useWalletConnectWeb3();
 
     const supported = function () {
         return window.ethereum !== undefined
     };
 
     async function autoConnect() {
-        return getActiveConnector().connectEagerly().catch(() => {
+        await web3React.connector.connectEagerly().catch(() => {
             console.debug('Failed to connect eagerly to connector')
         })
     }
 
+    function getActiveWeb3() {
+        if (metamaskWeb3.active) {
+            return metamaskWeb3;
+        } else if (walletConnectWeb3.active) {
+            return walletConnectWeb3;
+        } else {
+            return undefined;
+        }
+    }
+
     async function disconnect() {
-        return getActiveConnector().deactivate();
+        let activeConnector = getActiveWeb3();
+        if (activeConnector !== undefined) {
+            await activeConnector.deactivate();
+        }
     }
 
     const walletConnectLogin = async () => {
         try {
-            await walletConnectV2.activate();
+            await walletConnectWeb3.connector.activate();
         } catch (ex) {
             console.error(ex)
         }
@@ -64,7 +48,7 @@ export default function useWeb3() {
 
     const metamaskLogin = async () => {
         try {
-            await metaMask.activate()
+            await metamaskWeb3.connector.activate()
         } catch (ex) {
             console.error(ex)
         }
@@ -72,19 +56,93 @@ export default function useWeb3() {
 
     async function changeNetwork(networkId) {
         const chainConfig = getByChainId(networkId);
-        await getActiveConnector().activate(chainConfig)
+        console.log(chainConfig);
+        web3React.connector.activate(chainConfig)
     }
+
 
     return {
         changeNetwork: changeNetwork,
         metamaskLogin,
         walletConnectLogin,
         autoConnect,
-        hasAccount: getActiveHook().useAccount()?.length > 0,
-        active: getActiveHook().useIsActive(),
+        hasAccount: getActiveWeb3()?.hasAccount || false,
+        active: getActiveWeb3()?.active || false,
         supported: supported(),
         web3React: web3React,
         disconnect,
-        account: getActiveHook().useAccount(),
+        account: getActiveWeb3()?.account || undefined,
     }
-};
+}
+
+function useMetamaskWeb3() {
+
+    const {
+        useAccount,
+        useIsActive
+    } = metamaskHooks;
+
+    const account = useAccount();
+    const active = useIsActive();
+
+    async function deactivate() {
+        return metaMask.deactivate();
+    }
+
+    function getHasAccount() {
+        return account?.length > 0;
+    }
+
+    async function autoconnect() {
+        return metaMask.connectEagerly().catch(() => {
+            console.debug('Failed to connect eagerly to connector')
+        });
+    }
+
+    return {
+        connector: metaMask,
+        hasAccount: getHasAccount(),
+        active,
+        account,
+        deactivate,
+        autoconnect,
+        activate: metaMask.activate
+    }
+}
+
+function useWalletConnectWeb3() {
+
+    const {
+        useAccount,
+        useIsActive
+    } = walletConnectHooks;
+
+    const account = useAccount();
+    const active = useIsActive();
+
+    async function deactivate() {
+        return walletConnectV2.deactivate();
+    }
+
+    function getHasAccount() {
+        return account?.length > 0;
+    }
+
+    async function autoconnect() {
+        return walletConnectV2.connectEagerly().then(result => {
+            console.log('connected eagerly: ', result);
+        }).catch(() => {
+            console.debug('Failed to connect eagerly to connector')
+        });
+    }
+
+    return {
+        connector: walletConnectV2,
+        hasAccount: getHasAccount(),
+        active,
+        account,
+        deactivate,
+        activate: walletConnectV2.activate,
+        autoconnect
+    }
+}

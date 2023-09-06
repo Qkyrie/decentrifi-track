@@ -44,8 +44,8 @@ export default function App() {
         }
     }
 
-    useEffect( () => {
-        autoconnect()
+    useEffect( async () => {
+        await autoconnect()
     }, []);
 
     return (
