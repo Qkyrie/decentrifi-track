@@ -89,7 +89,7 @@ function UserLink() {
         const buttonText = (function () {
             if (showLogout === true) {
                 return 'Log Out';
-            } else if (ens != null) {
+            } else if (ens != null && ens !== "") {
                 return ens;
             } else {
                 return sliceAccount(account);
