@@ -20,14 +20,14 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
             const dollarValue = await calculatePrice({
                 address: tokenInfoResponse.address,
                 network: networkName,
-                amount: 1.0,
-                tokenType: tokenInfoResponse.type
+                amount: 1.0
             })
             return {
                 ...tokenInfoResponse,
                 dollarValue: dollarValue
             };
-        }
+        },
+        staleTime: 1000 * 60 * 3,
     })
 
     const token = tokenQuery.data;
@@ -46,128 +46,12 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
                 return 0;
             }
         },
-        enabled: !!token && web3.hasAccount
+        enabled: !!token && web3.hasAccount,
+        staleTime: 1000 * 60 * 3,
     });
-
-    const poolingOpportunitiesQuery = useQuery({
-        queryKey: ['tokens', networkName, tokenAddress, 'pooling-markets'],
-        queryFn: async () => {
-            const result = [];
-            let protocols = (await fetchProtocols()).filter((proto) => {
-                return proto.primitives.includes('POOLING');
-            });
-            for (const proto of protocols) {
-                let markets = token.type === 'SINGLE' ? await fetchPoolingMarketsForToken(
-                    networkName,
-                    proto,
-                    token.address
-                ) : await fetchPoolingMarketAlternativesForToken(
-                    networkName,
-                    proto,
-                    token.address
-                );
-                result.push(...markets);
-            }
-
-            return result;
-        },
-        enabled: !!token
-    });
-
-    const lendingOpportunitiesQuery = useQuery({
-        queryKey: ['tokens', networkName, tokenAddress, 'lending-markets'],
-        queryFn: async () => {
-            const result = [];
-            let protocols = (await fetchProtocols()).filter(proto => proto.primitives.includes('LENDING'));
-            for (const proto of protocols) {
-                let markets = await fetchLendingMarketsForToken(
-                    networkName,
-                    token.address,
-                    proto,
-                )
-                result.push(...markets);
-            }
-
-            return result;
-        },
-        enabled: !!token && token.type === 'SINGLE'
-    });
-
-    const [activeTab, setActiveTab] = useState('Pooling');
-
-    const farmingOpportunitiesQuery = useQuery({
-        queryKey: ['tokens', networkName, tokenAddress, 'farming-markets'],
-        queryFn: async () => {
-            const result = [];
-            let protocols = (await fetchProtocols()).filter(proto => proto.primitives.includes('FARMING'));
-            for (const proto of protocols) {
-                let markets = await fetchStakingMarketsForToken(
-                    networkName,
-                    proto,
-                    token.address,
-                )
-                result.push(...markets);
-            }
-
-            return result;
-        },
-        enabled: !!token
-    });
-
-
-    const tabs = useMemo(() => {
-        function updateActiveTab(tabName) {
-            const t = tabs.find((tab) => tab.id === tabName);
-            setActiveTab(t.id)
-        }
-
-        let t = [];
-        if ((poolingOpportunitiesQuery.data || []).length > 0) {
-            t.push({
-                id: 'Pooling',
-                name: `Pooling (${poolingOpportunitiesQuery.data.length})`, selected: true,
-                onClick: () => updateActiveTab('Pooling')
-            });
-        }
-        if ((lendingOpportunitiesQuery.data || []).length > 0) {
-            t.push({
-                id: `Lending`,
-                name: `Lending (${lendingOpportunitiesQuery.data.length})`, onClick: (() => {
-                    updateActiveTab('Lending')
-                })
-            });
-        }
-        if ((farmingOpportunitiesQuery.data || [].length) > 0) {
-            t.push({
-                id: 'Farming',
-                name: `Farming (${farmingOpportunitiesQuery.data.length})`, onClick: (() => {
-                    updateActiveTab('Farming')
-                })
-            });
-        }
-
-        if (t.length > 0) {
-            t[0].selected = true;
-        }
-        return t;
-    }, [
-        farmingOpportunitiesQuery.data,
-        lendingOpportunitiesQuery.data,
-        poolingOpportunitiesQuery.data,
-    ]);
 
     return {
-        tabs: (tabs || []).map((tab) => {
-            if (tab.id === activeTab) {
-                return {...tab, selected: true}
-            } else {
-                return {...tab, selected: false}
-            }
-        }),
         userBalance: userBalanceQuery.data || 0,
-        poolingOpportunities: poolingOpportunitiesQuery.data || [],
-        farmingOpportunities: farmingOpportunitiesQuery.data || [],
-        lendingOpportunities: lendingOpportunitiesQuery.data || [],
         token: tokenQuery.data,
         network: networkName,
     }

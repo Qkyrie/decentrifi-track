@@ -2,7 +2,7 @@
   "name": "@decentrifi/decentrifi-track",
   "version": "1.0.0",
   "dependencies": {
-    "@decentri.fi/defi-hub": "^2.0.4",
+    "@decentri.fi/defi-hub": "^2.1.3",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@ensdomains/ens-avatar": "^0.2.1",

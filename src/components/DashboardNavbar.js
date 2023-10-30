@@ -45,14 +45,14 @@ export default function DashboardNavbar({selected = "profile", address}) {
                     history.push(`/${address}/allowance`)
                 }
             },
-            stats.suggestionCount > 0 &&
+           /* stats.suggestionCount > 0 &&
             {
                 name: <span>Suggestions <NewLabel>new</NewLabel></span>,
                 selected: selected === "suggestions",
                 onClick() {
                     history.push(`/${address}/suggestions`)
                 }
-            }
+            } */
         ].filter((item) => !!item);
     }, [stats, address])
 

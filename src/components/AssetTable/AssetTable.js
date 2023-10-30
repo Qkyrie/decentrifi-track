@@ -22,15 +22,15 @@ const OverlayImage = tw.div`lg:h-4 lg:w-4 h-2 w-2 -mx-2 `
 const Row = tw.div`select-none cursor-pointer flex items-center py-2 border-b hover:bg-indigo-100 w-full`
 
 const IconColumn = tw.div`flex flex-col w-1/12 justify-center items-center mr-4 lg:block`
-const NameColumn = tw.div`pl-1 w-3/12  flex-1 font-medium text-indigo-600 text-xs`
-const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 w-3/12`
+const NameColumn = tw.div`pl-1 lg:w-5/12 w-4/12 flex-1 font-medium text-indigo-600 text-xs`
+const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 w-2/12 lg:w-1/12`
 const TotalColumn = tw.div`text-sm pr-4 text-left text-gray-600 w-3/12 justify-items-end grid`
 const ActionColumn = tw.div`w-2/12`
 
 
 const ThinGreen = tw.span`text-green-500 font-thin`
 
-const PullRight = tw.div`flex items-center justify-items-end w-full`
+const PullRight = tw.div`flex grid justify-items-end w-full`
 const Bold = tw.span`font-bold text-sm`
 const Hidden = tw.span`hidden lg:block`
 
@@ -148,23 +148,26 @@ function ListEntry({entry}) {
                     </AmountColumn>
                     <TotalColumn>
                         <PullRight>
-
                             <Bold>
                                 <DollarLabel amount={entry.dollarValue}/>
                             </Bold>
 
                         </PullRight>
                     </TotalColumn>
-                    <ActionColumn>
-                        <PullRight>
-                            <ActionButton>
-                                {
-                                    entry.actionButton &&
-                                    entry['actionButton']
-                                }
-                            </ActionButton>
-                        </PullRight>
-                    </ActionColumn>
+                    {
+                        entry.actionButton &&
+                        <ActionColumn>
+                            <PullRight>
+                                <ActionButton>
+                                    {
+                                        entry.actionButton &&
+                                        entry['actionButton']
+                                    }
+                                </ActionButton>
+                            </PullRight>
+                        </ActionColumn>
+                    }
+
                 </Row>
             </ListItem>
         </>

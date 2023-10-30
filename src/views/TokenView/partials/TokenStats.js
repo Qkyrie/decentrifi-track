@@ -27,7 +27,6 @@ export default function TokenStats({token, userBalance, network}) {
     const userDollarBalance = userBalance * token.dollarValue
 
 
-
     return (
         <Center>
             <StatsContainer>

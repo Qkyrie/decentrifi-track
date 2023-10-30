@@ -1,33 +1,22 @@
 import {getSigner} from "./withContract";
 
 import defihub from "@decentri.fi/defi-hub"
+import useWeb3 from "./web3";
+import {useTransactions} from "./useTransactions";
 
-export const useExitPosition = (web3) => {
+export const useExitPosition = () => {
+
+    const web3 = useWeb3();
+    const transaction = useTransactions();
+
+
     const initiateExitPosition = async (position) => {
-        if (position.network.chainId !== web3.web3React.chainId) {
-            try {
-                await web3.changeNetwork(position.network.chainId);
-            } catch (err) {
-                if (err.code === 4902) {
-                    throw new Error("Failed to change network, please add it manually");
-                    /*    await window.ethereum.request({
-                            method: 'wallet_addEthereumChain',
-                            params: [
-                                {
-                                    chainName: 'Polygon Mainnet',
-                                    chainId: web3.utils.toHex(chainId),
-                                    nativeCurrency: { name: 'MATIC', decimals: 18, symbol: 'MATIC' },
-                                    rpcUrls: ['https://polygon-rpc.com/']
-                                }
-                            ]
-                        }); *  */
-                } else {
-                    console.log(err);
-                }
-            }
-        } else {
-            const preparedTransactionFn = await defihub.exit().exitPositionFunction(position)
+
+        const validated = await transaction.validateChainId(position.network.chainId);
+        if (validated) {
+            const preparedTransactionFn = await defihub.exit().exitPositionFunction(position);
             const preparedTransactions = await preparedTransactionFn(web3.account, position.tokenAmount);
+            console.log(preparedTransactions)
             const transactions = preparedTransactions.transactions;
             for (const tx of transactions) {
                 if (tx.from == null || tx.from.toLowerCase() === web3.account.toLowerCase()) {
@@ -37,14 +26,17 @@ export const useExitPosition = (web3) => {
                             data: tx.data
                         }
                     )
+                    console.log('populated', tx);
                 } else {
                     throw new Error("You are not able to perform this transaction for this claimable");
                 }
             }
+        } else {
+            throw new Error("You are not able to perform this transaction for this claimable");
         }
     }
 
     return {
-        exit: initiateExitPosition
+        doExit: initiateExitPosition
     }
 }

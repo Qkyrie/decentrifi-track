@@ -6,6 +6,8 @@ import {useExitPosition} from "../../../../hooks/useExitPosition";
 import tw from "twin.macro";
 import spinner from "../../../../images/spinner.gif";
 import styled from "styled-components";
+import {useTransactions} from "../../../../hooks/useTransactions";
+import {toast, ToastContainer} from "react-toastify";
 
 const ButtonContent = styled.div`
   ${tw`flex flex-row`}
@@ -23,36 +25,45 @@ const ButtonContent = styled.div`
 
 export function ExitButton({element}) {
 
-    const [state, setState] = useState('default')
-
-    const web3 = useWeb3()
+    const transactions = useTransactions()
     const {
-        exit
-    } = useExitPosition(web3);
+        doExit
+    } = useExitPosition();
+
+    async function requestNetworkChange(event) {
+        event.stopPropagation();
+        await transactions.validateChainId(element.network.chainId)
+    }
+
+    async function exit(event) {
+        event.stopPropagation();
+        try {
+            toast("Signing transaction to claim tokens.")
+            const result = await doExit(element);
+            toast.dismiss();
+            if (result !== undefined) {
+                toast.promise(
+                    result.wait(),
+                    {
+                        pending: "Transaction submitted, awaiting confirmation.",
+                        success: "Your rewards were successfully claimed, refreshing them",
+                    }
+                ).then(() => {
+                    console.log('done')
+                });
+            }
+        } catch (err) {
+            transactions.handleErrorResult(err).then(() => {
+            })
+        }
+    }
+
 
     return (
-        <Button disabled={state === 'pending'} onClick={
-            async (e) => {
-                e.stopPropagation()
-                try {
-                    setState('pending')
-                    await exit(element);
-                } catch (err) {
-                    setState('error')
-                    swal({
-                        text: err.message,
-                        icon: "error"
-                    });
-                }
-            }
-        } variant={"contained"}>
+        <Button onClick={exit} variant={"contained"}>
             <ButtonContent>
-                {state === 'pending' &&
-                    <span>
-                        <img alt="spinner" src={spinner}/>
-                    </span>
-                }
                 <span>Exit Position</span>
+                <ToastContainer closeOnClick={false} theme={'light'}/>
             </ButtonContent>
         </Button>
     )
