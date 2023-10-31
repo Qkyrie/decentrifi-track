@@ -23,6 +23,32 @@ export default function useConnectWalletPopup() {
     const [open, setOpen] = useState(false);
     const closeModal = () => setOpen(false);
 
+    function metamask() {
+        if (web3.hasBrowserWallet) {
+            return <ConnectListItem onClick={async () => await web3.metamaskLogin().then(() => {
+                setOpen(false);
+            })}>
+                <ConnectItemLogo src={Metamask} alt="metamask" width="32" height="32"/>
+                <div>
+                    <span>Browser Wallet</span> <br/>
+                    <ConnectionDescription>A browser wallet like Metamask is a browser extension that allows you to interact
+                        with the Ethereum blockchain</ConnectionDescription>
+                </div>
+            </ConnectListItem>
+        } else {
+            return <>
+                <ConnectListItem>
+                    <ConnectItemLogo src={Metamask} alt="metamask" width="32" height="32"/>
+                    <div>
+                        <span tw="text-gray-300">No Browser Wallet Detected</span> <br/>
+                        <ConnectionDescription>A browser wallet like Metamask is a browser extension that allows you to interact
+                            with the Ethereum blockchain</ConnectionDescription>
+                    </div>
+                </ConnectListItem>
+            </>
+        }
+    }
+
     return {
         html: (
             <Popup modal open={open} onClose={closeModal}>
@@ -34,15 +60,7 @@ export default function useConnectWalletPopup() {
                     </CloseContainer>
                     <Header>Connect Wallet</Header>
                     <ConnectList>
-                        <ConnectListItem onClick={async () => await web3.metamaskLogin().then(() => {
-                            setOpen(false);
-                        })}>
-                            <ConnectItemLogo src={Metamask} alt="metamask" width="32" height="32"/>
-                            <div>
-                                <span>Browser Wallet</span> <br />
-                                <ConnectionDescription>A browser wallet like Metamask is a browser extension that allows you to interact with the Ethereum blockchain</ConnectionDescription>
-                            </div>
-                        </ConnectListItem>
+                        {metamask()}
                     </ConnectList>
                     <ConnectList>
                         <ConnectListItem onClick={async () => {
@@ -52,7 +70,8 @@ export default function useConnectWalletPopup() {
                             <ConnectItemLogo src={WalletConnect} alt="walletconnect" width="32" height="32"/>
                             <div>
                                 <span>WalletConnect</span> <br/>
-                                <ConnectionDescription>WalletConnect is a bridge that connects Decentralized Applications (DApps) to your web3 crypto wallet</ConnectionDescription>
+                                <ConnectionDescription>WalletConnect is a bridge that connects Decentralized
+                                    Applications (DApps) to your web3 crypto wallet</ConnectionDescription>
                             </div>
                         </ConnectListItem>
                     </ConnectList>

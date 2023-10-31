@@ -32,9 +32,6 @@ export default function useDashboardClaimableHooks(account) {
         });
     }
 
-    console.log('fetched claimables', query.data);
-
-
     return {
         claimables: query.data || [],
         refresh: refresh,

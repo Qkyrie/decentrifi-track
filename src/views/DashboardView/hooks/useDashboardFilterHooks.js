@@ -1,7 +1,7 @@
 import {useStateWithLocalStorage} from "../../../hooks/useStateWithLocalStorage";
 
 export const useDashboardFilterHooks = () => {
-    const [hideSmallValues, setHideSmallValues] = useStateWithLocalStorage('smallValueFilter', 'false')
+    const [hideSmallValues, setHideSmallValues] = useStateWithLocalStorage('smallValueFilter', 'true')
 
     const [hideWallet, setHideWallet] = useStateWithLocalStorage('walletFilter', 'false')
 
@@ -13,9 +13,15 @@ export const useDashboardFilterHooks = () => {
 
     const [hideBorrowings, setHideBorrowings] = useStateWithLocalStorage('borrowingFilter', 'false')
 
+    const toggleHideSmallValues = () => {
+        setHideSmallValues((prevValue) => {
+            return prevValue === 'true' ? 'false' : 'true'
+        })
+    }
+
     return {
         hideSmallValues: hideSmallValues === 'true',
-        setHideSmallValues: setHideSmallValues,
+        toggleHideSmallValues,
         hideWallet: hideWallet === 'true',
         setHidewallet: setHideWallet,
         hidePoolings: hidePoolings === 'true',

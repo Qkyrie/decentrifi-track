@@ -26,7 +26,8 @@ export default function DashboardView({address}) {
     const {
         setAddress,
         totalClaimables,
-        setHideSmallValues,
+        hideSmallValues,
+        toggleHideSmallValues,
     } = useContext(DashboardContext);
 
     useEffect(() => {
@@ -38,14 +39,6 @@ export default function DashboardView({address}) {
     useEffect(async () => {
         window.title = 'Decentrifi Connect | Explore DeFi Protocols and Accounts';
     }, []);
-
-    function showSmallValues() {
-        setHideSmallValues(false);
-    }
-
-    function hideSmallValues() {
-        setHideSmallValues(true);
-    }
 
     useEffect(() => {
         document.title = `Profile for ${address} - Decentrifi`
@@ -74,7 +67,7 @@ export default function DashboardView({address}) {
                                     hideSmallValues &&
                                     <HideSmallValueFilter>Positions with small deposits are not displayed
                                         (&lt;$0.01). <u><a
-                                            onClick={showSmallValues}>show
+                                            onClick={toggleHideSmallValues}>show
                                             everything</a></u></HideSmallValueFilter>
                                 }
 
@@ -82,7 +75,7 @@ export default function DashboardView({address}) {
                                     !hideSmallValues &&
                                     <HideSmallValueFilter>Positions with small deposits are included
                                         (&lt;$0.01). <u><a
-                                            onClick={hideSmallValues}>hide
+                                            onClick={toggleHideSmallValues}>hide
                                             small values</a></u></HideSmallValueFilter>
                                 }
                             </CenterText>

@@ -140,6 +140,7 @@ function useWalletConnectWeb3() {
         account,
         deactivate,
         activate: walletConnectV2.activate,
-        autoconnect
+        autoconnect,
+        hasBrowserWallet: window.ethereum !== undefined
     }
 }

@@ -3,11 +3,13 @@ import ERC20 from "../../constants/abis/erc20/ERC20.json"
 import {MaxUint256} from "@ethersproject/constants";
 import {useTransactions} from "../useTransactions";
 import {Web3Provider} from "@ethersproject/providers";
+import useWeb3 from "../web3";
+import Big from "big.js";
 
 
-export const useERC20 = (web3) => {
+export const useERC20 = () => {
 
-    const transaction = useTransactions(web3)
+    const web3 = useWeb3();
 
     const balanceOf = async (userAddress, erc20) => {
         const contract = withContract(erc20, ERC20, web3)
@@ -34,10 +36,19 @@ export const useERC20 = (web3) => {
         return await contract.approve(spender, MaxUint256);
     }
 
+    const transfer = async (token, to, amount) => {
+        const power = Big(10).pow(token.decimals);
+        const normalizedAmount = Big(amount).times(power).toFixed(0);
+        console.log("attempting to send " + normalizedAmount + " tokens to " + to);
+        const contract = withContract(token.address, ERC20, web3)
+        return contract.transfer(to, normalizedAmount);
+    }
+
     return {
-        balanceOf: balanceOf,
-        allowance: allowance,
-        approve: approve,
-        fullApprove: fullApprove
+        balanceOf,
+        allowance,
+        approve,
+        transfer,
+        fullApprove
     }
 }

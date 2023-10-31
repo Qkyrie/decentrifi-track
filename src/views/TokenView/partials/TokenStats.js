@@ -1,7 +1,7 @@
 import FallbackImage from "../../../components/Image/FallbackImage";
 import DollarLabel from "../../../components/Label/DollarLabel";
 import tw from "twin.macro";
-import React from "react";
+import React, {useMemo} from "react";
 import TokenChart from "./TokenChart";
 
 const DefaultStat = tw.div`flex flex-nowrap shadow p-2`
@@ -22,9 +22,15 @@ const Green = tw.span`text-green-500`
 const Bold = tw.b`text-black`
 
 
-export default function TokenStats({token, userBalance, network}) {
+export default function TokenStats({token, userBalance}) {
 
-    const userDollarBalance = userBalance * token.dollarValue
+    const userDollarBalance = useMemo(() => {
+        if (userBalance !== null) {
+            return token.dollarValue * userBalance
+        } else {
+            return 0.00
+        }
+    }, [token, userBalance]);
 
 
     return (
@@ -32,7 +38,7 @@ export default function TokenStats({token, userBalance, network}) {
             <StatsContainer>
                 <DoubleStat>
                     <TokenInfo>
-                        <StatTitle>{token.symbol} on {network.toLowerCase()}</StatTitle>
+                        <StatTitle>{token.symbol} on {token.network.name}</StatTitle>
                         <StatCenterText>{token.name}</StatCenterText>
                     </TokenInfo>
                     <TokenLogo>
@@ -64,11 +70,7 @@ export default function TokenStats({token, userBalance, network}) {
                         </SingleStat>
                     </>
                 }
-
-
             </StatsContainer>
-            <TokenChart token={token}/>
-
         </Center>
     )
 

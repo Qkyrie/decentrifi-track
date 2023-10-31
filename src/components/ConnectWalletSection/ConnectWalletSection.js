@@ -63,8 +63,8 @@ export default function ConnectWalletSection({
                             <Subheading>Enable your web3 wallet to fully appreciate this experience.</Subheading>
                             <Heading>Connect your web3 wallet.</Heading>
                             <Description>
-                                In order to view the positions related to your account, connect your web3
-                                wallet. <br/><br/>
+                                In order to manage your portfolio, you can connect your web3 wallet. We currently support
+                                browser wallets, like metamask, and walletconnect.<br/><br/>
                                 If you don't feel like doing this, you can just search any address using the search bar.
                                 We appreciate you being here either way.
                             </Description>
