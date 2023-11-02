@@ -5,7 +5,7 @@ import {SectionHeading, Subheading as SubheadingBase} from "components/misc/Head
 import {PrimaryButton as PrimaryButtonBase} from "components/misc/Buttons.js";
 import StatsIllustrationSrc from "images/stats-illustration.svg";
 import {ReactComponent as SvgDotPattern} from "images/dot-pattern.svg";
-import FoxWithWalletPic from "../../images/fox-with-wallet.png";
+import FoxWithWalletPic from "../../images/unicorns/unicorn-wallet.png";
 import 'reactjs-popup/dist/index.css';
 import useConnectWalletPopup from "../ConnectWalletPopup/UseConnectWalletPopup";
 
