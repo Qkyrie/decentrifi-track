@@ -9,5 +9,5 @@ export const fetchTokenInformation = async (address, network) => {
 }
 
 export const fetchTokenBalance = async (token, user, network) => {
-    return await defihub.erc20().getTokenBalance(network, token, user);
+    return await defihub.erc20().getTokenBalanceV2(network, token, user);
 }

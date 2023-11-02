@@ -1,13 +1,7 @@
-import {useMemo, useState} from "react";
-import {fetchTokenBalance, fetchTokenInformation, fetchWrappedToken} from "../../../api/defitrack/erc20/erc20";
-import {fetchProtocols} from "../../../api/defitrack/protocols/protocols";
-import {fetchPoolingMarketAlternativesForToken, fetchPoolingMarketsForToken} from "../../../api/defitrack/pools/pools";
+import {fetchTokenBalance, fetchTokenInformation} from "../../../api/defitrack/erc20/erc20";
 import useWeb3 from "../../../hooks/web3";
-import {ethers} from 'ethers';
 import {BigNumber} from "@ethersproject/bignumber";
 import {calculatePrice} from "../../../api/defitrack/price/price";
-import {fetchLendingMarketsForToken} from "../../../api/defitrack/lending/lending";
-import {fetchStakingMarketsForToken} from "../../../api/defitrack/staking/staking";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import Big from "big.js";
 
@@ -39,11 +33,7 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
     function doQuery() {
         return async () => {
             const result = await (async () => {
-                if (token.address === "0x0") {
-                    return await fetchTokenBalance(token.address, web3.account, networkName);
-                } else {
-                    return await fetchTokenBalance(token.address, web3.account, networkName);
-                }
+                return await fetchTokenBalance(token.address, web3.account, networkName).balance;
             })()
             if (result > 0) {
                 try {

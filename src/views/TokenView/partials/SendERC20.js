@@ -1,4 +1,3 @@
-import PrimaryButton from "../../../components/Button/PrimaryButton";
 import React, {useState} from "react";
 
 import tw from "twin.macro";
@@ -6,27 +5,37 @@ import styled from "styled-components";
 import {useTransactions} from "../../../hooks/useTransactions";
 import {toast, ToastContainer} from "react-toastify";
 import {useERC20} from "../../../hooks/erc20/useERC20";
-import {Input} from "@mui/material";
-import AboutUs from "../../AboutUs";
-import Pricing from "../../../pages/Pricing";
-import GetStarted from "../../../components/cta/GetStarted";
-import useWeb3 from "../../../hooks/web3";
 
 
 const Container = styled.div`
   ${tw`mb-2 pt-2 text-gray-600 flex flex-nowrap w-full`}
   input {
-    ${tw`w-11/12 border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none`}
+    ${tw`w-full border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none`}
   }
 `
+
+const ERC20Wrapper = tw.div`w-full grid justify-items-center py-4 my-4`
+const ERC20Container = styled.div`
+  ${tw`w-full mx-4 lg:w-1/3 bg-purple-500 rounded-lg`}
+  h4 {
+    ${tw`text-white text-2xl font-thin text-center my-4 text-gray-400`}
+  }
+`
+const InputRow = tw.div`flex flex-row mt-6 w-10/12`
+const InputLabel = tw.div`flex-col mx-2 mt-4 text-right w-1/4 text-gray-300 font-thin`
+const InputHolder = tw.div`w-3/4 mx-2`
+
+const SubmitRow = tw.div`flex justify-items-center grid mb-6`
+
+const AmountButton = tw.button`mx-1 text-xs bg-purple-400 text-center text-gray-200 font-semibold rounded-xl px-1`
+const SendButton = tw.button`mx-4 bg-purple-600 text-center text-gray-200 font-semibold py-1 rounded w-3/4 mt-4 hover:bg-purple-400`
+
 
 export function SendERC20({token, userBalance, refresh}) {
 
 
     const [addressField, setAddressField] = useState("");
     const [amountField, setAmountField] = useState(0);
-    const web3 = useWeb3();
-
 
     const transactions = useTransactions();
     const erc20 = useERC20();
@@ -34,6 +43,10 @@ export function SendERC20({token, userBalance, refresh}) {
     async function requestNetworkChange(event) {
         event.stopPropagation();
         await transactions.validateChainId(token.network.chainId)
+    }
+
+    function setHalf() {
+        setAmountField(userBalance / 2);
     }
 
     function setFull() {
@@ -87,51 +100,46 @@ export function SendERC20({token, userBalance, refresh}) {
     const isOnCorrectChain = transactions.isOnCorrectChain(token.network.chainId);
 
     return (
-        <div tw="w-full grid justify-items-center py-4 my-4">
+        <ERC20Wrapper>
             <ToastContainer closeOnClick={false} theme={'light'}/>
-            <div tw="w-2/3 lg:w-1/3 border-blue-100 bg-purple-200 rounded-xl">
-                <div tw="grid justify-items-center mt-4">
-                    <h4 tw="text-gray-600 font-bold">Send ERC20 Tokens</h4>
-                </div>
+            <ERC20Container>
+                <h4>Send ERC20 Tokens</h4>
 
-                <div tw="flex flex-row mt-6">
-                    <div tw="mx-2 text-right w-2/12 self-center">
-                        To:
-                    </div>
-                    <div tw="w-10/12 mx-2">
-                        <div tw="grid justify-items-end ml-4">
-                            <Container>
-                                <input onChange={onAddressChange} type="text" name="to" placeholder="0x0"/>
-                            </Container>
-                        </div>
-                    </div>
-                </div>
+                <InputRow>
+                    <InputLabel>
+                        to:
+                    </InputLabel>
+                    <InputHolder>
+                        <Container>
+                            <input onChange={onAddressChange} type="text" name="to" placeholder="0x0"/>
+                        </Container>
+                    </InputHolder>
+                </InputRow>
 
-                <div tw="flex">
-                    <div tw="flex-col mx-2 mt-4 text-right w-2/12">
-                        Amount:
+                <InputRow>
+                    <InputLabel>
+                        amount:
                         <div>
-                            <PrimaryButton onClick={setFull} label={"max"}></PrimaryButton>
+                            <AmountButton onClick={setHalf}>half</AmountButton>
+                            <AmountButton onClick={setFull}>max</AmountButton>
                         </div>
-                    </div>
-                    <div tw="w-10/12 mx-2">
-                        <div tw="grid justify-items-end ml-4">
-                            <Container>
-                                <Input value={amountField} onChange={onAmountChange} type="number" name="amount"
-                                       placeholder="0.00"/>
-                            </Container>
-                        </div>
-                    </div>
-                </div>
-                <div tw="flex justify-items-center grid mb-6">
+                    </InputLabel>
+                    <InputHolder>
+                        <Container>
+                            <input value={amountField} onChange={onAmountChange} type="number" name="amount"
+                                   placeholder="0.00"/>
+                        </Container>
+                    </InputHolder>
+                </InputRow>
+                <SubmitRow>
                     {
-                        isOnCorrectChain && <PrimaryButton label="send" onClick={sendIt}/>
+                        isOnCorrectChain && <SendButton onClick={sendIt}>send</SendButton>
                     }
                     {
-                        !isOnCorrectChain && <PrimaryButton label="change network" onClick={requestNetworkChange}/>
+                        !isOnCorrectChain && <SendButton label="change network" onClick={requestNetworkChange}/>
                     }
-                </div>
-            </div>
-        </div>
+                </SubmitRow>
+            </ERC20Container>
+        </ERC20Wrapper>
     )
 }

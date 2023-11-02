@@ -3,18 +3,20 @@ import styled from "styled-components";
 import tw from "twin.macro";
 //eslint-disable-next-line
 import {ReactComponent as SvgDecoratorBlob1} from "images/svg-decorator-blob-1.svg";
-import DesignIllustration from "images/unicorn-magnify.png";
+import DetectiveUni from "images/unicorns/unicorn-detective.png";
 import useWeb3 from "../../../hooks/web3";
 import useConnectWalletPopup from "../../../components/ConnectWalletPopup/UseConnectWalletPopup";
 import {useHistory} from "react-router-dom";
 
-const Container = tw.div`relative`;
+const Container = tw.div`relative mx-2`;
 const TwoColumn = tw.div`flex flex-col lg:flex-row lg:items-center max-w-screen-xl mx-auto `;
-const LeftColumn = tw.div`relative lg:w-5/12 text-center max-w-lg mx-auto lg:max-w-none lg:text-left`;
+const LeftColumn = tw.div`relative lg:w-1/2 text-center max-w-lg mx-auto lg:max-w-none lg:text-left`;
 const RightColumn = tw.div`relative mt-12 lg:mt-0 flex-1 flex flex-col justify-center lg:self-end`;
 
 const Heading = tw.h1`font-bold text-3xl md:text-3xl lg:text-4xl xl:text-5xl text-gray-900 leading-tight`;
 const Paragraph = tw.p`my-5 lg:my-8 text-base xl:text-lg`;
+
+const UnicornImage = tw.img`w-1/2 hidden lg:block`
 
 const SearchAction = styled.div`
   ${tw`relative max-w-md text-center mx-auto lg:mx-0 mb-2`}
@@ -34,7 +36,9 @@ const ConnectAction = styled.div`
   }
 `;
 
-const IllustrationContainer = tw.div`flex justify-center lg:justify-end items-center`;
+const PrimaryText = tw.span`text-primary-500`
+
+const IllustrationContainer = tw.div`hidden lg:block flex grid justify-center lg:justify-end items-center`;
 
 // Random Decorator Blobs (shapes that you see in background)
 const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
@@ -65,7 +69,7 @@ export default ({roundedHeaderButton}) => {
                 <TwoColumn>
                     <LeftColumn>
                         <Heading>
-                            Explore <span tw="text-primary-500">DeFi</span>
+                            Explore <PrimaryText>DeFi</PrimaryText>
                         </Heading>
                         <Paragraph>
                             The easiest way to get up to speed is to connect your wallet and start. We curently support
@@ -86,7 +90,7 @@ export default ({roundedHeaderButton}) => {
                     </LeftColumn>
                     <RightColumn>
                         <IllustrationContainer>
-                            <img src={DesignIllustration}
+                            <UnicornImage src={DetectiveUni}
                                  alt="Design Illustration"/>
                         </IllustrationContainer>
                     </RightColumn>

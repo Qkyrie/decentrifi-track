@@ -2,7 +2,6 @@ import FallbackImage from "../../../components/Image/FallbackImage";
 import DollarLabel from "../../../components/Label/DollarLabel";
 import tw from "twin.macro";
 import React, {useMemo} from "react";
-import TokenChart from "./TokenChart";
 
 const DefaultStat = tw.div`flex flex-nowrap shadow p-2`
 const DoubleStat = tw(DefaultStat)`col-span-2`

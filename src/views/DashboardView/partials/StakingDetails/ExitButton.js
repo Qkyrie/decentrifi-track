@@ -1,10 +1,7 @@
-import swal from "sweetalert";
 import {Button} from "@mui/material";
-import React, {useState} from "react";
-import useWeb3 from "../../../../hooks/web3";
+import React from "react";
 import {useExitPosition} from "../../../../hooks/useExitPosition";
 import tw from "twin.macro";
-import spinner from "../../../../images/spinner.gif";
 import styled from "styled-components";
 import {useTransactions} from "../../../../hooks/useTransactions";
 import {toast, ToastContainer} from "react-toastify";
@@ -59,12 +56,24 @@ export function ExitButton({element}) {
     }
 
 
-    return (
-        <Button onClick={exit} variant={"contained"}>
-            <ButtonContent>
-                <span>Exit Position</span>
-                <ToastContainer closeOnClick={false} theme={'light'}/>
-            </ButtonContent>
-        </Button>
-    )
+
+    if (transactions.isOnCorrectChain(element.network.chainId)) {
+        return (
+            <Button onClick={exit} variant={"contained"}>
+                <ButtonContent>
+                    <span>Exit Position</span>
+                    <ToastContainer closeOnClick={false} theme={'light'}/>
+                </ButtonContent>
+            </Button>
+        )
+    } else {
+        return (
+            <Button onClick={requestNetworkChange} variant={"contained"}>
+                <ButtonContent>
+                    <span>Change Network Position</span>
+                    <ToastContainer closeOnClick={false} theme={'light'}/>
+                </ButtonContent>
+            </Button>
+        )
+    }
 }

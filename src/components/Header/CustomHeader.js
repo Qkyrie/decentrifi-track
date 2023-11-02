@@ -30,7 +30,7 @@ const OpacityOverlay = tw.div`z-10 absolute inset-0 bg-primary-500 opacity-25`;
 const HeroContainer = tw.div`z-20 relative px-4 sm:px-8 max-w-screen-xl mx-auto`;
 const TwoColumn = tw.div`lg:pt-24 lg:pb-32 px-4 flex justify-between items-center flex-col lg:flex-row`;
 const LeftColumn = tw.div`flex flex-col items-center lg:block lg:w-1/2 w-full lg:pr-24`;
-const RightColumn = tw.div`w-full sm:w-5/6 lg:w-1/2 mt-16 lg:mt-0 lg:pl-8`;
+const RightColumn = tw.div`w-full sm:w-5/6 lg:w-1/2 lg:mt-16 lg:mt-0 lg:pl-8`;
 
 
 const SearchHolder = tw.div`flex justify-between items-center flex-col lg:flex-row`;

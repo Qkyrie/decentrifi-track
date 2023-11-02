@@ -7,6 +7,7 @@ import tw from "twin.macro";
 import DollarLabel from "../../../../components/Label/DollarLabel";
 import {DashboardContext} from "../../../../App";
 import styled from "styled-components";
+import SearchingUni from "../../../../images/unicorns/searching-unicorn.png"
 
 const Address = styled.span`
   ${tw`hidden lg:block font-bold text-base text-black ml-2`}
@@ -14,8 +15,8 @@ const Address = styled.span`
     ${tw`w-3 h-3 text-primary-500`}
   }
 `
-const ShortAddress = tw.span`lg:hidden block font-bold text-base text-black ml-2 border-b`
-const ENS = tw.span`text-sm text-gray-500 ml-2`
+const ShortAddress = tw.span`lg:hidden block font-bold text-base text-black ml-2 border-b text-center`
+const ENS = tw.span`font-thin text-sm text-gray-500 ml-2 w-full text-center lg:text-left`
 const Blockie = tw.span`hidden lg:block rounded-xl relative p-2 w-24 `;
 const GeneralInfo = tw.div`grid flex items-center mb-3 flex-col lg:flex-row w-full`
 
@@ -26,7 +27,7 @@ const AddressText = tw.div`flex flex-col`
 const Wrapper = tw.div`flex grid justify-items-center flex-wrap lg:flex-nowrap p-4`;
 const Center = tw.div`w-full lg:w-2/3 border rounded-xl`
 const PortfolioValue = tw.div`lg:justify-items-end justify-self-center grid w-full`
-const PortfolioValueContainer = tw.div`bg-gray-200 p-4 flex flex-col rounded-lg w-full lg:w-3/4 mx-4`
+const PortfolioValueContainer = tw.div`bg-gray-200 p-4 flex flex-col rounded-lg lg:w-3/4 mx-4`
 
 const ScanningContainer = tw.div`block m-auto`;
 const ProgressText = tw.span`text-sm inline-block text-gray-500`
@@ -34,7 +35,7 @@ const ProgressText = tw.span`text-sm inline-block text-gray-500`
 const PercentageContainer = tw.div`w-full h-2 bg-gray-200 rounded-full mt-2`;
 const Percentage = tw.div`h-full text-center text-xs text-white bg-purple-500 rounded-full`
 
-const PortfolioTitle = tw.span`text-sm text-primary-700 text-center lg:text-left justify-self-start`
+const PortfolioTitle = tw.span`font-thin text-sm text-primary-700 text-center lg:text-left justify-self-start`
 const PortfolioAmount = tw.span`text-3xl text-center lg:text-left justify-self-start`
 
 export default function DashboardHeader() {
@@ -85,7 +86,14 @@ export default function DashboardHeader() {
                         {
                             address &&
                             <AddressInfo>
-                                <Blockie><FallbackImage src={blockie}/></Blockie>
+                                {
+                                    hasFinishedScanning &&
+                                    <Blockie><FallbackImage src={blockie}/></Blockie>
+                                }
+                                {
+                                    !hasFinishedScanning &&
+                                    <Blockie><FallbackImage src={SearchingUni}/></Blockie>
+                                }
                                 <AddressText>
                                     <Address>{address} {
                                         hasFinishedScanning &&

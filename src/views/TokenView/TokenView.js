@@ -7,7 +7,6 @@ import ReactGA from "react-ga4";
 import Navbar from "../../components/Navbar/Navbar";
 import TokenStats from "./partials/TokenStats";
 import {SendERC20} from "./partials/SendERC20";
-import GetStarted from "../../components/cta/GetStarted";
 import useWeb3 from "../../hooks/web3";
 import ConnectWalletSection from "../../components/ConnectWalletSection/ConnectWalletSection";
 
