@@ -33,14 +33,12 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
     function doQuery() {
         return async () => {
             const result = await (async () => {
-                return await fetchTokenBalance(token.address, web3.account, networkName).balance;
+                const bal  =await fetchTokenBalance(token.address, web3.account, networkName)
+                return bal.balance;
             })()
             if (result > 0) {
                 try {
-                    console.log("test", BigNumber.from("879404191289884246"))
-                    console.log('result', result)
                     const number = Big(result.toString())
-                    console.log(number.toString());
                     return number.div(Big(10).pow(token.decimals)).toFixed(token.decimals)
                 } catch (ex) {
                     console.log(ex)

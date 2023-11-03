@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { css } from "styled-components/macro";
 import GitHubButton from "react-github-btn";
 
-import { LogoLink } from "components/headers/light.js";
+import { LogoLink } from "components/headers/light.jsx";
 import { SectionHeading as HeadingBase } from "components/misc/Headings";
 import { SectionDescription as DescriptionBase } from "components/misc/Typography";
 

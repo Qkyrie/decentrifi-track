@@ -19,7 +19,6 @@ export default function useDashboardClaimableHooks(account) {
         }
     );
 
-
     const refresh = () => {
         protocols.forEach(async (protocol) => {
             await queryClient.invalidateQueries(['claimables', account]);

@@ -1,19 +1,14 @@
 import {fetchNetworks} from "../../../api/defitrack/networks/networks";
-import {useEffect, useState} from "react";
+import {useQuery} from "@tanstack/react-query";
 
 export default function useNetworks() {
-    const [networks, setNetworks] = useState([])
-
-    useEffect(() => {
-        async function fetchData() {
-            const retVal = await fetchNetworks()
-            setNetworks(retVal)
-        }
-
-        fetchData();
-    }, [])
+    const query = useQuery({
+        queryKey: ['networks'],
+        queryFn: fetchNetworks,
+        staleTime: 1000 * 60 * 5,
+    })
 
     return {
-        networks
+        networks: query?.data || []
     }
 };

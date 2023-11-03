@@ -2,6 +2,7 @@ import {hooks as metamaskHooks, metaMask} from "./connectors/metamask";
 import {hooks as walletConnectHooks, walletConnectV2} from "./connectors/walletconnect";
 import {useWeb3React} from '@web3-react/core'
 import {getByChainId} from "../chains/chains";
+import {useMemo} from "react";
 
 export default function useWeb3() {
 
@@ -10,9 +11,9 @@ export default function useWeb3() {
     const metamaskWeb3 = useMetamaskWeb3();
     const walletConnectWeb3 = useWalletConnectWeb3();
 
-    const supported = function () {
+    const supported = useMemo(() => {
         return window.ethereum !== undefined
-    };
+    });
 
     async function autoConnect() {
         await web3React.connector.connectEagerly().catch(() => {
@@ -65,7 +66,7 @@ export default function useWeb3() {
         autoConnect,
         hasAccount: getActiveWeb3()?.hasAccount || false,
         active: getActiveWeb3()?.active || false,
-        supported: supported(),
+        supported: supported,
         web3React: web3React,
         account: getActiveWeb3()?.account || undefined,
         disconnect,
@@ -140,7 +141,6 @@ function useWalletConnectWeb3() {
         account,
         deactivate,
         activate: walletConnectV2.activate,
-        autoconnect,
-        hasBrowserWallet: window.ethereum !== undefined
+        autoconnect
     }
 }

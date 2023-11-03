@@ -1,74 +1,67 @@
 import {useEffect, useState} from "react";
 import {fetchNativeBalance, fetchTokenBalance} from "../../../api/defitrack/balance/balance";
 import useNetworks from "./useNetworks";
+import {signal} from "@preact/signals-react";
+import {useQuery} from "@tanstack/react-query";
 
 export default function useDashboardWalletHooks(account, supportsBalances) {
-    const [balanceElements, setBalanceElements] = useState([]);
+
 
     const {networks} = useNetworks();
 
-    function refresh() {
-        localStorage.setItem(`balance-elements-${account}`, null);
-        setBalanceElements([]);
-        init(account);
-    }
+    const balanceQuery = useQuery({
+        queryKey: ['balances', account],
+        queryFn: () => {
 
-    function init(_account) {
-        if (supportsBalances && _account != null && networks != null && networks.length > 0) {
-            const savedOne = JSON.parse(localStorage.getItem(`balance-elements-${_account}`));
-            if (savedOne != null) {
-                setBalanceElements(savedOne)
-            } else {
-                setBalanceElements([]);
-                fetchNativeBalance(_account).then(nativeBalance => {
-                    for (const balanceElement of nativeBalance) {
-                        setBalanceElements(prevState => {
-                            prevState.push({
-                                ...balanceElement,
-                                owner: _account
-                            });
-                            localStorage.setItem(`balance-elements-${_account}`, JSON.stringify(prevState));
-                            return [...prevState];
-                        })
-                    }
-                });
-                for (const network of networks) {
-                    fetchTokenBalance(_account, network.name).then(tokenBalance => {
-                        if (tokenBalance.length > 0) {
-                            for (const balanceElement of tokenBalance) {
-                                setBalanceElements(prevState => {
-                                    prevState.push({
-                                        ...balanceElement,
-                                        owner: _account
-                                    });
-                                    localStorage.setItem(`balance-elements-${_account}`, JSON.stringify(prevState));
-                                    return [...prevState];
-                                })
-                            }
-                        } else {
-                            setBalanceElements(prevState => {
-
-                                localStorage.setItem(`balance-elements-${_account}`, JSON.stringify(prevState));
-                                return prevState
-                            })
-                        }
-                    }).catch(ex => {
-                        console.log(`error trying to fetch token balances for network ${network.name}`)
+            const result = new ResultHolder();
+            fetchNativeBalance(account).then(nativeBalance => {
+                for (const balanceElement of nativeBalance) {
+                    console.log('pushing', balanceElement)
+                    result.push({
+                        ...balanceElement,
+                        owner: account
                     });
                 }
+            });
+
+            for (const network of networks) {
+                fetchTokenBalance(account, network.name).then(tokenBalance => {
+                    if (tokenBalance.length > 0) {
+                        for (const balanceElement of tokenBalance) {
+                            result.push({
+                                ...balanceElement,
+                                owner: account
+                            })
+                        }
+                    }
+                }).catch(ex => {
+                    console.log(`error trying to fetch token balances for network ${network.name}`)
+                });
             }
+            return result;
+        },
+        staleTime: 1000 * 60 * 5,
+        enabled: supportsBalances && account != null && networks != null && networks.length > 0
+    });
+
+    function refresh() {
+        console.log('refreshing balance')
+        balanceQuery.refetch();
+    }
+
+    const filteredBalanceElements = () => {
+        if (balanceQuery?.data?.results == null || balanceQuery?.data?.results?.length === 0) {
+            return [];
+        } else {
+            return balanceQuery?.data?.results.filter(balance => balance.owner === account);
         }
     }
 
-    useEffect(() => {
-        init(account);
-    }, [account, networks])
+    class ResultHolder {
+        results = []
 
-    const filteredBalanceElements = () => {
-        if (balanceElements == null || balanceElements.length === 0) {
-            return [];
-        } else {
-            return balanceElements.filter(balance => balance.owner === account);
+        push(element) {
+            this.results.push(element);
         }
     }
 

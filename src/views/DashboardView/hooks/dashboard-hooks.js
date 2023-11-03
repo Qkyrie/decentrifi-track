@@ -8,6 +8,8 @@ import useDashboardClaimableHooks from "./useDashboardClaimableHooks";
 import useDashboardBorrowingHooks from "./useDashboardBorrowingHooks";
 import useDashboardLPHooks from "./useDashboardLPHooks";
 import useEns from "./useEns";
+import {signal} from "@preact/signals-react";
+
 
 export default function
     useDashboardHooks({
@@ -18,7 +20,13 @@ export default function
     supportsPooling = true
 }) {
 
+    const acc = signal(null)
     const [account, setAccount] = useState(null);
+
+    function setAddress(address) {
+        acc.value = address
+        setAccount(address)
+    }
 
     const useDashboardFilter = useDashboardFilterHooks()
 

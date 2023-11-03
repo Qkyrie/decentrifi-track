@@ -48,25 +48,25 @@ import TwoPlansWithDurationSwitcherPricing from "components/pricing/TwoPlansWith
 import ThreePlansWithHalfPrimaryBackgroundPricing from "components/pricing/ThreePlansWithHalfPrimaryBackground.js";
 import ThreePlansPricing from "components/pricing/ThreePlans.js";
 
-import ThreeColWithSideImageFeatures from "components/features/ThreeColWithSideImage.js";
-import TwoColWithButtonFeatures from "components/features/TwoColWithButton.js";
-import ThreeColSimpleFeatures from "components/features/ThreeColSimple.js";
-import ThreeColWithSideImageWithPrimaryBackgroundFeatures from "components/features/ThreeColWithSideImageWithPrimaryBackground.js";
-import TwoColVerticalWithButtonFeatures from "components/features/TwoColWithTwoFeaturesAndButtons.js";
-import TwoColHorizontalWithButtonFeatures from "components/features/TwoColWithTwoHorizontalFeaturesAndButton.js";
-import WithStepsAndImageFeatures from "components/features/TwoColWithSteps.js";
+import ThreeColWithSideImageFeatures from "components/features/ThreeColWithSideImage.jsx";
+import TwoColWithButtonFeatures from "components/features/TwoColWithButton.jsx";
+import ThreeColSimpleFeatures from "components/features/ThreeColSimple.jsx";
+import ThreeColWithSideImageWithPrimaryBackgroundFeatures from "components/features/ThreeColWithSideImageWithPrimaryBackground.jsx";
+import TwoColVerticalWithButtonFeatures from "components/features/TwoColWithTwoFeaturesAndButtons.jsx";
+import TwoColHorizontalWithButtonFeatures from "components/features/TwoColWithTwoHorizontalFeaturesAndButton.jsx";
+import WithStepsAndImageFeatures from "components/features/TwoColWithSteps.jsx";
 import ThreeColumnDashedBorderFeatures from "components/features/DashedBorderSixFeatures";
-import ThreeColCenteredStatsWithPrimaryBackgroundFeatures from "components/features/ThreeColCenteredStatsPrimaryBackground.js";
-import WithStatsAndImageFeatures from "components/features/TwoColSingleFeatureWithStats.js";
-import WithStatsAndImage2Features from "components/features/TwoColSingleFeatureWithStats2.js";
-import VerticalWithAlternateImageAndTextFeatures from "components/features/VerticalWithAlternateImageAndText.js";
+import ThreeColCenteredStatsWithPrimaryBackgroundFeatures from "components/features/ThreeColCenteredStatsPrimaryBackground.jsx";
+import WithStatsAndImageFeatures from "components/features/TwoColSingleFeatureWithStats.jsx";
+import WithStatsAndImage2Features from "components/features/TwoColSingleFeatureWithStats2.jsx";
+import VerticalWithAlternateImageAndTextFeatures from "components/features/VerticalWithAlternateImageAndText.jsx";
 
-import SliderCards from "components/cards/ThreeColSlider.js";
-import TrendingCards from "components/cards/TwoTrendingPreviewCardsWithImage.js";
-import PortfolioCards from "components/cards/PortfolioTwoCardsWithImage.js";
-import TabGridCards from "components/cards/TabCardGrid.js";
-import ProfileThreeColGridCards from "components/cards/ProfileThreeColGrid.js"
-import ThreeColContactDetailsCards from "components/cards/ThreeColContactDetails.js"
+import SliderCards from "components/cards/ThreeColSlider.jsx";
+import TrendingCards from "components/cards/TwoTrendingPreviewCardsWithImage.jsx";
+import PortfolioCards from "components/cards/PortfolioTwoCardsWithImage.jsx";
+import TabGridCards from "components/cards/TabCardGrid.jsx";
+import ProfileThreeColGridCards from "components/cards/ProfileThreeColGrid.jsx"
+import ThreeColContactDetailsCards from "components/cards/ThreeColContactDetails.jsx"
 
 import ThreeColSimpleWithImageBlog from "components/blogs/ThreeColSimpleWithImage.js";
 import ThreeColSimpleWithImageAndDashedBorderBlog from "components/blogs/ThreeColSimpleWithImageAndDashedBorder.js";
@@ -79,24 +79,24 @@ import TwoColumnWithImageAndRatingTestimonial from "components/testimonials/TwoC
 import ThreeColumnWithProfileImageTestimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
 import SimplePrimaryBackgroundTestimonial from "components/testimonials/SimplePrimaryBackground.js";
 
-import SimpleWithSideImageFAQS from "components/faqs/SimpleWithSideImage.js";
-import SingleColFAQS from "components/faqs/SingleCol.js";
-import TwoColumnPrimaryBackgroundFAQS from "components/faqs/TwoColumnPrimaryBackground.js";
+import SimpleWithSideImageFAQS from "components/faqs/SimpleWithSideImage.jsx";
+import SingleColFAQS from "components/faqs/SingleCol.jsx";
+import TwoColumnPrimaryBackgroundFAQS from "components/faqs/TwoColumnPrimaryBackground.jsx";
 
 import SimpleContactUsForm from "components/forms/SimpleContactUs.js";
 import SimpleSubscribeNewsletterForm from "components/forms/SimpleSubscribeNewsletter.js";
 import TwoColContactUsForm from "components/forms/TwoColContactUsWithIllustration.js";
 import TwoColContactUsFullForm from "components/forms/TwoColContactUsWithIllustrationFullForm.js";
 
-import GetStartedCTA from "components/cta/GetStarted.js";
-import GetStartedLightCTA from "components/cta/GetStartedLight.js";
-import DownloadAppCTA from "components/cta/DownloadApp.js";
+import GetStartedCTA from "components/cta/GetStarted.jsx";
+import GetStartedLightCTA from "components/cta/GetStartedLight.jsx";
+import DownloadAppCTA from "components/cta/DownloadApp.jsx";
 
-import SimpleFiveColumnFooter from "components/footers/SimpleFiveColumn.js";
-import FiveColumnWithInputFormFooter from "components/footers/FiveColumnWithInputForm.js";
-import FiveColumnWithBackgroundFooter from "components/footers/FiveColumnWithBackground.js";
-import FiveColumnDarkFooter from "components/footers/FiveColumnDark.js";
-import MiniCenteredFooter from "components/footers/MiniCenteredFooter.js";
+import SimpleFiveColumnFooter from "components/footers/SimpleFiveColumn.jsx";
+import FiveColumnWithInputFormFooter from "components/footers/FiveColumnWithInputForm.jsx";
+import FiveColumnWithBackgroundFooter from "components/footers/FiveColumnWithBackground.jsx";
+import FiveColumnDarkFooter from "components/footers/FiveColumnDark.jsx";
+import MiniCenteredFooter from "components/footers/MiniCenteredFooter.jsx";
 
 
 export const components = {
