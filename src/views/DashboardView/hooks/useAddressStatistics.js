@@ -8,8 +8,7 @@ export function useAddressStatistics(address) {
         queryKey: ["whalespotter", "users", address],
         staleTime: 30 * 1000, //every 30 secs
         queryFn: async () => {
-            const response = getAccount(address)
-            return await response;
+            return  getAccount(address);
         }
     });
 
