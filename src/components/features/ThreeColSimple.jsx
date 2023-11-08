@@ -5,7 +5,7 @@ import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "../../components/misc/Headings.js";
 import { SectionDescription } from "../misc/Typography";
 import { Container, ContentWithPaddingXl } from "../misc/Layouts";
-import ArrowRightIcon from "../../images/arrow-right-icon.svg";
+import ArrowRightIcon from "../../images/arrow-right-icon.svg?react";
 import SupportIconImage from "../../images/support-icon.svg";
 import ShieldIconImage from "../../images/shield-icon.svg";
 import CustomizeIconImage from "../../images/customize-icon.svg";

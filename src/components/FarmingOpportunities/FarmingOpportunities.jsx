@@ -44,34 +44,6 @@ export default function FarmingOpportunities({farmingOpportunities}) {
     }
 
 
-    const networkButtons = networks.map((network) => {
-        const onClick = () => {
-            setNetworkFilter((prevState) => {
-                if (prevState.includes(network)) {
-                    return [...prevState.filter(x => x !== network)]
-                } else {
-                    prevState.push(network);
-                    return [...prevState];
-                }
-            });
-        }
-
-        const getVariant = () => {
-            return networkFilter.includes(network) ? "contained" : "outlined"
-        }
-
-        return (
-            <ButtonWrapper key={network.slug}>
-                <Button onClick={onClick} variant={getVariant()} color={"success"}>
-                    <ButtonIcon>
-                        <FallbackImage src={getLogo(network)}/>
-                    </ButtonIcon>
-                    {network}</Button>
-            </ButtonWrapper>
-        )
-    })
-
-
     let opportunities = farmingOpportunities.filter(row => {
         if (searchFilter !== null && searchFilter.length > 0) {
             return row.stakedToken.name.toLowerCase().includes(searchFilter.toString().toLowerCase());
@@ -113,7 +85,9 @@ export default function FarmingOpportunities({farmingOpportunities}) {
                         header={
                             <>
                                 <Header>Farming Opportunities</Header>
-                                <NetworkContainer>{networkButtons}</NetworkContainer>
+                                <NetworkContainer>
+                                    <NetworkButtons networks={networks}/>
+                                </NetworkContainer>
                                 <Center>
                                     <SearchField onChange={search} onClick={e => console.log(e)}/>
                                 </Center>
@@ -124,4 +98,25 @@ export default function FarmingOpportunities({farmingOpportunities}) {
             </Center>
         </>
     );
+}
+
+function NetworkButtons({networks}) {
+    networks.map((network) => {
+        return (
+            <NetworkButton network={network}/>
+        )
+    })
+}
+
+function NetworkButton({network}) {
+    return (
+        <ButtonWrapper key={network.slug}>
+            <Button onClick={onClick} variant={getVariant()} color={"success"}>
+                <ButtonIcon>
+                    <FallbackImage src={getLogo(network)}/>
+                </ButtonIcon>
+                {network}
+            </Button>
+        </ButtonWrapper>
+    )
 }

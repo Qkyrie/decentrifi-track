@@ -6,7 +6,7 @@ import {Container, ContentWithPaddingXl} from "../misc/Layouts";
 import {SectionHeading, Subheading as SubheadingBase} from "../../components/misc/Headings";
 import {SectionDescription} from "../misc/Typography";
 import TwitterIcon from "../../images/twitter-icon.svg?react";
-import LinkedinIcon from "../../images/linkedin-icon.svg";
+import LinkedinIcon from "../../images/linkedin-icon.svg?react";
 import GithubIcon from "../../images/github-icon.svg?react";
 import {useHistory} from "react-router-dom";
 

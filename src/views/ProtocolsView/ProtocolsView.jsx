@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import WebsiteIcon from "../../images/globe.svg";
-import ArrowIcon from "../../images/arrow-right-icon.svg";
+import WebsiteIcon from "../../images/globe.svg?react";
+import ArrowIcon from "../../images/arrow-right-icon.svg?react";
 import ProtocolsThreeColGrid from "../../components/cards/ProtocolsThreeColGrid";
 import useProtocolsviewHooks from "./hooks/protocolsview-hooks";
 

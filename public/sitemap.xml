@@ -9,22 +9,26 @@
 
     <url>
         <loc>https://track.decentri.fi/</loc>
-        <lastmod>2022-12-16T09:45:28+00:00</lastmod>
+        <lastmod>2023-10-16T09:45:28+00:00</lastmod>
     </url>
     <url>
         <loc>https://track.decentri.fi/dashboard</loc>
-        <lastmod>2022-12-16T09:45:28+00:00</lastmod>
+        <lastmod>2023-10-16T09:45:28+00:00</lastmod>
     </url>
     <url>
         <loc>https://track.decentri.fi/protocols</loc>
-        <lastmod>2022-12-16T09:45:28+00:00</lastmod>
+        <lastmod>2023-10-16T09:45:28+00:00</lastmod>
     </url>
     <url>
         <loc>https://track.decentri.fi/defi-hub</loc>
-        <lastmod>2022-12-16T09:45:28+00:00</lastmod>
+        <lastmod>2023-10-16T09:45:28+00:00</lastmod>
     </url>
     <url>
         <loc>https://track.decentri.fi/claimables</loc>
-        <lastmod>2022-12-16T09:45:28+00:00</lastmod>
+        <lastmod>2023-10-16T09:45:28+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://track.decentri.fi/explore</loc>
+        <lastmod>2023-10-16T09:45:28+00:00</lastmod>
     </url>
 </urlset>
