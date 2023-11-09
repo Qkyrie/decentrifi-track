@@ -10,19 +10,7 @@ export default function useSuggestionHooks(address) {
     const suggestionQuery = useQuery({
         queryKey: ['account', address, 'suggestions'],
         queryFn: async () => {
-            if (siwe.isAuthenticated()) {
-                const auth = createAuthentication({
-                    owner: siwe.owner,
-                    signature: await siwe.getSignature(),
-                    message: await siwe.getMessage()
-                });
-                return getSuggestions(
-                    address,
-                    auth
-                )
-            } else {
-                return []
-            }
+            return getSuggestions(address)
         }
     })
 
