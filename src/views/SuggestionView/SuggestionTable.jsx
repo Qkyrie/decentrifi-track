@@ -57,7 +57,7 @@ export default ({suggestions}) => {
     return (
         <Container>
             <ThreeColumnContainer>
-                <Heading>Our Portfolio <span tw="text-green-500">Suggestions</span></Heading>
+                <Heading>Your Portfolio <span tw="text-green-500">Suggestions</span></Heading>
                 {cards.map((card, i) => (
                     <Column key={i}>
                         <Card>

@@ -43,6 +43,17 @@ const chains = [
         },
         rpcUrls: ["https://polygon.llamarpc.com"],
         blockExplorerUrls: ["https://polygonscan.com/"]
+    },
+    {
+        chainId: "2105",
+        chainName: "Base",
+        nativeCurrency: {
+            name: 'Eth',
+            symbol: 'ETH',
+            decimals: 18,
+        },
+        rpcUrls: ["https://base.publicnode.com"],
+        blockExplorerUrls: ["https://basescan.org/"]
     }
 ]
 

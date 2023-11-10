@@ -6,7 +6,7 @@ import {SuccessButton} from "../../../components/misc/Buttons";
 import tw from "twin.macro";
 
 const Center = tw.div`grid justify-items-center py-5`
-const PrimaryBackgroundContainer = tw.div`-mx-8 px-8 bg-green-700 text-white -mt-8 mb-4`;
+const PrimaryBackgroundContainer = tw.div`-mx-8 px-8 bg-green-700 text-white`;
 const SubHeader = tw(Subheading)`text-center text-gray-100 mb-4`;
 
 export default function ({amount, address}) {

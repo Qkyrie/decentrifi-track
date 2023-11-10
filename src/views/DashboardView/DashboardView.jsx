@@ -10,6 +10,7 @@ import ClaimableTeaser from "./teasers/ClaimableTeaser";
 import SuggestionTeaser from "./teasers/SuggestionTeaser";
 import useSuggestionHooks from "../SuggestionView/hooks/useSuggestionHooks";
 import {DashboardContext} from "../../App";
+import {useAddressStatistics} from "./hooks/useAddressStatistics";
 
 const Container = tw.div`flex pt-5 grid`
 const DashboardWrapper = tw.div`w-full`
@@ -25,7 +26,9 @@ const Center = tw.div`w-full flex grid justify-items-center mt-3 mb-1`
 
 export default function DashboardView({address}) {
 
-    const suggestions = useSuggestionHooks(address);
+    const {
+        stats
+    } = useAddressStatistics(address);
 
     const {
         setAddress,
@@ -52,7 +55,6 @@ export default function DashboardView({address}) {
                 <DashboardHeader/>
 
                 <ClaimableTeaser address={address} amount={totalClaimables}/>
-                <SuggestionTeaser address={address} amount={suggestions.suggestions.length}/>
                 <Full>
                     <Column>
 
@@ -83,6 +85,8 @@ export default function DashboardView({address}) {
                         <DefiPositions/>
                     </Column>
                 </Full>
+                <SuggestionTeaser address={address} amount={stats.suggestionCount}/>
+
             </DashboardWrapper>
         </Container>
     )

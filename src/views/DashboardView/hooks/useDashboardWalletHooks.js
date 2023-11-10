@@ -16,7 +16,6 @@ export default function useDashboardWalletHooks(account, supportsBalances) {
             const result = new ResultHolder();
             fetchNativeBalance(account).then(nativeBalance => {
                 for (const balanceElement of nativeBalance) {
-                    console.log('pushing', balanceElement)
                     result.push({
                         ...balanceElement,
                         owner: account
@@ -45,7 +44,6 @@ export default function useDashboardWalletHooks(account, supportsBalances) {
     });
 
     function refresh() {
-        console.log('refreshing balance')
         balanceQuery.refetch();
     }
 

@@ -3,6 +3,7 @@ import React, {useMemo} from "react";
 import {useHistory} from "react-router-dom";
 import tw from "twin.macro";
 import {useAddressStatistics} from "../views/DashboardView/hooks/useAddressStatistics";
+const NewLabel = tw.span`text-xs align-text-top font-thin text-teal-500`
 
 export default function DashboardNavbar({selected = "profile", address}) {
 
@@ -43,14 +44,14 @@ export default function DashboardNavbar({selected = "profile", address}) {
                     history.push(`/${address}/allowance`)
                 }
             },
-           /* stats.suggestionCount > 0 &&
+            stats.suggestionCount > 0 &&
             {
                 name: <span>Suggestions <NewLabel>new</NewLabel></span>,
                 selected: selected === "suggestions",
                 onClick() {
                     history.push(`/${address}/suggestions`)
                 }
-            } */
+            }
         ].filter((item) => !!item);
     }, [stats, address])
 

@@ -7,7 +7,7 @@ export class SuggestionMapper {
             return {
                 imageSrc: IdeaIconImage,
                 title: "Pool to Farm",
-                description: `You can put your <b>{metadata.poolName}</b> position into <b>{metadata.farmProtocol}</b>'s <b>{metadata.farmName}</b> to start earning additional yield.`
+                description: <span>You can put your <b>{metadata.poolName}</b> position into <b>{metadata.farmProtocol}</b>'s <b>{metadata.farmName}</b> to start earning additional yield.</span>
             }
         } else if (suggestion.type === 'EXPIRED_FARM') {
             return {
