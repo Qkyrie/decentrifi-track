@@ -2,9 +2,7 @@ import {getReverseEns} from "../../../api/defitrack/ens/ens";
 import {useQuery} from "@tanstack/react-query";
 import useWeb3 from "../../../hooks/web3";
 
-export default function useEns() {
-
-    const {account} = useWeb3();
+export default function useEns(account) {
 
     const query = useQuery({
         staleTime: 1000 * 60 * 10,

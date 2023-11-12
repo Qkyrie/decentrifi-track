@@ -13,8 +13,8 @@ export class SuggestionMapper {
             return {
                 imageSrc: IdeaIconImage,
                 title: "Expired Farm",
-                description: <p>You've invested in <b>{metadata.farmProtocol}</b>'s <b>{metadata.farmName}</b>. The farm
-                    has expired. Claim rewards and <u>exit the farm.</u></p>
+                description: <p>You have invested in <b>{metadata.farmProtocol}</b>'s <b>{metadata.farmName}</b>. The farm
+                    has expired. Claim rewards by <u>exiting the farm.</u></p>
             }
         }
 

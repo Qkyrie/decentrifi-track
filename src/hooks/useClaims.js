@@ -1,6 +1,7 @@
 import {getSigner} from "./withContract";
 import {useTransactions} from "./useTransactions";
 import useWeb3 from "./web3";
+import swal from "sweetalert";
 
 export const useClaims = () => {
 
@@ -16,10 +17,13 @@ export const useClaims = () => {
                     to: claimable.claimTransaction.to,
                     data: claimable.claimTransaction.data
                 });
-                console.log('populated', tx);
                 return signer.sendTransaction(tx);
             } else {
-                throw new Error("You are not able to perform this transaction for this claimable");
+                swal({
+                    text: 'Only the owner of this claimable can perform this transaction.',
+                    icon: "error"
+                })
+                return undefined
             }
         }
     }
