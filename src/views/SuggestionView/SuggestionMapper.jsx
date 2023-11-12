@@ -6,7 +6,7 @@ export class SuggestionMapper {
         if (suggestion.type === 'POOL_TO_FARM') {
             return {
                 imageSrc: IdeaIconImage,
-                title: "Pool to Farm",
+                title: "Easy Farming Opportunity",
                 description: <span>You can put your <b>{metadata.poolName}</b> position into <b>{metadata.farmProtocol}</b>'s <b>{metadata.farmName}</b> to start earning additional yield.</span>
             }
         } else if (suggestion.type === 'EXPIRED_FARM') {
@@ -16,8 +16,14 @@ export class SuggestionMapper {
                 description: <p>You have invested in <b>{metadata.farmProtocol}</b>'s <b>{metadata.farmName}</b>. The farm
                     has expired. Claim rewards by <u>exiting the farm.</u></p>
             }
+        } else if (suggestion.type === 'AAVE_V2_MIGRATION') {
+            return {
+                imageSrc: IdeaIconImage,
+                title: "Expired Farm",
+                description: <p>You have invested in <b>{metadata.farmProtocol}</b>'s <b>{metadata.farmName}</b>. The farm
+                    has expired. Claim rewards by <u>exiting the farm.</u></p>
+            }
         }
-
         return null
     }
 }

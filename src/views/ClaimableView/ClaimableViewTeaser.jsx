@@ -88,10 +88,7 @@ export default function ClaimableViewTeaser() {
             <AlternativeContainer>
                 <Center>
                     {
-                        web3.supported && <ConnectWalletSection/>
-                    }
-                    {
-                        !web3.supported && <NoWeb3Browser/>
+                        <ConnectWalletSection/>
                     }
                 </Center>
             </AlternativeContainer>
