@@ -82,14 +82,12 @@ export default function ClaimableViewTeaser() {
                     <Description></Description>
                 </Section>
                 <Section>
-                    <TeaserImage src={TeaserImageLocation} alt="Claimable Teaser" tw="w-full lg:w-1/2" />
+                    <TeaserImage src={TeaserImageLocation} alt="Claimable Teaser" tw="w-full lg:w-1/2"/>
                 </Section>
             </Container>
             <AlternativeContainer>
                 <Center>
-                    {
-                        <ConnectWalletSection/>
-                    }
+                    <ConnectWalletSection/>
                 </Center>
             </AlternativeContainer>
             <Container>
