@@ -2,12 +2,12 @@ import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
-import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
-import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-import TeamIllustrationSrc from "images/team-illustration-2.svg";
-import { ReactComponent as SvgDotPattern } from "../../images/dot-pattern.svg";
-import { ReactComponent as BriefcaseIcon } from "feather-icons/dist/icons/briefcase.svg";
-import { ReactComponent as MoneyIcon } from "feather-icons/dist/icons/dollar-sign.svg";
+import { SectionHeading, Subheading as SubheadingBase } from "../../components/misc/Headings.js";
+import { PrimaryButton as PrimaryButtonBase } from "../../components/misc/Buttons.js";
+import TeamIllustrationSrc from "../../images/team-illustration-2.svg";
+import SvgDotPattern from "../../images/dot-pattern.svg";
+import {BriefcaseIcon} from "@heroicons/react/solid";
+import {CurrencyDollarIcon} from "@heroicons/react/outline";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24 items-center`;
@@ -95,7 +95,7 @@ export default ({
       iconContainerCss: tw`bg-teal-300 text-teal-800`
     },
     {
-      Icon: MoneyIcon,
+      Icon: CurrencyDollarIcon,
       title: "Affordable",
       description: "We promise to offer you the best rate we can - at par with the industry standard.",
       iconContainerCss: tw`bg-red-300 text-red-800`
