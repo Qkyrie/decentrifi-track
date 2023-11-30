@@ -44,15 +44,6 @@ export default function () {
         <Container>
             <ExploreSearchTeaser/>
         </Container>
-        <Container>
-            <Center>
-                <Heading>Explore <Highlight>Protocols</Highlight></Heading>
-
-                <ProtocolsContainer>
-                    {protocols}
-                </ProtocolsContainer>
-            </Center>
-        </Container>
     </>
 
 };

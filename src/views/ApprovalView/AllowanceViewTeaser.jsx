@@ -12,7 +12,7 @@ import {SectionHeading, Subheading as SubheadingBase} from "../../components/mis
 import {SectionDescription} from "../../components/misc/Typography";
 import FAQ from "../../components/faqs/SingleCol";
 
-import TeaserImageLocation from "../../images/landing/claimable-teaser.png";
+import TeaserImageLocation from "../../images/landing/allowances-teaser.png";
 
 const Container = tw.div`px-2 flex flex-col pt-8 lg:pt-24 bg-defaultBackground`
 const AlternativeContainer = tw(Container)`bg-primary-100 text-white`
@@ -49,7 +49,7 @@ const faqs = [
 ]
 
 
-export default function ClaimableViewTeaser() {
+export default function AllowanceViewTeaser() {
 
     const web3 = useWeb3();
     const history = useHistory();
@@ -73,15 +73,13 @@ export default function ClaimableViewTeaser() {
             <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
             <Container>
                 <Section>
-                    <Subheading>defi rewards might be waiting for you</Subheading>
-                    <Heading>You might have <HighlightedText><DollarLabel amount={
-                        420.69
-                    }/></HighlightedText> of
-                        outstanding <HighlightedText>rewards.</HighlightedText></Heading>
+                    <Subheading>Security is of utmost importance</Subheading>
+                    <Heading>Your funds might be <HighlightedText>at risk</HighlightedText> of
+                        being <HighlightedText>stolen.</HighlightedText></Heading>
                     <Description></Description>
                 </Section>
                 <Section>
-                    <TeaserImage src={TeaserImageLocation} alt="Claimable Teaser" tw="w-full lg:w-1/2"/>
+                    <TeaserImage src={TeaserImageLocation} alt="Allowances Teaser" tw="w-full lg:w-1/2"/>
                 </Section>
             </Container>
             <AlternativeContainer>

@@ -25,6 +25,7 @@ import SuggestionView from "./views/SuggestionView/SuggestionView";
 import MentorshipView from "./views/MentorshipView/MentorshipView";
 import GoerliFaucetView from "./views/GoerliFaucetView/GoerliFaucetView.jsx";
 import {DashboardProvider} from "./views/DashboardProvider";
+import AllowanceViewTeaser from "./views/ApprovalView/AllowanceViewTeaser";
 
 export const DashboardContext = createContext(null);
 
@@ -74,6 +75,10 @@ export default function App() {
                         </Route>
                         <Route path="/claimables">
                             <ClaimableViewTeaser/>
+                            <FooterV2/>
+                        </Route>
+                        <Route path="/allowances">
+                            <AllowanceViewTeaser/>
                             <FooterV2/>
                         </Route>
                         <Route exact path="/protocols">
