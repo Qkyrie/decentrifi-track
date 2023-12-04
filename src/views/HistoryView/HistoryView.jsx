@@ -8,6 +8,8 @@ import TwoColSingleFeatureWithStats2 from "../../components/features/TwoColSingl
 import DashboardNavbar from "../../components/DashboardNavbar";
 import useHistoryHooks from "./hooks/useHistoryHooks";
 import TransactionEntry, {TransactionEntryPlaceholder} from "./components/TransactionEntry";
+import UnicornDetective from "../../images/unicorns/searching-unicorn.png";
+import SecureUnicorn from "../../images/unicorns/secure_unicorn.png";
 
 const Container = tw.div`flex pt-8 grid`
 const DashboardWrapper = tw.div`w-full grid justify-items-center mt-4`
@@ -18,6 +20,10 @@ const Description = tw(SectionDescription)`w-full text-center mb-4`;
 const SectionWithBackground = tw.div`grid w-full justify-items-center bg-defaultBackground pt-2`
 const HighlightedText = tw.span`text-primary-500`
 
+const SearchingUnicorn = tw.img`w-1/4 rounded`
+const SecureUnicornImage = tw.img`w-1/4 rounded`
+const GreenUnderline = tw.span`text-green-500 underline`
+const Purple = tw.span`text-purple-500`
 
 const Section = tw.div`grid w-full justify-items-center pt-2`
 
@@ -29,7 +35,8 @@ export default function HistoryView() {
     const address = params.user;
 
     const {
-        loading,
+        importingHistory,
+        isFetchingHistory,
         events
     } = useHistoryHooks(address);
 
@@ -63,35 +70,33 @@ export default function HistoryView() {
             <DashboardWrapper>
 
                 {
-                    loading &&
-                    <Center>
-                        <TransactionEntryPlaceholder/>
-                    </Center>
+                    (importingHistory || isFetchingHistory) &&
+                    <>
+                        <Heading>Searching through <Purple> the history</Purple> of your account.</Heading>
+                        <SearchingUnicorn src={UnicornDetective}
+                                          alt="Unicorn Detective"/>
+                    </>
                 }
-
                 {
-                    !loading && entries?.length > 0 &&
+                    entries?.length > 0 &&
 
                     <Center>
                         {entries}
                     </Center>
                 }
 
-
                 {
-                    !loading && entries == null &&
-                    <Section>
-                        <TwoColSingleFeatureWithStats2
-                            statistics={[]}
-                            subheading={"History is being scanned"}
-                            heading={"We're currently scanning for your history."}
-                            description={"Please check back and refresh this page after a while to see your full historical transactions."}
-                            primaryButtonText={"Refresh"}
-                            primaryButtonUrl={`/${address}/history`}
-                            secondaryButtonText={"Back to overview"}
-                            secondaryButtonUrl={`/${address}/profile`}
-                        />
-                    </Section>
+                    !importingHistory &&
+                    !isFetchingHistory &&
+                    events.length === 0 &&
+                    <>
+                        <Heading>Great news, very secure!</Heading>
+                        <SecureUnicornImage src={SecureUnicorn} />
+
+                        <Heading><GreenUnderline>no unrestricted approvals</GreenUnderline> to your assets were
+                            found.</Heading>
+                    </>
+
                 }
             </DashboardWrapper>
         </Container>

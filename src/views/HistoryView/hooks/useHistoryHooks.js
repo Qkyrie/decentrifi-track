@@ -1,15 +1,43 @@
-import {useEffect} from "react";
-import {getEvents} from "../../../api/whalespotter/transactions/transactions";
+import {useEffect, useMemo, useState} from "react";
+import {getEvents, getHistoryJob} from "../../../api/whalespotter/transactions/transactions";
 import {useQuery} from "@tanstack/react-query";
+import {getApprovalJob, getApprovals} from "../../../api/whalespotter/approvals/Approvals";
 
 export default function (address) {
+
+    const [rescan, setRescan] = useState(true);
+
+    const historyJobQuery = useQuery({
+        queryKey: ['account', address, 'history', 'job'],
+        queryFn: async () => {
+            console.log('fetching history job')
+            const job = await getHistoryJob(address)
+            if (job?.status === 'FINISHED') {
+                setRescan(false);
+            }
+            return job;
+        },
+        refetchInterval: rescan ? 1000 : 0
+    })
+
+    const importingHistory = useMemo(() => {
+        if (historyJobQuery.isLoading
+            || historyJobQuery.data?.status === "CREATED"
+            || historyJobQuery.data === undefined
+            || historyJobQuery.data?.status === undefined) {
+            return true;
+        } else {
+            return false;
+        }
+    }, [historyJobQuery.isLoading, historyJobQuery.data])
+
 
     const eventsQuery = useQuery({
         queryKey: ['account', address, 'events'],
         queryFn: async () => {
-            return getEvents(address)
+            return await getEvents(address)
         },
-        staleTime: 1000 * 60 * 3,
+        enabled: !!address && !importingHistory
     })
 
     useEffect(() => {
@@ -17,7 +45,8 @@ export default function (address) {
     }, [address]);
 
     return {
-        loading: eventsQuery.isLoading,
-        events: eventsQuery.data?.content
+        importingHistory,
+        isFetchingHistory: eventsQuery.isLoading,
+        events: eventsQuery.data?.content || [],
     }
 };

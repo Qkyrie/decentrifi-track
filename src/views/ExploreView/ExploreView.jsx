@@ -5,6 +5,7 @@ import {useQuery} from "@tanstack/react-query";
 import {getStatisticsPerProtocol} from "../../api/defitrack/statistics/Statistics";
 import {ProtocolCard} from "./ProtocolCard";
 import ExploreSearchTeaser from "./components/ExploreSearchTeaser";
+import ReactGA from "react-ga4";
 
 const Container = tw.div`flex grid w-full`
 const Center = tw.div`flex grid justify-items-center mb-1`
@@ -16,28 +17,13 @@ const ProtocolsContainer = tw.div`flex lg:w-3/4 flex-wrap w-full`
 export default function () {
 
     useEffect(() => {
-        window.title = 'Decentrifi Connect | Explore DeFi Protocols and Accounts';
+        window.title = 'Decentrifi Portfolio | Explore DeFi Protocols and Accounts';
+        ReactGA.send({
+            hitType: "pageview",
+            page: window.location.pathname + window.location.search
+        });
     }, []);
 
-
-    async function fetchStatistics() {
-        return await getStatisticsPerProtocol();
-    }
-
-    const protocolQuery = useQuery({
-        queryKey: ["protocol-stats"],
-        queryFn: async () => {
-            return await fetchStatistics();
-        }
-    })
-
-    const protocols = useMemo(() =>  {
-        return protocolQuery.data?.sort(() => 0.5 - Math.random()).map((stat) => {
-            return (
-                <ProtocolCard stat={stat} key={stat.protocol.slug}/>
-            )
-        }).slice(0, 12)
-    }, [protocolQuery.data])
 
     return <>
         <CustomHeader showSearch={false}></CustomHeader>

@@ -20,9 +20,6 @@ export function useApprovalHooks(address) {
     })
 
     const importingAllowances = useMemo(() => {
-        console.log('job loading?', approvalJobQuery.isLoading)
-        console.log('created?', approvalJobQuery.data?.status)
-        console.log('undefined?', approvalJobQuery.data === undefined)
         if (approvalJobQuery.isLoading
             || approvalJobQuery.data?.status === "CREATED"
             || approvalJobQuery.data === undefined
