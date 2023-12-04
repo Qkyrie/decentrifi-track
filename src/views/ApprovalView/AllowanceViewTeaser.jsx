@@ -66,7 +66,7 @@ export default function AllowanceViewTeaser() {
     }, [])
 
     if (web3.account != null) {
-        history.push(`/${web3.account}/claimables`);
+        history.push(`/${web3.account}/allowances`);
         return <></>;
     } else {
         return <>
