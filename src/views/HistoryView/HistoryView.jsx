@@ -1,5 +1,5 @@
 import React, {useMemo} from "react";
-import {useHistory, useParams} from "react-router-dom";
+import {useHistory, useLocation, useParams} from "react-router-dom";
 import CustomHeader from "../../components/Header/CustomHeader";
 import tw from "twin.macro";
 import {SectionHeading, Subheading as SubheadingBase} from "../../components/misc/Headings";
@@ -10,6 +10,8 @@ import useHistoryHooks from "./hooks/useHistoryHooks";
 import TransactionEntry, {TransactionEntryPlaceholder} from "./components/TransactionEntry";
 import UnicornDetective from "../../images/unicorns/searching-unicorn.png";
 import SecureUnicorn from "../../images/unicorns/secure_unicorn.png";
+import {Pagination, TablePagination} from "@mui/material";
+import {useQuery$} from "@preact-signals/query";
 
 const Container = tw.div`flex pt-8 grid`
 const DashboardWrapper = tw.div`w-full grid justify-items-center mt-4`
@@ -28,30 +30,62 @@ const Purple = tw.span`text-purple-500`
 const Section = tw.div`grid w-full justify-items-center pt-2`
 
 
+
+
 export default function HistoryView() {
+
+    function useQuery() {
+        const { search } = useLocation();
+
+        return React.useMemo(() => new URLSearchParams(search), [search]);
+    }
 
     const history = useHistory();
     const params = useParams();
+    const query = useQuery();
     const address = params.user;
+
+    let page = (query.get("page") || 1);
 
     const {
         importingHistory,
         isFetchingHistory,
         events
-    } = useHistoryHooks(address);
+    } = useHistoryHooks(address, page);
 
     const onAddressChange = (address) => {
         history.push(`/${address}/history`);
     };
 
+    const onPageChange = (page) => {
+        history.push(`/${address}/history?page=${page}`);
+    }
+
 
     const entries = useMemo(() => {
-        return events?.map((entry) => {
+        return events.content.map((entry) => {
             return (
                 <TransactionEntry key={entry.hash} transaction={entry} events={entry.events} owner={address}/>
             )
         })
     }, [events, address]);
+
+
+    const pagination = useMemo(() => {
+        if (events.totalPages > 1) {
+            console.log('current page', page)
+            return (
+                <Pagination
+                    count={events.totalPages}
+                    page={Number(page)}
+                    siblingCount={2}
+                    onChange={(event, page) => {
+                        onPageChange(page)
+                    }}
+                />
+            )
+        }
+    }, [events, page]);
 
     return <>
         <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
@@ -91,13 +125,15 @@ export default function HistoryView() {
                     events.length === 0 &&
                     <>
                         <Heading>Great news, very secure!</Heading>
-                        <SecureUnicornImage src={SecureUnicorn} />
+                        <SecureUnicornImage src={SecureUnicorn}/>
 
                         <Heading><GreenUnderline>no unrestricted approvals</GreenUnderline> to your assets were
                             found.</Heading>
                     </>
 
                 }
+
+                {pagination}
             </DashboardWrapper>
         </Container>
 
