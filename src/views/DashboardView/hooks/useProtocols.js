@@ -8,8 +8,7 @@ export default function useProtocols() {
     const query = useQuery({
         queryKey: ['protocols'],
         queryFn: async () => {
-            const retVal = await fetchProtocols()
-            return retVal;
+            return await fetchProtocols();
         }
     })
 
