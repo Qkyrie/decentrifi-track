@@ -61,7 +61,6 @@ export default function useProtocolView() {
                 selected: 'Lending' === activeTab,
                 name: `Lending (${lendingOpportunities.length})`,
                 onClick: () => {
-                    console.log('lending')
                     setActiveTab('Lending')
                 }
             });
@@ -72,7 +71,6 @@ export default function useProtocolView() {
                 selected: 'Farming' === activeTab,
                 name: `Farming (${farmingOpportunities.length})`,
                 onClick: () => {
-                    console.log('farming')
                     setActiveTab('Farming')
                 }
             });

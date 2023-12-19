@@ -4,6 +4,9 @@ import tw from "twin.macro";
 import {Button} from "@mui/material";
 import AssetTable from "../AssetTable/AssetTable";
 import FallbackImage from "../Image/FallbackImage";
+import {ChevronDownIcon, ChevronRightIcon} from "@heroicons/react/solid";
+
+import styled from "styled-components"; //eslint-disable-line
 
 const Center = tw.div`w-full grid justify-items-center`
 const Container = tw.div`px-4 bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-2/3 my-4 py-4`
@@ -13,7 +16,14 @@ const ButtonWrapper = tw.span`px-1`
 
 const ButtonIcon = tw.div`w-3 h-3 mr-2`
 
-export default ({poolingOpportunities, title = "Pooling Opportunities", isLoading = true}) => {
+const Actions = styled.div`
+    ${tw`flex`}
+    svg {
+        ${tw`w-4 h-4`}
+    }
+`
+
+export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
 
     const [searchFilter, setSearchFilter] = useState(null)
     const [networkFilter, setNetworkFilter] = useState([])
@@ -43,34 +53,6 @@ export default ({poolingOpportunities, title = "Pooling Opportunities", isLoadin
         })
     }, [poolingOpportunities])
 
-    const networkButtons = networks.map((network) => {
-        const onClick = () => {
-            setNetworkFilter((prevState) => {
-                if (prevState.includes(network)) {
-                    return [...prevState.filter(x => x !== network)]
-                } else {
-                    prevState.push(network);
-                    return [...prevState];
-                }
-            });
-        }
-
-        const getVariant = () => {
-            return networkFilter.includes(network) ? "contained" : "outlined"
-        }
-
-        return (
-            <ButtonWrapper>
-                <Button onClick={onClick} variant={getVariant()} color={"success"}>
-                    <ButtonIcon>
-                        <FallbackImage src={getLogo(network)}/>
-                    </ButtonIcon>
-                    {network}
-                </Button>
-            </ButtonWrapper>
-        );
-    })
-
     const entries = poolingOpportunities.filter((row) => {
         if (searchFilter && searchFilter.length > 0) {
             return row.tokens.filter(t => {
@@ -84,15 +66,18 @@ export default ({poolingOpportunities, title = "Pooling Opportunities", isLoadin
     }).sort((row1, row2) => {
         return row2.marketSize - row1.marketSize
     }).map(element => {
+
+
         return {
-            symbol: element.symbol,
+            symbol: null,
             detailUrl: /* `/pooling/${element.network.name}/${element.protocol.slug}/${element.id}` */ null,
-            name: element.name,
+            name: <ElementAndBreakdown element={element}/>,
             amount: element.amount,
             apr: element.apr,
             logo: element.protocol.logo,
             networkLogo: element.network.logo,
             dollarValue: element.marketSize,
+            actionButton: null
         }
     })
     const search = (e) => {
@@ -108,11 +93,12 @@ export default ({poolingOpportunities, title = "Pooling Opportunities", isLoadin
                         usePagination={true}
                         showPlaceholder={true}
                         entries={entries}
-                        isLoading={isLoading}
                         header={
                             <>
                                 <Header><h2>{title}</h2></Header>
-                                <NetworkContainer>{networkButtons}</NetworkContainer>
+                                <NetworkContainer>
+                                    <NetworkButtons networks={networks}/>
+                                </NetworkContainer>
                                 <Center>
                                     <SearchField onChange={search}/>
                                 </Center>
@@ -126,5 +112,46 @@ export default ({poolingOpportunities, title = "Pooling Opportunities", isLoadin
         return <>
         </>
     }
+}
 
+function NetworkButtons({networks}) {
+    networks.map((network) => {
+        return (
+            <NetworkButton network={network}/>
+        )
+    })
+}
+
+function NetworkButton({network}) {
+    return (
+        <ButtonWrapper key={network.slug}>
+            <Button onClick={onClick} variant={getVariant()} color={"success"}>
+                <ButtonIcon>
+                    <FallbackImage src={getLogo(network)}/>
+                </ButtonIcon>
+                {network}
+            </Button>
+        </ButtonWrapper>
+    )
+}
+
+const ElementAndBreakdownHolder = tw.div`w-full flex`
+const ElementName = tw.div`w-1/2`
+const ElementBreakdown = tw.div`w-1/2`
+
+function ElementAndBreakdown({element}) {
+    const breakdown = (element.breakdown || []).map((breakdownElement, index) => {
+        return <span tw={"bg-gray-200 p-2 mx-1"} key={index}>{breakdownElement.token.symbol}</span>
+    });
+
+    return (
+        <ElementAndBreakdownHolder>
+            <ElementName>
+                {element.name}
+            </ElementName>
+            <ElementBreakdown>
+                {breakdown}
+            </ElementBreakdown>
+        </ElementAndBreakdownHolder>
+    )
 }

@@ -34,7 +34,7 @@ const PullRight = tw.div`flex grid justify-items-end w-full`
 const Bold = tw.span`font-bold text-sm`
 const Hidden = tw.span`hidden lg:block`
 
-const ActionButton = tw.div`ml-4 justify-items-end flex w-full`
+const ActionButton = tw.div`justify-items-end flex grid w-full`
 
 const PaginationSection = tw.div`mt-4 flex flex-row justify-center w-full`
 const Center = tw.div`flex`
