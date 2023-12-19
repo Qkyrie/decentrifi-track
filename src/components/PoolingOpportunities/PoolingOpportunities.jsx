@@ -5,7 +5,6 @@ import {Button} from "@mui/material";
 import AssetTable from "../AssetTable/AssetTable";
 import FallbackImage from "../Image/FallbackImage";
 import {ChevronDownIcon, ChevronRightIcon} from "@heroicons/react/solid";
-
 import styled from "styled-components"; //eslint-disable-line
 
 const Center = tw.div`w-full grid justify-items-center`
@@ -55,7 +54,7 @@ export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
 
     const entries = poolingOpportunities.filter((row) => {
         if (searchFilter && searchFilter.length > 0) {
-            return row.tokens.filter(t => {
+            return row.name.toLowerCase().includes(searchFilter.toLowerCase()) || row.tokens.filter(t => {
                 return t.symbol.toLowerCase().includes(searchFilter.toLowerCase())
             }).length > 0
         } else {
@@ -135,13 +134,24 @@ function NetworkButton({network}) {
     )
 }
 
+const TokenLabel = styled.span`
+    ${tw`bg-gray-200 p-2 mx-1 rounded text-xs`}
+    object {
+        ${tw`w-4 h-4 inline-block mr-1`}
+    }
+`
 const ElementAndBreakdownHolder = tw.div`w-full flex`
-const ElementName = tw.div`w-1/2`
+const ElementName = tw.div`w-1/2 self-center`
 const ElementBreakdown = tw.div`w-1/2`
 
 function ElementAndBreakdown({element}) {
     const breakdown = (element.breakdown || []).map((breakdownElement, index) => {
-        return <span tw={"bg-gray-200 p-2 mx-1"} key={index}>{breakdownElement.token.symbol}</span>
+        return (
+            <TokenLabel key={index}>
+                <FallbackImage src={breakdownElement.token.logo}/>
+                {breakdownElement.token.symbol}
+            </TokenLabel>
+        )
     });
 
     return (
