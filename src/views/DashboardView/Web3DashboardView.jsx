@@ -1,12 +1,9 @@
 import React, {useEffect} from 'react';
-import tw from "twin.macro";
 import useWeb3 from "../../hooks/web3";
 import ReactGA from "react-ga4";
 import {useHistory} from "react-router-dom";
 import ConnectWalletView from "../ConnectWalletView/ConnectWalletView";
 
-
-import Unicorn from "../../images/unicorns/searching-unicorn.png";
 
 export default function Web3DashboardView() {
 
