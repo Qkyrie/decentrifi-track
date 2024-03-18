@@ -70,7 +70,7 @@ export function ExitButton({element}) {
         return (
             <Button onClick={requestNetworkChange} variant={"contained"}>
                 <ButtonContent>
-                    <span>Change Network Position</span>
+                    <span>Change Network</span>
                     <ToastContainer closeOnClick={false} theme={'light'}/>
                 </ButtonContent>
             </Button>
