@@ -16,16 +16,12 @@ import ProtocolView from "./views/ProtocolsView/ProtocolView";
 import ClaimableViewTeaser from "./views/ClaimableView/ClaimableViewTeaser";
 import AddressClaimableView from "./views/ClaimableView/AddressClaimableView";
 import useWeb3 from "./hooks/web3";
-import HistoryView from "./views/HistoryView/HistoryView";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import ExploreView from "./views/ExploreView/ExploreView";
 import MembershipView from "./views/MembershipView";
-import {ApprovalView} from "./views/ApprovalView/ApprovalView";
-import SuggestionView from "./views/SuggestionView/SuggestionView";
 import MentorshipView from "./views/MentorshipView/MentorshipView";
 import GoerliFaucetView from "./views/GoerliFaucetView/GoerliFaucetView.jsx";
 import {DashboardProvider} from "./views/DashboardProvider";
-import AllowanceViewTeaser from "./views/ApprovalView/AllowanceViewTeaser";
 
 export const DashboardContext = createContext(null);
 
@@ -77,10 +73,6 @@ export default function App() {
                             <ClaimableViewTeaser/>
                             <FooterV2/>
                         </Route>
-                        <Route path="/allowances">
-                            <AllowanceViewTeaser/>
-                            <FooterV2/>
-                        </Route>
                         <Route exact path="/protocols">
                             <CustomHeader/>
                             <ProtocolsView/>
@@ -89,14 +81,6 @@ export default function App() {
                         <Route exact path="/protocols/:protocol">
                             <CustomHeader/>
                             <ProtocolView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route path="/:user/allowance">
-                            <ApprovalView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route path="/:user/suggestions">
-                            <SuggestionView/>
                             <FooterV2/>
                         </Route>
                         <Route path="/:user/profile">
@@ -109,10 +93,6 @@ export default function App() {
                         </Route>
                         <Route path="/:user/claimables">
                             <AddressClaimableView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route path="/:user/history">
-                            <HistoryView/>
                             <FooterV2/>
                         </Route>
                         <Route path="/tokens/:network/:token">

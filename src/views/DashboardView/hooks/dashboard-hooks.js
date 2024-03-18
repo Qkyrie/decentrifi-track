@@ -20,13 +20,7 @@ export default function
     supportsPooling = true
 }) {
 
-    const acc = signal(null)
     const [account, setAccount] = useState(null);
-
-    function setAddress(address) {
-        acc.value = address
-        setAccount(address)
-    }
 
     const useDashboardFilter = useDashboardFilterHooks()
 

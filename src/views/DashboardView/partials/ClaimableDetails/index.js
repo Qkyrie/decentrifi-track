@@ -1,1 +1,1 @@
-export {default} from './ClaimableDetails'
+export {default} from './AllClaimableDetails'

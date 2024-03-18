@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from "react";
-import ClaimableDetails from "../DashboardView/partials/ClaimableDetails";
+import AllClaimableDetails from "../DashboardView/partials/ClaimableDetails/AllClaimableDetails";
 
 import tw from 'twin.macro';
 import {SectionHeading, Subheading as SubheadingBase} from "../../components/misc/Headings";
@@ -79,8 +79,8 @@ export default function ClaimableView({address}) {
                         }
 
                         <ClaimableSection>
-                            <ClaimableDetails showNothingFoundMessage={true}
-                                              showPlaceholder={claimableLoading}/>
+                            <AllClaimableDetails showNothingFoundMessage={true}
+                                                 showPlaceholder={claimableLoading}/>
                         </ClaimableSection>
                     </>
                 }

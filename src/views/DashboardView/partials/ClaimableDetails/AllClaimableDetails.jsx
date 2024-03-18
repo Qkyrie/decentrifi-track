@@ -26,7 +26,7 @@ const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 bg-green-600 
 const BalanceText = tw.div`w-9/12 text-right`
 const Hidden = tw.span`hidden lg:block`
 
-export default function ClaimableDetails({showPlaceholder = false, showNothingFoundMessage = false}) {
+export default function AllClaimableDetails({showPlaceholder = false, showNothingFoundMessage = false}) {
 
     const {
         claimables,

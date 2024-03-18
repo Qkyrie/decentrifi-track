@@ -5,6 +5,7 @@ import BorrowingDetails from "./BorrowingDetails";
 import React, {useContext} from "react";
 import tw from "twin.macro";
 import {DashboardContext} from "../../../App";
+import ClaimableDetails from "./ClaimableDetails";
 
 
 const ProtocolSection = tw.section`w-full grid justify-items-start mb-6 rounded py-4 rounded-lg border p-4`
@@ -47,6 +48,7 @@ export default function DefiPositions() {
                     <PoolingDetails protocol={proto}/>
                     <LendingDetails protocol={proto}/>
                     <BorrowingDetails protocol={proto}/>
+                    <ClaimableDetails protocol={proto}/>
                 </ProtocolDetails>
             </ProtocolSection>
         )

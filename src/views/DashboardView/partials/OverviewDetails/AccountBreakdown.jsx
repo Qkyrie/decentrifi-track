@@ -105,13 +105,14 @@ function AccountOverview() {
         totalStaking,
         totalPooling,
         totalBorrowing,
+        totalClaimables,
     } = useContext(DashboardContext)
 
 
     function totalDollarValue() {
         return ((totalWalletBalance)
             + (totalLending)
-            + (totalStaking) + (totalPooling)
+            + (totalStaking) + (totalPooling) + totalClaimables
         )
     }
 

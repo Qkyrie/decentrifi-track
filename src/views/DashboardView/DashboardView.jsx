@@ -8,7 +8,6 @@ import DefiPositions from "./partials/DefiPositions";
 import DashboardNavbar from "../../components/DashboardNavbar";
 import ClaimableTeaser from "./teasers/ClaimableTeaser";
 import SuggestionTeaser from "./teasers/SuggestionTeaser";
-import useSuggestionHooks from "../SuggestionView/hooks/useSuggestionHooks";
 import {DashboardContext} from "../../App";
 import {useAddressStatistics} from "./hooks/useAddressStatistics";
 
