@@ -45,24 +45,26 @@ export default function PoolingDetails({protocol}) {
         );
     } else {
         return (
-            <AssetTable
-                entries={elements}
-                header={
-                    <Header>
-                        <HeaderTextContainer><HeaderText>Liquidity Pooling</HeaderText></HeaderTextContainer>
-                        <BalanceText>
-                            <Hidden>
-                                <PullRight>
-                                    <HeaderText>
-                                        <DollarLabel
-                                            amount={totalPoolingForProtocol(protocol)}/>
-                                    </HeaderText>
-                                </PullRight>
-                            </Hidden>
-                        </BalanceText>
-                    </Header>
-                }
-            />
+           <>
+               <AssetTable
+                   entries={elements}
+                   header={
+                       <Header>
+                           <HeaderTextContainer><HeaderText>Liquidity Pooling</HeaderText></HeaderTextContainer>
+                           <BalanceText>
+                               <Hidden>
+                                   <PullRight>
+                                       <HeaderText>
+                                           <DollarLabel
+                                               amount={totalPoolingForProtocol(protocol)}/>
+                                       </HeaderText>
+                                   </PullRight>
+                               </Hidden>
+                           </BalanceText>
+                       </Header>
+                   }
+               />
+           </>
         );
     }
 }

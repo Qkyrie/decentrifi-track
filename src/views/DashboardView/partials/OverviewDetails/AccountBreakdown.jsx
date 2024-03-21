@@ -10,10 +10,7 @@ import {useHistory} from "react-router-dom";
 import {DashboardContext} from "../../../../App";
 
 
-const CenterImage = tw.div`w-full flex justify-center my-2`
-const SadWhaleImage = tw.img`w-10 h-10`
-const Container = tw.div`w-full mr-4 flex flex-wrap border p-4 rounded-lg mb-2`
-const Header = tw.h3`text-lg font-medium mb-2  `
+const Container = tw.div`w-full mr-4 flex flex-wrap  p-4 rounded-lg mb-2`
 const Table = tw.div`w-full flex flex-wrap mb-2`
 
 const GreenDollarIcon = tw(CurrencyDollarIcon)`text-green-400 h-8 w-8`
@@ -28,10 +25,10 @@ const YellowProgressBar = tw(ProgressBar)`bg-yellow-500`
 const GreenProgressBar = tw(ProgressBar)`bg-green-500`
 const OrangeProgressBar = tw(ProgressBar)`bg-orange-500`
 
-const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 bg-green-600 rounded-r  text-white`
+const HeaderText = tw.h3`mx-2 shadow px-4 py-1 text-sm font-medium mb-2 bg-green-600 rounded-r  text-white`
 
 const Logo = tw.img`h-8 w-8`
-const FullRow = tw.div`w-full`
+const FullRow = tw.div`w-1/4`
 
 function Protocols() {
 
@@ -216,9 +213,6 @@ function AccountOverview() {
     )
 }
 
-const Hero = tw.div`justify-self-center bg-gray-100 w-full border p-4 mb-4 text-center`
-const HeroDescription = tw.p`text-gray-500 text-lg`
-
 function DefiOverview() {
 
     const {
@@ -228,16 +222,6 @@ function DefiOverview() {
 
     if (usedProtocols.length === 0 && hasFinishedScanning) {
         return <>
-            <Container>
-                <Hero>
-                    <Header>We couldn't find any <Subheading>Active Defi Application</Subheading></Header>
-                    <CenterImage>
-                        <SadWhaleImage src={SadWhalePic}/>
-                    </CenterImage>
-                    <HeroDescription>Unfortunately, we couldn't identify any participation in a defi application for
-                        this specific address. It might be a fresh account or simply not exist at all.</HeroDescription>
-                </Hero>
-            </Container>
         </>
     }
 

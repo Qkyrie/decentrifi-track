@@ -1,7 +1,7 @@
 import React from "react";
 import tw from "twin.macro"
 
-const Container = tw.div`flex mb-2`
+const Container = tw.div`flex mb-2 mx-2`
 const Border = tw.div`shadow-md hover:shadow-lg  w-full p-2 bg-white`
 const Center = tw.div`flex items-center`
 

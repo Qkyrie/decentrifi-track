@@ -49,13 +49,16 @@ export default function DashboardView({address}) {
             <DashboardWrapper>
                 <Center>
                     <DashboardNavbar address={address} selected={"profile"}/>
+
                 </Center>
+
 
                 <DashboardHeader/>
 
                 <ClaimableTeaser address={address} amount={totalClaimables}/>
                 <Full>
                     <Column>
+
 
                         <BalanceDetails/>
 
@@ -80,7 +83,6 @@ export default function DashboardView({address}) {
                         </HorizontalCenter>
                     </Column>
                     <Column>
-                        <AccountBreakdown/>
                         <DefiPositions/>
                     </Column>
                 </Full>

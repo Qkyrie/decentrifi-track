@@ -8,6 +8,7 @@ import DollarLabel from "../../../../components/Label/DollarLabel";
 import {DashboardContext} from "../../../../App";
 import styled from "styled-components";
 import SearchingUni from "../../../../images/unicorns/searching-unicorn.png"
+import AccountBreakdown from "../OverviewDetails";
 
 const Address = styled.span`
   ${tw`hidden lg:block font-bold text-base text-black ml-2`}
@@ -25,7 +26,7 @@ const LeftColumn = tw.div` w-full p-4 bg-white`
 const AddressInfo = tw.div`flex items-center`
 const AddressText = tw.div`flex flex-col`
 const Wrapper = tw.div`flex grid justify-items-center flex-wrap lg:flex-nowrap p-4`;
-const Center = tw.div`w-full lg:w-2/3 border rounded-xl`
+const Center = tw.div`w-full lg:w-10/12 border rounded-xl`
 const PortfolioValue = tw.div`lg:justify-items-end justify-self-center grid w-full`
 const PortfolioValueContainer = tw.div`bg-gray-200 p-4 flex flex-col rounded-lg lg:w-3/4 mx-4`
 
@@ -143,6 +144,9 @@ export default function DashboardHeader() {
                         </ScanningContainer>
                     }
                 </LeftColumn>
+
+                <AccountBreakdown/>
+
             </Center>
         </Wrapper>
     )
