@@ -1,6 +1,7 @@
 import {farmingPositions} from "../../../api/defitrack/staking/staking";
 import useProtocols from "./useProtocols";
 import {useQuery} from "@tanstack/react-query";
+import {useEffect, useState} from "react";
 
 export default function useDashboardStakingHooks(account, supportsStaking, {
     addToTotalScanning,
@@ -9,43 +10,33 @@ export default function useDashboardStakingHooks(account, supportsStaking, {
 
     const protocols = useProtocols().protocols
 
-    const stakingQuery = useQuery({
-        queryKey: ['staking', account],
-        staleTime: 1000 * 60 * 3,
-        queryFn: async () => {
-            let farmingProtocols = protocols.filter(proto => {
-                return proto.primitives.includes('FARMING');
-            });
+    const [positions, setPositions] = useState([]);
 
-            addToTotalScanning(farmingProtocols.length);
+    function loadData() {
+        let farmingProtocols = protocols.filter(proto => {
+            return proto.primitives.includes('FARMING');
+        });
 
-            const result = new ResultHolder();
+        addToTotalScanning(farmingProtocols.length);
 
-            farmingProtocols.forEach(async (protocol) => {
-                const positions = await farmingPositions(account, protocol)
-                incrementProgress();
-                positions.forEach((position) => result.push(position))
-            });
-
-            return result
-        },
-        enabled: protocols.length > 0 && !!account
-    });
-
-    class ResultHolder {
-        results = []
-
-        push(element) {
-            this.results.push(element);
-        }
+        farmingProtocols.forEach(async (protocol) => {
+            const positions = await farmingPositions(account, protocol)
+            incrementProgress();
+            setPositions((prev) => [...prev, ...positions]);
+        });
     }
 
+    useEffect(() => {
+        loadData();
+    }, [protocols]);
+
     function refresh() {
-        stakingQuery.refetch();
+        setPositions((prev) => []);
+        loadData();
     }
 
     return {
-        stakings: stakingQuery.data?.results || [],
+        stakings: positions || [],
         refresh
     }
 };

@@ -58,8 +58,6 @@ export default function DashboardView({address}) {
                 <ClaimableTeaser address={address} amount={totalClaimables}/>
                 <Full>
                     <Column>
-
-
                         <BalanceDetails/>
 
                         <HorizontalCenter>

@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import {useDashboardFilterHooks} from "./useDashboardFilterHooks";
 import useDashboardWalletHooks from "./useDashboardWalletHooks";
 import useDashboardScanningProgressHooks from "./useDashboardScanningProgressHooks";
@@ -8,17 +8,16 @@ import useDashboardClaimableHooks from "./useDashboardClaimableHooks";
 import useDashboardBorrowingHooks from "./useDashboardBorrowingHooks";
 import useDashboardLPHooks from "./useDashboardLPHooks";
 import useEns from "./useEns";
-import {signal} from "@preact/signals-react";
 
 
 export default function
     useDashboardHooks({
-    supportsBalances = true,
-    supportsDebt = true,
-    supportsLending = true,
-    supportsStaking = true,
-    supportsPooling = true
-}) {
+                          supportsBalances = true,
+                          supportsDebt = true,
+                          supportsLending = true,
+                          supportsStaking = true,
+                          supportsPooling = true
+                      }) {
 
     const [account, setAccount] = useState(null);
 
@@ -184,23 +183,47 @@ export default function
         }
     }
 
+    const uniqueProtocols = useMemo(() => {
+        console.log('stakings: ', stakings)
+        console.log('lps: ', lps)
+        const stakingProtocols = stakings.map(staking => staking.protocol)
+        const poolingProtocols = lps.map(lp => lp.protocol)
+        const claimableProtocols = claimables.map(claimable => claimable.protocol)
+        const lendingProtocols = lendings.map(lending => lending.protocol)
+        const borrowingProtocols = borrowings.map(borrowing => borrowing.protocol)
+
+        const activeProtocols = stakingProtocols
+            .concat(poolingProtocols)
+            .concat(claimableProtocols)
+            .concat(lendingProtocols)
+            .concat(borrowingProtocols)
+
+        const set = Array.from(
+            new Set(
+                activeProtocols
+                    .map(proto => proto.name)
+                    .map(id => {
+                        return activeProtocols.find(proto => id === proto.name)
+                    })
+            )
+        )
+
+        return set.map(proto => {
+            return {
+                ...proto
+            }
+        })
+    }, [lps, stakings, borrowings, claimables, lendings])
+
     function getUniqueProtocols() {
         let activeProtocols = lendings
             .filter(smallValueFilter)
             .map(lending => lending.protocol)
-            .concat(
-                borrowings.map(borrowing => borrowing.protocol)
-            ).concat(
-                stakings
-                    .filter(smallValueFilter)
-                    .map(staking => staking.protocol)
-            ).concat(
-                lps
-                    .filter(smallValueFilter)
-                    .map(lp => lp.protocol)
-            ).concat(
-                claimables.map(claimable => claimable.protocol)
-            ).filter(proto => proto != null)
+            // .concat(borrowings.map(borrowing => borrowing.protocol))
+            // .concat(stakings.map(staking => staking.protocol))
+            // .concat(lps.map(lp => lp.protocol))
+            //  .concat(claimables.map(claimable => claimable.protocol))
+            .filter(proto => proto != null)
 
         const set = Array.from(
             new Set(
@@ -248,7 +271,7 @@ export default function
         setSearchAddress: setSearchAddress,
         address: account,
         setAddress: setAccount,
-        usedProtocols: getUniqueProtocols(),
+        usedProtocols: uniqueProtocols,
         usedNetworks: getUniqueNetworks(),
         hasFinishedScanning: doneScanning === totalScanning,
         totalScanning: totalScanning,
