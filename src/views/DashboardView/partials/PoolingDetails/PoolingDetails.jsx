@@ -31,6 +31,12 @@ export default function PoolingDetails({protocol}) {
             amount: amount,
             apr: element.apr,
             logo: element.protocol.logo,
+            breakdown: element.breakdown.map(e => {
+                return {
+                    amount: e.reserveDecimal,
+                    name: e.token.name,
+                }
+            }),
             networkLogo: element.network.logo,
             dollarValue: element.dollarValue,
             symbol: ''
@@ -45,26 +51,26 @@ export default function PoolingDetails({protocol}) {
         );
     } else {
         return (
-           <>
-               <AssetTable
-                   entries={elements}
-                   header={
-                       <Header>
-                           <HeaderTextContainer><HeaderText>Liquidity Pooling</HeaderText></HeaderTextContainer>
-                           <BalanceText>
-                               <Hidden>
-                                   <PullRight>
-                                       <HeaderText>
-                                           <DollarLabel
-                                               amount={totalPoolingForProtocol(protocol)}/>
-                                       </HeaderText>
-                                   </PullRight>
-                               </Hidden>
-                           </BalanceText>
-                       </Header>
-                   }
-               />
-           </>
+            <>
+                <AssetTable
+                    entries={elements}
+                    header={
+                        <Header>
+                            <HeaderTextContainer><HeaderText>Liquidity Pooling</HeaderText></HeaderTextContainer>
+                            <BalanceText>
+                                <Hidden>
+                                    <PullRight>
+                                        <HeaderText>
+                                            <DollarLabel
+                                                amount={totalPoolingForProtocol(protocol)}/>
+                                        </HeaderText>
+                                    </PullRight>
+                                </Hidden>
+                            </BalanceText>
+                        </Header>
+                    }
+                />
+            </>
         );
     }
 }

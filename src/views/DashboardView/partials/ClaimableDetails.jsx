@@ -28,7 +28,12 @@ export default function ClaimableDetails({protocol}) {
             symbol: element.token.symbol,
             detailUrl: `#`,
             name: element.name,
-            amount: element.amount,
+            breakdown: [
+                {
+                    amount: element.amount,
+                    name: element.token.symbol,
+                }
+            ],
             apr: element.apr,
             logo: element.protocol.logo,
             networkLogo: element.network.logo,

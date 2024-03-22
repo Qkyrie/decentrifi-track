@@ -108,6 +108,12 @@ export default function StakingDetails({protocol}) {
                 setOpen(true);
             },
             name: element.name,
+            breakdown: [
+                {
+                    name: element.stakedToken.symbol,
+                    amount: element.stakedAmountDecimal
+                }
+            ],
             amount: element.stakedAmountDecimal,
             apr: element.apr,
             logo: element.protocol.logo,

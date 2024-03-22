@@ -28,7 +28,7 @@ const OrangeProgressBar = tw(ProgressBar)`bg-orange-500`
 const HeaderText = tw.h3`mx-2 shadow px-4 py-1 text-sm font-medium mb-2 bg-green-600 rounded-r  text-white`
 
 const Logo = tw.img`h-8 w-8`
-const FullRow = tw.div`w-1/4`
+const FullRow = tw.div`lg:w-1/6 w-1/2`
 
 function Protocols() {
 

@@ -9,8 +9,8 @@ const TitleText = tw.p`text-sm text-gray-800`
 const BoldText = tw.p`text-gray-800 text-sm font-bold`
 const Icon = tw.div`mr-2`
 const PullRight = tw.div`flex grid justify-items-end text-right`
-const Title = tw.div`flex w-2/3`
-const Number = tw.div`w-1/3`
+const Title = tw.div`flex w-1/2`
+const Number = tw.div`w-1/2`
 export default function DetailCard({centerHtml, title, icon, bottomHtml = <></>}) {
     return (
         <Container>

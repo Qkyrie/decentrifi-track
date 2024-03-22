@@ -59,26 +59,6 @@ export default function DashboardView({address}) {
                 <Full>
                     <Column>
                         <BalanceDetails/>
-
-                        <HorizontalCenter>
-                            <CenterText>
-                                {
-                                    hideSmallValues &&
-                                    <HideSmallValueFilter>Positions with small deposits are not displayed
-                                        (&lt;$0.01). <u><a
-                                            onClick={toggleHideSmallValues}>show
-                                            everything</a></u></HideSmallValueFilter>
-                                }
-
-                                {
-                                    !hideSmallValues &&
-                                    <HideSmallValueFilter>Positions with small deposits are included
-                                        (&lt;$0.01). <u><a
-                                            onClick={toggleHideSmallValues}>hide
-                                            small values</a></u></HideSmallValueFilter>
-                                }
-                            </CenterText>
-                        </HorizontalCenter>
                     </Column>
                     <Column>
                         <DefiPositions/>
