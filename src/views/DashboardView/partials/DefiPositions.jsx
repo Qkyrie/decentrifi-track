@@ -23,10 +23,11 @@ export default function DefiPositions() {
     } = useContext(DashboardContext)
 
     const elements = useMemo(() => {
-        console.log("used protos", usedProtocols)
         return <div>
             {
-                [...usedProtocols].map((proto, index) => {
+                [...usedProtocols].sort((a, b) => {
+                    return b.totalDollarValue - a.totalDollarValue
+                }).map((proto, index) => {
                     return      <>
                         <ProtocolSectionHeader href={proto.website} target="_blank">
                             <HeaderText>

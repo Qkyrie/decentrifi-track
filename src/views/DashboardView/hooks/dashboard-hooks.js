@@ -82,7 +82,6 @@ export default function
             return 0.0;
         } else {
             return stakings
-                .filter(smallValueFilter)
                 .filter(staking => {
                     return protocol == null || staking.protocol.name === protocol.name
                 })
@@ -120,7 +119,6 @@ export default function
             return 0.0
         } else {
             return lps
-                .filter(smallValueFilter)
                 .filter(lp => {
                     return protocol == null || lp.protocol.name === protocol.name
                 })
@@ -134,7 +132,6 @@ export default function
             return 0.0;
         } else {
             return lendings
-                .filter(smallValueFilter)
                 .filter(lending => {
                     return protocol == null || lending.protocol.name === protocol.name
                 })
@@ -147,7 +144,6 @@ export default function
             return 0;
         } else {
             return borrowings
-                .filter(smallValueFilter)
                 .map(borrowing => borrowing.dollarValue).reduce((a, b) => a + b, 0)
         }
     }
@@ -184,8 +180,6 @@ export default function
     }
 
     const uniqueProtocols = useMemo(() => {
-        console.log('stakings: ', stakings)
-        console.log('lps: ', lps)
         const stakingProtocols = stakings.map(staking => staking.protocol)
         const poolingProtocols = lps.map(lp => lp.protocol)
         const claimableProtocols = claimables.map(claimable => claimable.protocol)
@@ -210,14 +204,14 @@ export default function
 
         return set.map(proto => {
             return {
-                ...proto
+                ...proto,
+                totalDollarValue: totalLending(proto) + totalStaking(proto) + totalPooling(proto)
             }
         })
     }, [lps, stakings, borrowings, claimables, lendings])
 
     function getUniqueProtocols() {
         let activeProtocols = lendings
-            .filter(smallValueFilter)
             .map(lending => lending.protocol)
             // .concat(borrowings.map(borrowing => borrowing.protocol))
             // .concat(stakings.map(staking => staking.protocol))
@@ -241,14 +235,6 @@ export default function
                 totalDollarValue: totalLending(proto) + totalStaking(proto) + totalPooling(proto)
             }
         })
-    }
-
-    let smallValueFilter = element => {
-        if (useDashboardFilter.hideSmallValues) {
-            return element.dollarValue > 0.01
-        } else {
-            return true;
-        }
     }
 
     const [searchAddress, setSearchAddress] = useState(null);
@@ -276,11 +262,11 @@ export default function
         hasFinishedScanning: doneScanning === totalScanning,
         totalScanning: totalScanning,
         doneScanning: doneScanning,
-        balanceElements: balanceElements.filter(smallValueFilter),
-        lps: lps.filter(smallValueFilter),
-        lendings: lendings.filter(smallValueFilter),
-        borrowings: borrowings.filter(smallValueFilter),
-        stakings: stakings.filter(smallValueFilter),
+        balanceElements: balanceElements,
+        lps: lps,
+        lendings: lendings,
+        borrowings: borrowings,
+        stakings: stakings,
         claimables: claimables,
         totalClaimables: totalClaimables(),
         totalWalletBalance: totalWalletBalance(),

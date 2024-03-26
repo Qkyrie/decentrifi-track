@@ -68,7 +68,7 @@ function BalanceRow({balance}) {
                 </NameColumn>
                 <AmountColumn>
                     <NumberFormat
-                        value={balance.amount} displayType={'text'} decimalScale={4} thousandSeparator={true}/>
+                        value={balance.decimalAmount} displayType={'text'} decimalScale={4} thousandSeparator={true}/>
                     <ThinGreen>
                         &nbsp;
                         {balance.token.symbol}

@@ -3,9 +3,7 @@ import DollarLabel from "../../../components/Label/DollarLabel";
 import tw from "twin.macro";
 import AssetTable from "../../../components/AssetTable/AssetTable";
 import {DashboardContext} from "../../../App";
-import ClaimButton from "./ClaimableDetails/ClaimButton"; //eslint-disable-line
 
-const Header = tw.div`w-full flex items-center mb-2`
 const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
 const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 bg-blue-600 rounded-r  text-white`
 const BalanceText = tw.div`w-9/12 text-right`

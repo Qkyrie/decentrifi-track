@@ -28,6 +28,10 @@ export default function LendingDetails({protocol}) {
             name: element.name,
             amount: element.amountDecimal,
             apr: element.rate,
+            breakdown: [
+                {name: element.token.name,
+                amount: element.amountDecimal}
+            ],
             logo: element.protocol.logo,
             networkLogo: element.network.logo,
             dollarValue: element.dollarValue,
