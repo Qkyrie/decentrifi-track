@@ -90,7 +90,7 @@ export default function AllClaimableDetails({showPlaceholder = false, showNothin
                                                 <PullRight>
                                                     <HeaderText>
                                                         <DollarLabel
-                                                            amount={totalClaimables}/></HeaderText>
+                                                            amount={totalClaimables()}/></HeaderText>
                                                 </PullRight>
                                             </Hidden>
                                         </BalanceText>

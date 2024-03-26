@@ -67,11 +67,11 @@ export default function ClaimableView({address}) {
                     !claimableLoading &&
                     <>
                         {
-                            totalClaimables > 0.01 &&
+                            totalClaimables() > 0.01 &&
                             <Section>
                                 <Subheading>Rewards are waiting for you</Subheading>
                                 <Heading>You've got <HighlightedText><DollarLabel amount={
-                                    totalClaimables
+                                    totalClaimables()
                                 }/></HighlightedText> of
                                     outstanding <HighlightedText>rewards</HighlightedText></Heading>
                                 <Description></Description>

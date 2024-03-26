@@ -59,7 +59,7 @@ export default function ClaimableDetails({protocol}) {
                             <PullRight>
                                 <HeaderText>
                                     <DollarLabel
-                                        amount={totalClaimables}/></HeaderText>
+                                        amount={totalClaimables(protocol)}/></HeaderText>
                             </PullRight>
                         </Hidden>
                     </BalanceText>

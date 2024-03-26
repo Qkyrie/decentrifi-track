@@ -55,7 +55,7 @@ export default function DashboardView({address}) {
 
                 <DashboardHeader/>
 
-                <ClaimableTeaser address={address} amount={totalClaimables}/>
+                <ClaimableTeaser address={address} amount={totalClaimables()}/>
                 <Full>
                     <Column>
                         <BalanceDetails/>

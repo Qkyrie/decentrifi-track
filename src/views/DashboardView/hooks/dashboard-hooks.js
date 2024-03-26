@@ -268,7 +268,7 @@ export default function
         borrowings: borrowings,
         stakings: stakings,
         claimables: claimables,
-        totalClaimables: totalClaimables(),
+        totalClaimables: totalClaimables,
         totalWalletBalance: totalWalletBalance(),
         totalBalance: totalBalance(),
         totalStaking: totalStaking(),
